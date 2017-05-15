@@ -5,7 +5,7 @@ env:
 
 before_install:
 # Be sure this is updated to use your encrypted key
-# - openssl aes-256-cbc -K $encrypted_939c08394e3d_key -iv $encrypted_939c08394e3d_iv -in assets/server.key.enc -out assets/server.key -d
+  - openssl aes-256-cbc -K $encrypted_939c08394e3d_key -iv $encrypted_939c08394e3d_iv -in assets/server.key.enc -out assets/server.key -d
   - wget -qO- $URL | tar xJf -
   - ./heroku/install
   - export PATH=./heroku/$(pwd):$PATH
