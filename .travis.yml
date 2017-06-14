@@ -12,7 +12,7 @@ before_script:
 - sfdx plugins:install salesforcedx@pre-release
 - sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key --username $USERNAME --setdefaultdevhubusername
 script:
-- sfdx force:org:create -s -f config/workspace-scratch-def.json -a travisci
+- sfdx force:org:create -s -f config/project-scratch-def.json -a travisci
 - sfdx force:source:push -u travisci
 - sfdx force:apex:test:run -u travisci -c -r human
 - sfdx force:org:delete -u travisci -p
