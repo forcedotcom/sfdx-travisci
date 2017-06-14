@@ -14,6 +14,7 @@ before_script:
 - echo $USERNAME
 - sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key --username $USERNAME --setdefaultdevhubusername
 script:
+- sfdx force:config:list
 - rm ~/.sfdx/sfdx.log
 - sfdx force:org:create -v $USERNAME -s -f config/project-scratch-def.json -a travisci --loglevel trace
 - cat ~/.sfdx/sfdx.log
