@@ -10,6 +10,7 @@ before_script:
 - export SFDX_DISABLE_ENCRYPTION=true
 - export SFDX_DOMAIN_RETRY=300
 - sfdx plugins:install salesforcedx@pre-release
+- sfdx plugins
 - sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key --username $USERNAME --setdefaultdevhubusername
 script:
 - sfdx force:org:create -s -f config/project-scratch-def.json -a travisci
