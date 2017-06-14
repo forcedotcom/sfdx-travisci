@@ -1,10 +1,12 @@
 {
-  "Company": "YOURCOMPANY",
-  "Country": "US",
-  "LastName": "YOURLASTNAME",
-  "Email": "YOUREMAIL",
-  "Edition": "Developer",
-  "OrgPreferences" : {
-    "S1DesktopEnabled" : true
-  }
+  "country": "US",
+  "edition": "Developer",
+  "orgPreferences": {
+    "enabled": [
+      "S1DesktopEnabled"
+    ],
+    "disabled": []
+  },
+  "orgName": "YOURCOMPANY",
+  "adminEmail": "YOUREMAIL"
 }

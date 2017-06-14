@@ -14,5 +14,5 @@ before_script:
 script:
 - sfdx force:org:create -s -f config/workspace-scratch-def.json -a travisci
 - sfdx force:source:push -u travisci
-- sfdx force:apex:test:run -c -r human
+- sfdx force:apex:test:run -u travisci -c -r human
 - sfdx force:org:delete -u travisci -p
