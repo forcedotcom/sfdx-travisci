@@ -1,23 +1,18 @@
 sudo: true
-
 env:
-  - URL=https://developer.salesforce.com/media/salesforce-cli/beta/sfdx-v5.7.4-57b4969-linux-amd64.tar.xz
-
+- URL=https://developer.salesforce.com/media/salesforce-cli/beta/sfdx-v5.7.4-57b4969-linux-amd64.tar.xz
 before_install:
-# Be sure this is updated to use your encrypted key
-# - openssl aes-256-cbc -K $encrypted_939c08394e3d_key -iv $encrypted_939c08394e3d_iv -in assets/server.key.enc -out assets/server.key -d
-  - wget -qO- $URL | tar xJf -
-  - ./sfdx/install
-  - export PATH=./sfdx/$(pwd):$PATH
-
+- openssl aes-256-cbc -K $encrypted_f42060fe945a_key -iv $encrypted_f42060fe945a_iv -in assets/server.key.enc -out assets/server.key -d
+- wget -qO- $URL | tar xJf -
+- "./sfdx/install"
+- export PATH=./sfdx/$(pwd):$PATH
 before_script:
-  - export SFDX_DISABLE_ENCRYPTION=true
-  - export SFDX_DOMAIN_RETRY=300
-  - sfdx plugins:install salesforcedx@pre-release
-  - sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key --username $USERNAME --setdefaultdevhubusername
-
+- export SFDX_DISABLE_ENCRYPTION=true
+- export SFDX_DOMAIN_RETRY=300
+- sfdx plugins:install salesforcedx@pre-release
+- sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key --username $USERNAME --setdefaultdevhubusername
 script:
-  - sfdx force:org:create -s -f config/workspace-scratch-def.json -a travisci
-  - sfdx force:source:push -u travisci
-  - sfdx force:apex:test:run -c -r human
-  - sfdx force:org:delete -u travisci -p
+- sfdx force:org:create -s -f config/workspace-scratch-def.json -a travisci
+- sfdx force:source:push -u travisci
+- sfdx force:apex:test:run -c -r human
+- sfdx force:org:delete -u travisci -p
