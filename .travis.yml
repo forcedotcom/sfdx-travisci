@@ -16,6 +16,8 @@ before_script:
 - rm -rf ~/.sfdx
 - export USE_GENERIC_UNIX_KEYCHAIN=true
 - export SFDX_DOMAIN_RETRY=300
+- sfdx update
+- sfdx plugins:uninstall salesforcedx
 - sfdx plugins:install salesforcedx@pre-release
 - sfdx plugins
 - echo $USERNAME
