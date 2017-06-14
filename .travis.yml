@@ -13,7 +13,10 @@ before_script:
 - sfdx plugins
 - sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key --username $USERNAME --setdefaultdevhubusername
 script:
-- sfdx force:org:create -s -f config/project-scratch-def.json -a travisci
+- rm ~/.sfdx/sfdx.log
+- sfdx force:org:create -s -f config/project-scratch-def.json -a travisci --loglevel trace
+- cat ~/.sfdx/sfdx.log
 - sfdx force:source:push -u travisci
 - sfdx force:apex:test:run -u travisci -c -r human
 - sfdx force:org:delete -u travisci -p
+- cat ~/.sfdx/sfdx.log
