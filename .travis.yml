@@ -7,7 +7,7 @@ before_install:
 - "./sfdx/install"
 - export PATH=./sfdx/$(pwd):$PATH
 before_script:
-- export SFDX_DISABLE_ENCRYPTION=true
+- export USE_GENERIC_UNIX_KEYCHAIN=true
 - export SFDX_DOMAIN_RETRY=300
 - sfdx plugins:install salesforcedx@pre-release
 - sfdx plugins
@@ -15,10 +15,10 @@ before_script:
 - sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key --username $USERNAME --setdefaultdevhubusername
 script:
 - sfdx force:config:list
+- sfdx force:org:list
 - rm ~/.sfdx/sfdx.log
 - sfdx force:org:create -v $USERNAME -s -f config/project-scratch-def.json -a travisci --loglevel trace
 - cat ~/.sfdx/sfdx.log
 - sfdx force:source:push -u travisci
 - sfdx force:apex:test:run -u travisci -c -r human
 - sfdx force:org:delete -u travisci -p
-- cat ~/.sfdx/sfdx.log
