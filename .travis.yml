@@ -6,6 +6,10 @@ env:
 - URL=https://developer.salesforce.com/media/salesforce-cli/beta/sfdx-v5.7.4-57b4969-linux-amd64.tar.xz
 
 before_install:
+- ls -lA ./heroku
+- ls -lA ./sfdx
+- rm -rf ./heroku
+- rm -rf ./sfdx
 - openssl aes-256-cbc -K $encrypted_f42060fe945a_key -iv $encrypted_f42060fe945a_iv -in assets/server.key.enc -out assets/server.key -d
 - wget -qO- $URL | tar xJf -
 - "./sfdx/install"
