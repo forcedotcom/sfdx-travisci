@@ -13,10 +13,12 @@ before_script:
 - sfdx plugins:install salesforcedx@pre-release
 - sfdx plugins
 - echo $USERNAME
-- sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key --username $USERNAME --setdefaultdevhubusername
+- sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key --username $USERNAME --setdefaultdevhubusername -a HubOrg
 script:
+- sfdx force:org:open -u HubOrg -r
 - sfdx force:config:list
 - sfdx force:org:list
+- cat config/project-scratch-def.json
 - rm ~/.sfdx/sfdx.log
 - sfdx force:org:create -v $USERNAME -s -f config/project-scratch-def.json -a travisci --loglevel trace
 - cat ~/.sfdx/sfdx.log
