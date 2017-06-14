@@ -4,11 +4,13 @@ cache: false
 
 env:
 - URL=https://developer.salesforce.com/media/salesforce-cli/beta/sfdx-v5.7.4-57b4969-linux-amd64.tar.xz
+
 before_install:
 - openssl aes-256-cbc -K $encrypted_f42060fe945a_key -iv $encrypted_f42060fe945a_iv -in assets/server.key.enc -out assets/server.key -d
 - wget -qO- $URL | tar xJf -
 - "./sfdx/install"
 - export PATH=./sfdx/$(pwd):$PATH
+
 before_script:
 - rm -rf ~/.sfdx
 - export USE_GENERIC_UNIX_KEYCHAIN=true
@@ -17,6 +19,7 @@ before_script:
 - sfdx plugins
 - echo $USERNAME
 - sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key --username $USERNAME --setdefaultdevhubusername -a HubOrg
+
 script:
 - sfdx force:org:open -u HubOrg -r
 - sfdx force:config:list
