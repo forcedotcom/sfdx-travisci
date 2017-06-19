@@ -7,7 +7,6 @@ env:
 
 before_install:
 - ls -lA 
-- openssl aes-256-cbc -K $encrypted_f42060fe945a_key -iv $encrypted_f42060fe945a_iv -in assets/server.key.enc -out assets/server.key -d
 - wget -qO- $URL | tar xJf -
 - "./sfdx/install"
 - export PATH=./sfdx/$(pwd):$PATH
