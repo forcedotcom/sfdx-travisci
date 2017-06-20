@@ -12,11 +12,11 @@ before_install:
 - export PATH=./sfdx/$(pwd):$PATH
 
 before_script:
-- export SFDX_AUTOUPDATE_DISABLE=true
 - export USE_GENERIC_UNIX_KEYCHAIN=true
 - export SFDX_DOMAIN_RETRY=300
 
 script:
+- export SFDX_AUTOUPDATE_DISABLE=true
 - sfdx plugins:install salesforcedx@pre-release
 - sfdx plugins
 - sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key --username $USERNAME --setdefaultdevhubusername -a HubOrg
