@@ -24,3 +24,8 @@ script:
 - sfdx force:source:push -u ciorg
 - sfdx force:apex:test:run -u ciorg -c -r human
 - sfdx force:org:delete -u ciorg -p
+- test $TRAVIS_BRANCH = master \
+  && mkdir mdapiout \
+  && sfdx force:source:convert -d mdapiout \
+  && sfdx force:mdapi:deploy -d mdapiout -u MySB \
+  && sfdx force:source:convert -d mdapiout \
