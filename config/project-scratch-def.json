@@ -1,7 +1,14 @@
 {
-    "orgName": "TrailDX Example",
+    "country": "US",
     "edition": "Developer",
-    "orgPreferences" : {
-        "enabled": ["S1DesktopEnabled"]
-    }
+    "features": "Multicurrency",
+    "orgPreferences": {
+        "enabled": [
+            "ChatterEnabled",
+            "S1DesktopEnabled"
+        ],
+        "disabled": []
+    },
+    "orgName": "Travis CI",
+    "adminEmail": "jweijters@salesforce.com"
 }
