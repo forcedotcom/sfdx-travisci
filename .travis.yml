@@ -1,27 +1,25 @@
 sudo: true
-dist: trusty 
+dist: trusty
 cache: false
-
 env:
 - URL=https://developer.salesforce.com/media/salesforce-cli/beta/sfdx-v5.7.4-57b4969-linux-amd64.tar.xz
-
 before_install:
-- ls -lA 
-- openssl aes-256-cbc -K $encrypted_f42060fe945a_key -iv $encrypted_f42060fe945a_iv -in assets/server.key.enc -out assets/server.key -d
+- openssl aes-256-cbc -K $encrypted_8d0901f3edab_key -iv $encrypted_8d0901f3edab_iv
+  -in assets/server.key.enc -out assets/server.key -d
+- ls -lA
 - wget -qO- $URL | tar xJf -
 - "./sfdx/install"
 - export PATH=./sfdx/$(pwd):$PATH
-
 before_script:
 - export USE_GENERIC_UNIX_KEYCHAIN=true
 - export SFDX_DOMAIN_RETRY=300
-
 script:
 - sfdx update
 - sfdx plugins:uninstall salesforcedx
 - sfdx plugins:install salesforcedx@pre-release
 - sfdx plugins
-- sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key --username $USERNAME --setdefaultdevhubusername -a HubOrg
+- sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key
+  --username $USERNAME --setdefaultdevhubusername -a HubOrg
 - sfdx force:org:create -v HubOrg -s -f config/project-scratch-def.json -a ciorg
 - sfdx force:source:push -u ciorg
 - sfdx force:apex:test:run -u ciorg -c -r human
