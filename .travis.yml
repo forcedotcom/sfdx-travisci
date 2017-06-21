@@ -1,5 +1,6 @@
-sudo: true
 dist: trusty
+sudo: required
+group: edge  # Trying new Travis CI image
 cache: false
 env:
 - URL=https://developer.salesforce.com/media/salesforce-cli/beta/sfdx-v5.7.4-57b4969-linux-amd64.tar.xz
@@ -14,6 +15,7 @@ before_script:
 - export USE_GENERIC_UNIX_KEYCHAIN=true
 - export SFDX_DOMAIN_RETRY=300
 script:
+- sfdx plugins:install salesforcedx@pre-release
 - sfdx update
 - sfdx plugins:uninstall salesforcedx
 - sfdx plugins:install salesforcedx@pre-release
@@ -21,6 +23,18 @@ script:
 - sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key
   --username $USERNAME --setdefaultdevhubusername -a HubOrg
 - sfdx force:org:create -v HubOrg -s -f config/project-scratch-def.json -a ciorg
+- sfdx force:org:list
 - sfdx force:source:push -u ciorg
 - sfdx force:apex:test:run -u ciorg -c -r human
 - sfdx force:org:delete -u ciorg -p
+after_success:
+- if [ ${TRAVIS_BRANCH} == "master" ]; then
+    if [ ${TRAVIS_PULL_REQUEST} == "false" ]; then
+      mkdir mdapiout || travis_terminate 1;
+      sfdx force:source:convert -d mdapiout || travis_terminate 1;
+      sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key --username $SBUSERNAME -a MySB;
+      sfdx force:org:list || travis_terminate 1;
+      sfdx force:mdapi:deploy -d mdapiout -u MySB || travis_terminate 1;
+    else echo ${TRAVIS_PULL_REQUEST_BRANCH};  
+    fi
+  fi
