@@ -14,6 +14,7 @@ before_script:
 - export USE_GENERIC_UNIX_KEYCHAIN=true
 - export SFDX_DOMAIN_RETRY=300
 script:
+- sfdx plugins:install salesforcedx@pre-release
 - sfdx update
 - sfdx plugins:uninstall salesforcedx
 - sfdx plugins:install salesforcedx@pre-release
