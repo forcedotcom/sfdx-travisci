@@ -2,13 +2,6 @@
     "country": "US",
     "edition": "Developer",
     "features": "Multicurrency",
-    "orgPreferences": {
-        "enabled": [
-            "ChatterEnabled",
-            "S1DesktopEnabled"
-        ],
-        "disabled": []
-    },
     "orgName": "Travis CI",
     "adminEmail": "jweijters@salesforce.com"
 }
