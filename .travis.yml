@@ -24,11 +24,8 @@ script:
 - sfdx force:source:push -u ciorg
 - sfdx force:apex:test:run -u ciorg -c -r human
 - sfdx force:org:delete -u ciorg -p
-- test $TRAVIS_BRANCH=master \
-  && mkdir mdapiout
-- test $TRAVIS_BRANCH=master \
-  && sfdx force:source:convert -d mdapiout
-  - test $TRAVIS_BRANCH=master
-  && sfdx force:mdapi:deploy -d mdapiout -u MySB
-  - test $TRAVIS_BRANCH=master \
-  && sfdx force:source:convert -d mdapiout
+after_success:
+- if [ "$TRAVIS_BRANCH" == "master" ]; then mkdir mdapiout
+- if [ "$TRAVIS_BRANCH" == "master" ]; then sfdx force:source:convert -d mdapiout
+- if [ "$TRAVIS_BRANCH" == "master" ]; then sfdx force:mdapi:deploy -d mdapiout -u MySB
+- if [ "$TRAVIS_BRANCH" == "master" ]; then sfdx force:source:convert -d mdapiout
