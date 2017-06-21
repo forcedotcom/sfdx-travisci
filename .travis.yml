@@ -32,7 +32,7 @@ after_success:
     if [ ${TRAVIS_PULL_REQUEST} == "false" ]; then
       mkdir mdapiout || travis_terminate 1;
       sfdx force:source:convert -d mdapiout || travis_terminate 1;
-      sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key --username $SBUSERNAME -a MySB;
+      sfdx force:auth:jwt:grant --clientid $SBCONSUMERKEY --jwtkeyfile assets/server.key --username $SBUSERNAME -a MySB;
       sfdx force:org:list || travis_terminate 1;
       sfdx force:mdapi:deploy -d mdapiout -u MySB || travis_terminate 1;
     else echo ${TRAVIS_PULL_REQUEST_BRANCH};  
