@@ -34,7 +34,7 @@ after_success:
       sfdx force:source:convert -d mdapiout || travis_terminate 1;
       sfdx force:auth:jwt:grant --clientid $SBCONSUMERKEY --jwtkeyfile assets/server.key --username $SBUSERNAME -a MySB;
       sfdx force:org:list || travis_terminate 1;
-      sfdx force:mdapi:deploy -d mdapiout -u MySB --testlevel RunAllTestsInOrg --wait 2  || travis_terminate 1;
+      sfdx force:mdapi:deploy -d mdapiout -u MySB --testlevel RunAllTestsInOrg --wait 2 || travis_terminate 1;
     else echo ${TRAVIS_PULL_REQUEST_BRANCH};  
     fi
   fi
