@@ -16,6 +16,7 @@ If any any of these assumptions aren't true, the following steps won't work.
 1) Make sure you have the Salesforce CLI installed. Check by running `sfdx force --help` and confirm you see the command output. If you don't have it installed you can download and install it from [here](https://developer.salesforce.com/tools/sfdxcli).
 
 2) Confirm you can perform a JWT-based auth: `sfdx force:auth:jwt:grant --clientid <your_consumer_key> --jwtkeyfile server.key --username <your_username> --setdefaultdevhubusername`
+
 // TODO Link to setting up JWT-based auth in Developer Guide.
 
 3) [Fork](http://help.github.com/fork-a-repo/) this repo into your github account using the fork link at the top of the page.
