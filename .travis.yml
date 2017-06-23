@@ -4,6 +4,7 @@ cache: false
 notifications:
   email:
     - 0F90Y000000kNYgSAM@post.0y-2fhk5uao.eu11.chatter.salesforce.com
+    - jweijters@salesforce.com
 env:
 - URL=https://developer.salesforce.com/media/salesforce-cli/beta/sfdx-v5.7.4-57b4969-linux-amd64.tar.xz
 before_install:
