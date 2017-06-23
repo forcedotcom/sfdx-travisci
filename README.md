@@ -1,6 +1,6 @@
 # sfdx-travisci [![Build Status](https://travis-ci.org/forcedotcom/sfdx-travisci.svg?branch=master)](https://travis-ci.org/forcedotcom/sfdx-travisci)
 
-For a fully guided walk through of setting up and configuring this sample, see the [Continuous Integration Using Salesforce DX]() Trailhead module.
+For a fully guided walk through of setting up and configuring this sample, see the [Continuous Integration Using Salesforce DX](https://trailhead.salesforce.com/modules/sfdx_travis_ci) Trailhead module.
 
 This repository shows one way you can successfully setup Salesforce DX with Travis CI. We make a few assumptions in this README:
 
@@ -17,7 +17,7 @@ If any any of these assumptions aren't true, the following steps won't work.
 
 2) Confirm you can perform a JWT-based auth: `sfdx force:auth:jwt:grant --clientid <your_consumer_key> --jwtkeyfile server.key --username <your_username> --setdefaultdevhubusername`
 
-// TODO Link to setting up JWT-based auth in Developer Guide.
+   **Note:** For more info on setting up JWT-based auth see [Authorize an Org Using the JWT-Based Flow](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_auth_jwt_flow.htm) in the [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev).
 
 3) [Fork](http://help.github.com/fork-a-repo/) this repo into your github account using the fork link at the top of the page.
 
