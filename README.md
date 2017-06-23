@@ -17,7 +17,7 @@ If any any of these assumptions aren't true, the following steps won't work.
 
 2) Confirm you can perform a JWT-based auth: `sfdx force:auth:jwt:grant --clientid <your_consumer_key> --jwtkeyfile server.key --username <your_username> --setdefaultdevhubusername`
 
-// TODO Link to setting up JWT-based auth in Developer Guide.
+   **Note:** For more info on setting up JWT-based auth see [Authorize an Org Using the JWT-Based Flow](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_auth_jwt_flow.htm) in the [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev).
 
 3) [Fork](http://help.github.com/fork-a-repo/) this repo into your github account using the fork link at the top of the page.
 
