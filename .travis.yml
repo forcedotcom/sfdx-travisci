@@ -4,15 +4,15 @@ cache: false
 notifications:
   email:
     recipients:
-      - 0F90Y000000kNYgSAM@post.0y-2fhk5uao.eu11.chatter.salesforce.com
-      - jweijters@salesforce.com
+    - 0F90Y000000kNYgSAM@post.0y-2fhk5uao.eu11.chatter.salesforce.com
+    - jweijters@salesforce.com
   on_success: always
   on_failure: always
 env:
 - URL=https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
 before_install:
-- openssl aes-256-cbc -K $encrypted_8d0901f3edab_key -iv $encrypted_8d0901f3edab_iv
-  -in assets/server.key.enc -out assets/server.key -d
+- openssl aes-256-cbc -K $encrypted_2a150af141c8_key -iv $encrypted_2a150af141c8_iv
+  -in assets/new_server.key.enc -out assets/new_server.key -d
 - export SFDX_AUTOUPDATE_DISABLE=true
 - export SFDX_USE_GENERIC_UNIX_KEYCHAIN=true
 - export SFDX_DOMAIN_RETRY=300
@@ -30,13 +30,9 @@ script:
 - sfdx force:apex:test:run -u ciorg -c -r human
 - sfdx force:org:delete -u ciorg -p
 after_success:
-- if [ ${TRAVIS_BRANCH} == "master" ]; then
-    if [ ${TRAVIS_PULL_REQUEST} == "false" ]; then
-      mkdir mdapiout || travis_terminate 1;
-      sfdx force:source:convert -d mdapiout || travis_terminate 1;
-      sfdx force:auth:jwt:grant --clientid $SBCONSUMERKEY --jwtkeyfile assets/server.key --username $SBUSERNAME -a MySB;
-      sfdx force:org:list || travis_terminate 1;
-      sfdx force:mdapi:deploy -d mdapiout -u MySB --testlevel RunAllTestsInOrg --wait 2 || travis_terminate 1;
-    else echo ${TRAVIS_PULL_REQUEST_BRANCH};  
-    fi
-  fi
+- if [ ${TRAVIS_BRANCH} == "master" ]; then if [ ${TRAVIS_PULL_REQUEST} == "false"
+  ]; then mkdir mdapiout || travis_terminate 1; sfdx force:source:convert -d mdapiout
+  || travis_terminate 1; sfdx force:auth:jwt:grant --clientid $SBCONSUMERKEY --jwtkeyfile
+  assets/server.key --username $SBUSERNAME -a MySB; sfdx force:org:list || travis_terminate
+  1; sfdx force:mdapi:deploy -d mdapiout -u MySB --testlevel RunAllTestsInOrg --wait
+  2 || travis_terminate 1; else echo ${TRAVIS_PULL_REQUEST_BRANCH}; fi fi
