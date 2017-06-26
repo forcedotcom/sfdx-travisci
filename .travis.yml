@@ -9,22 +9,18 @@ notifications:
   on_success: always
   on_failure: always
 env:
-- URL=https://developer.salesforce.com/media/salesforce-cli/beta/sfdx-v5.7.4-57b4969-linux-amd64.tar.xz
+- URL=https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
 before_install:
 - openssl aes-256-cbc -K $encrypted_8d0901f3edab_key -iv $encrypted_8d0901f3edab_iv
   -in assets/server.key.enc -out assets/server.key -d
-- ls -lA
+- export SFDX_AUTOUPDATE_DISABLE=true
+- export SFDX_USE_GENERIC_UNIX_KEYCHAIN=true
+- export SFDX_DOMAIN_RETRY=300
 - wget -qO- $URL | tar xJf -
 - "./sfdx/install"
 - export PATH=./sfdx/$(pwd):$PATH
-before_script:
-- export USE_GENERIC_UNIX_KEYCHAIN=true
-- export SFDX_DOMAIN_RETRY=300
+- sfdx plugins:install salesforcedx@pre-release
 script:
-- sfdx plugins:install salesforcedx@pre-release
-- sfdx update
-- sfdx plugins:uninstall salesforcedx
-- sfdx plugins:install salesforcedx@pre-release
 - sfdx plugins
 - sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key
   --username $USERNAME --setdefaultdevhubusername -a HubOrg
