@@ -1,8 +1,15 @@
 sudo: true
 dist: trusty
 cache: false
+
 env:
 - URL=https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
+
+branches:
+  only:
+    - master
+    - dev
+
 before_install:
 - openssl aes-256-cbc -K $encrypted_b342cf464e0f_key -iv $encrypted_b342cf464e0f_iv
   -in assets/server.key.enc -out assets/server.key -d
@@ -13,10 +20,13 @@ before_install:
 - "./sfdx/install"
 - export PATH=./sfdx/$(pwd):$PATH
 - sfdx update
-- sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key
-  --username $USERNAME --setdefaultdevhubusername -a HubOrg
+- sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key --username $USERNAME --setdefaultdevhubusername -a HubOrg
+
 script:
-- sfdx force:org:create -v HubOrg -s -f config/project-scratch-def.json -a ciorg
-- sfdx force:source:push -u ciorg
-- sfdx force:apex:test:run -u ciorg -c -r human
-- sfdx force:org:delete -u ciorg -p
+# - sfdx force:org:create -v HubOrg -s -f config/project-scratch-def.json -a ciorg
+# - sfdx force:source:push -u ciorg
+# - sfdx force:apex:test:run -u ciorg -c -r human
+# - sfdx force:org:delete -u ciorg -p
+  - ./scripts/create_pr_org.sh
+  - sfdx force:source:push -u $TRAVIS_PULL_REQUEST_BRANCH -c
+
