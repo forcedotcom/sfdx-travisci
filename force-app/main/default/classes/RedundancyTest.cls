@@ -8,6 +8,11 @@ public with sharing class RedundancyTest {
         myclass demo = new myclass();
         System.assertEquals(demo.getAppVersion(), '1.0.0');
     }
+        @isTest
+    static void CheckingAgainTest() {
+        myclass demo = new myclass();
+        System.assertEquals(demo.getAppVersion(), '1.0.0');
+    }
     @isTest
     static void JustCheckingTest() {
         myclass demo = new myclass();
