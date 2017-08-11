@@ -1,9 +1,7 @@
 {
 <<<<<<< HEAD
     "orgName": "JK Scratch",
-=======
     "orgName": "TrailheadDX",
->>>>>>> 290e0da85914107b5851978b2c797ca13b3a0fbf
     "edition": "Developer",
     "orgPreferences" : {
         "enabled": ["S1DesktopEnabled"]
