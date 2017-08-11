@@ -1,7 +1,7 @@
 @isTest
 public with sharing class RedundancyTest {
     public RedundancyTest() {
-
+    //content here
     }
     @isTest
     static void CheckingTest() {
