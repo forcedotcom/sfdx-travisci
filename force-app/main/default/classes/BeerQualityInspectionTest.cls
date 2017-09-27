@@ -1,6 +1,7 @@
 //a comment
 @isTest
 public with sharing class BeerQualityInspectionTest {
+
     public BeerQualityInspectionTest() {
 
     }
