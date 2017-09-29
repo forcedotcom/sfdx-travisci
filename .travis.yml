@@ -1,13 +1,11 @@
 sudo: true
-dist: trusty 
+dist: trusty
 cache: false
-
 env:
 - URL=https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
-
 before_install:
-# delete the following line before encrypting your server.key
-- openssl aes-256-cbc -K $encrypted_f42060fe945a_key -iv $encrypted_f42060fe945a_iv -in assets/server.key.enc -out assets/server.key -d
+- openssl aes-256-cbc -K $encrypted_1db1e2c996e7_key -iv $encrypted_1db1e2c996e7_iv
+  -in assets/server.key.enc -out assets/server.key -d
 - export SFDX_AUTOUPDATE_DISABLE=true
 - export SFDX_USE_GENERIC_UNIX_KEYCHAIN=true
 - export SFDX_DOMAIN_RETRY=300
@@ -15,8 +13,8 @@ before_install:
 - "./sfdx/install"
 - export PATH=./sfdx/$(pwd):$PATH
 - sfdx update
-- sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key --username $USERNAME --setdefaultdevhubusername -a HubOrg
-
+- sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key
+  --username $USERNAME --setdefaultdevhubusername -a HubOrg
 script:
 - sfdx force:org:create -v HubOrg -s -f config/project-scratch-def.json -a ciorg
 - sfdx force:source:push -u ciorg
