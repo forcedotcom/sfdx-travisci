@@ -28,5 +28,6 @@ private class sampletesting {
       system.assertEquals(true, true);
       system.debug('hello world');
         system.debug('hello world2');
+          system.debug('hello world2');
     }
 }
