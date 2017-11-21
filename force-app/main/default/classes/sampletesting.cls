@@ -25,5 +25,7 @@ private class sampletesting {
     @isTest
     static void myUnitTest() {
       system.assertEquals(true, true);
+      system.assertEquals(true, true);
+      system.debug('hello world');
     }
 }
