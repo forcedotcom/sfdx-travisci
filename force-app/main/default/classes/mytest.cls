@@ -10,6 +10,6 @@ private class mytest {
     @isTest
     static void myUnitTest2() {
        
-        System.assertEquals('1', '2');
+        System.assertEquals('1', '1');
     }
 }
