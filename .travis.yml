@@ -1,22 +1,4 @@
-Skip to content
-This repository
-Search
-Pull requests
-Issues
-Marketplace
-Explore
- @snw832
- Sign out
- Watch 0
-  Star 0  Fork 1,259 snw832/sfdx-travisci
-forked from forcedotcom/sfdx-travisci
- Code  Pull requests 0  Projects 0  Wiki  Insights  Settings
-Branch: master Find file Copy pathsfdx-travisci/.travis.yml
-53b9956  7 minutes ago
-@snw832 snw832 Update .travis.yml
-3 contributors @wadewegner @dcarroll @snw832
-RawBlameHistory     
-27 lines (23 sloc)  938 Bytes
+
 sudo: true
 dist: trusty 
 cache: false
