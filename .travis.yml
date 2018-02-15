@@ -4,9 +4,7 @@ cache: false
 env:
 - URL=https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
 before_install:
-- openssl aes-256-cbc -K $encrypted_ff33a9407690_key -iv $encrypted_ff33a9407690_iv
-  -in assets/server.key.enc -out assets/server.key -d
-- openssl aes-256-cbc -K $encrypted_f42060fe945a_key -iv $encrypted_f42060fe945a_iv
+- openssl aes-256-cbc -K $encrypted_d6719d4d0bbb_key -iv $encrypted_d6719d4d0bbb_iv
   -in assets/server.key.enc -out assets/server.key -d
 - export SFDX_AUTOUPDATE_DISABLE=true
 - export SFDX_USE_GENERIC_UNIX_KEYCHAIN=true
