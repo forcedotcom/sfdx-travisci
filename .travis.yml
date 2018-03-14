@@ -1,5 +1,5 @@
-sudo: false
-dist: trusty 
+sudo: true
+dist: precise 
 cache: false
 
 env:
