@@ -49,7 +49,7 @@ jobs:
             sfdx force:org:create -s -f ~/ci_app/config/project-scratch-def.json -a circle_build_$CIRCLE_BUILD_NUM --wait 2
             sfdx force:source:push -u circle_build_$CIRCLE_BUILD_NUM
       - store_test_results:
-        path: test-results
+          path: test-results
       -run:
           name: Run Apex Tests
           command: |
