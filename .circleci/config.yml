@@ -16,6 +16,7 @@ jobs:
       # and https://developer.salesforce.com/media/salesforce-cli/manifest.json
       - DX_CLI_URL: https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
     steps:
+      - checkout:
       - run:
           name: Download CLI
           command: |
@@ -39,7 +40,6 @@ jobs:
           #- echo $DEPLOY_SERVER_KEY_HEX | xxd -r -ps >> keys/deploy.key
           #- openssl rsa -in keys/deploy.key -check -noout
           #- sfdx force:auth:jwt:grant --clientid $DEPLOY_CONSUMER_KEY --jwtkeyfile keys/deploy.key --username $DEPLOY_SFDC_USER -a deploy
-      - checkout
       - run:
           name: Run Tests
           command: |
