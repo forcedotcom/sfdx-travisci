@@ -7,50 +7,50 @@ general:
 #       - dev # specific branch
 #       - /dev-.*/ # or regexes
 
-machine:
-  timezone: America/New_York
-  environment:
-    # from https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_install_cli_standalone.htm
-    # and https://developer.salesforce.com/media/salesforce-cli/manifest.json
-    DX_CLI_URL: https://developer.salesforce.com/media/salesforce-cli/sfdx-v5.7.6-d42cf65-linux-amd64.tar.xz
-    SFDX_DISABLE_ENCRYPTION: true
-
-machine:
-  enabled: true
-  pre:
-    - run:  
+jobs:
+  build:
+    machine:
+      timezone: America/New_York
+      environment:
+        # from https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_install_cli_standalone.htm
+        # and https://developer.salesforce.com/media/salesforce-cli/manifest.json
+        DX_CLI_URL: https://developer.salesforce.com/media/salesforce-cli/sfdx-v5.7.6-d42cf65-linux-amd64.tar.xz
+      SFDX_DISABLE_ENCRYPTION: true
+    steps:
+      - run:
         name: Download CLI
         command: |
-          mkdir sfdx |
+          mkdir sfdx
           wget -qO- $DX_CLI_URL | tar xJ -C sfdx --strip-components 1
-    - run:
+      - run:
         name: Install CLI
         command: |
-          ./sfdx/install |
+          ./sfdx/install
           mkdir tmp
-    - run:
+      - run:
         name: Create hub key
         command: |
-          echo 'make hub key' |
-          echo $HUB_SERVER_KEY_HEX | xxd -r -ps >> keys/hub.key |
+          echo 'make hub key'
+          echo $HUB_SERVER_KEY_HEX | xxd -r -ps >> keys/hub.key
           openssl rsa -in keys/hub.key -check -noout
-    ### Uncomment the following if performing deployments
-    #- echo 'make deploy key'
-    #- echo $DEPLOY_SERVER_KEY_HEX | xxd -r -ps >> keys/deploy.key
-    #- openssl rsa -in keys/deploy.key -check -noout
-    #- sfdx force:auth:jwt:grant --clientid $DEPLOY_CONSUMER_KEY --jwtkeyfile keys/deploy.key --username $DEPLOY_SFDC_USER -a deploy
-
-
-test:
-  override:
-    - sfdx force:auth:jwt:grant --clientid $HUB_CONSUMER_KEY --jwtkeyfile keys/hub.key --username $HUB_SFDC_USER --setdefaultdevhubusername -a hub
-    - sfdx force --help
-    - sfdx force:org:create -s -f config/project-scratch-def.json -a circle_build_$CIRCLE_BUILD_NUM --wait 2
-    - sfdx force:source:push -u circle_build_$CIRCLE_BUILD_NUM
-    - mkdir -p $CIRCLE_TEST_REPORTS/junit
-    - sfdx force:apex:test:run -c -d $CIRCLE_TEST_REPORTS/junit -r junit
-  post:
-    - sfdx force:org:delete -u circle_build_$CIRCLE_BUILD_NUM -p
+          ### Uncomment the following if performing deployments
+          #- echo 'make deploy key'
+          #- echo $DEPLOY_SERVER_KEY_HEX | xxd -r -ps >> keys/deploy.key
+          #- openssl rsa -in keys/deploy.key -check -noout
+          #- sfdx force:auth:jwt:grant --clientid $DEPLOY_CONSUMER_KEY --jwtkeyfile keys/deploy.key --username $DEPLOY_SFDC_USER -a deploy
+      - run:
+        name: Run Tests
+        command: |
+          echo 'Running tests'
+          sfdx force:auth:jwt:grant --clientid $HUB_CONSUMER_KEY --jwtkeyfile keys/hub.key --username $HUB_SFDC_USER --setdefaultdevhubusername -a hub
+          sfdx force --help
+          sfdx force:org:create -s -f config/project-scratch-def.json -a circle_build_$CIRCLE_BUILD_NUM --wait 2
+          sfdx force:source:push -u circle_build_$CIRCLE_BUILD_NUM
+          mkdir -p $CIRCLE_TEST_REPORTS/junit
+          sfdx force:apex:test:run -c -d $CIRCLE_TEST_REPORTS/junit -r junit
+      - run:
+        commands: |
+          sfdx force:org:delete -u circle_build_$CIRCLE_BUILD_NUM -p
 
 ### Uncomment the following if performing deployments
 #deployment:
