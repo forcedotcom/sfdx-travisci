@@ -14,8 +14,8 @@ machine:
     DX_CLI_URL: https://developer.salesforce.com/media/salesforce-cli/sfdx-v5.7.6-d42cf65-linux-amd64.tar.xz
     SFDX_DISABLE_ENCRYPTION: true
 
-dependencies:
-  override:
+machine:
+  pre:
     - mkdir sfdx
     - wget -qO- $DX_CLI_URL | tar xJ -C sfdx --strip-components 1
     - ./sfdx/install
@@ -23,7 +23,6 @@ dependencies:
     - echo 'make hub key'
     - echo $HUB_SERVER_KEY_HEX | xxd -r -ps >> keys/hub.key
     - openssl rsa -in keys/hub.key -check -noout
-    - sfdx force:auth:jwt:grant --clientid $HUB_CONSUMER_KEY --jwtkeyfile keys/hub.key --username $HUB_SFDC_USER --setdefaultdevhubusername -a hub
     ### Uncomment the following if performing deployments
     #- echo 'make deploy key'
     #- echo $DEPLOY_SERVER_KEY_HEX | xxd -r -ps >> keys/deploy.key
@@ -33,6 +32,7 @@ dependencies:
 
 test:
   override:
+    - sfdx force:auth:jwt:grant --clientid $HUB_CONSUMER_KEY --jwtkeyfile keys/hub.key --username $HUB_SFDC_USER --setdefaultdevhubusername -a hub
     - sfdx force --help
     - sfdx force:org:create -s -f config/project-scratch-def.json -a circle_build_$CIRCLE_BUILD_NUM --wait 2
     - sfdx force:source:push -u circle_build_$CIRCLE_BUILD_NUM
