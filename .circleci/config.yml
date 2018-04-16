@@ -9,13 +9,13 @@ general:
 
 jobs:
   build:
-    machine:
-      timezone: America/New_York
-      environment:
-        # from https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_install_cli_standalone.htm
-        # and https://developer.salesforce.com/media/salesforce-cli/manifest.json
-        DX_CLI_URL: https://developer.salesforce.com/media/salesforce-cli/sfdx-v5.7.6-d42cf65-linux-amd64.tar.xz
-      SFDX_DISABLE_ENCRYPTION: true
+    machine: true
+    timezone: America/New_York
+    environment:
+      # from https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_install_cli_standalone.htm
+      # and https://developer.salesforce.com/media/salesforce-cli/manifest.json
+      - DX_CLI_URL: https://developer.salesforce.com/media/salesforce-cli/sfdx-v5.7.6-d42cf65-linux-amd64.tar.xz
+      - SFDX_DISABLE_ENCRYPTION: true
     steps:
       - run:
         name: Download CLI
