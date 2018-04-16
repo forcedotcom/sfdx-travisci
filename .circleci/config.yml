@@ -39,7 +39,7 @@ jobs:
           #- openssl rsa -in keys/deploy.key -check -noout
           #- sfdx force:auth:jwt:grant --clientid $DEPLOY_CONSUMER_KEY --jwtkeyfile keys/deploy.key --username $DEPLOY_SFDC_USER -a deploy
       - checkout:
-          path: working_dir
+          - path: working_dir
       name: Run Tests
           command: |
             echo 'Running tests'
