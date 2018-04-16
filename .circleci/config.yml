@@ -25,6 +25,7 @@ jobs:
           name: Install CLI
           command: |
             ./sfdx/install
+            sfdx
             mkdir tmp
       - run:
           name: Create hub key
