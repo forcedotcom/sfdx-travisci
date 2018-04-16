@@ -16,7 +16,7 @@ jobs:
       # and https://developer.salesforce.com/media/salesforce-cli/manifest.json
       - DX_CLI_URL: https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
     steps:
-      - checkout:
+      - checkout
       - run:
           name: Download CLI
           command: |
