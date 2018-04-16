@@ -39,8 +39,8 @@ jobs:
           #- openssl rsa -in keys/deploy.key -check -noout
           #- sfdx force:auth:jwt:grant --clientid $DEPLOY_CONSUMER_KEY --jwtkeyfile keys/deploy.key --username $DEPLOY_SFDC_USER -a deploy
       - checkout
-          
-      name: Run Tests
+      - run:
+          name: Run Tests
           command: |
             echo 'Running tests'
             sfdx force:auth:jwt:grant --clientid $HUB_CONSUMER_KEY --jwtkeyfile keys/hub.key --username $HUB_SFDC_USER --setdefaultdevhubusername -a hub
