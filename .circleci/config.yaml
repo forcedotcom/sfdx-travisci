@@ -15,14 +15,24 @@ machine:
     SFDX_DISABLE_ENCRYPTION: true
 
 machine:
+  enabled: true
   pre:
-    - mkdir sfdx
-    - wget -qO- $DX_CLI_URL | tar xJ -C sfdx --strip-components 1
-    - ./sfdx/install
-    - mkdir tmp
-    - echo 'make hub key'
-    - echo $HUB_SERVER_KEY_HEX | xxd -r -ps >> keys/hub.key
-    - openssl rsa -in keys/hub.key -check -noout
+    - run:  
+        name: Download CLI
+        command: |
+          mkdir sfdx |
+          wget -qO- $DX_CLI_URL | tar xJ -C sfdx --strip-components 1
+    - run:
+        name: Install CLI
+        command: |
+          ./sfdx/install |
+          mkdir tmp
+    - run:
+        name: Create hub key
+        command: |
+          echo 'make hub key' |
+          echo $HUB_SERVER_KEY_HEX | xxd -r -ps >> keys/hub.key |
+          openssl rsa -in keys/hub.key -check -noout
     ### Uncomment the following if performing deployments
     #- echo 'make deploy key'
     #- echo $DEPLOY_SERVER_KEY_HEX | xxd -r -ps >> keys/deploy.key
