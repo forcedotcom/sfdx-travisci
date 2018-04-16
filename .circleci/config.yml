@@ -10,7 +10,6 @@ general:
 jobs:
   build:
     machine: true
-    timezone: America/New_York
     environment:
       # from https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_install_cli_standalone.htm
       # and https://developer.salesforce.com/media/salesforce-cli/manifest.json
@@ -49,7 +48,7 @@ jobs:
           mkdir -p $CIRCLE_TEST_REPORTS/junit
           sfdx force:apex:test:run -c -d $CIRCLE_TEST_REPORTS/junit -r junit
       - run:
-        commands: |
+        command: |
           sfdx force:org:delete -u circle_build_$CIRCLE_BUILD_NUM -p
 
 ### Uncomment the following if performing deployments
