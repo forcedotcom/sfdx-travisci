@@ -31,13 +31,13 @@ If any any of these assumptions aren't true, the following steps won't work.
 
 7) Add your `server.key` that you generated previously to the folder called `assets`.
 
-8) From the root folder of your local project, encrypt your `server.key` value:
+8) Open the `.travis.yml` file and remove the first line that starts with `openssl ...` and save the file.
+
+9) From the root folder of your local project, encrypt your `server.key` value:
 
     travis encrypt-file assets/server.key assets/server.key.enc --add
 
-9) IMPORTANT! Remove your `server.key`: `rm assets/server.key`, you should never store keys or certificates in a public place.
-
-11) Open the `.travis.yml` file and remove the first line that starts with `openssl ...` and save the file.
+10) IMPORTANT! Remove your `server.key`: `rm assets/server.key`, you should never store keys or certificates in a public place.
 
 And you should be ready to go! Now when you commit and push a change, your change will kick off a Travis CI build.
 
