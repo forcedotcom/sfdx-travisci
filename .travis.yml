@@ -26,3 +26,9 @@ script:
 - sfdx force:source:push -u ciorg
 - sfdx force:apex:test:run -u ciorg --wait 10
 - sfdx force:org:delete -u ciorg -p
+notifications:
+  email:
+    recipients:
+      - ryabchikovserg@gmail.com
+    on_success: always # default: change
+    on_failure: always # default: always
