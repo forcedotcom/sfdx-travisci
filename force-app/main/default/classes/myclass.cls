@@ -4,6 +4,7 @@ public with sharing class myclass {
 	}
 
 	public String getAppVersion() {
+	    integer i = 1000;
 		return '1.0.0';
 	}
 }
