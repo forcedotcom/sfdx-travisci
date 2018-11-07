@@ -17,9 +17,9 @@ before_install:
 - sfdx --version
 - sfdx plugins --core
 - sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key
-  --username system.admin@trailhead.com --setdefaultdevhubusername -a DevHub
+  --username $USERNAME --setdefaultdevhubusername -a DevHub
 script:
-- sfdx force:org:create -v DevHub -s -f config/project-scratch-def.json -a ciorg --wait 200
+- sfdx force:org:create -v DevHub -s -f config/project-scratch-def.json -a ciorg --wait 20
 - sfdx force:org:display -u ciorg
 - sfdx force:source:push -u ciorg
 - sfdx force:apex:test:run -u ciorg --wait 10
