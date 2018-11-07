@@ -10,6 +10,8 @@ before_install:
 - export SFDX_DOMAIN_RETRY=300
 - export SFDX_DISABLE_APP_HUB=true
 - export SFDX_LOG_LEVEL=DEBUG
+- export USERNAME=system.admin@trailhead.com
+- export MASTERORG=DevHub
 - mkdir sfdx
 - wget -qO- $URL | tar xJ -C sfdx --strip-components 1
 - "./sfdx/install"
@@ -17,9 +19,9 @@ before_install:
 - sfdx --version
 - sfdx plugins --core
 - sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key
-  --username $USERNAME --setdefaultdevhubusername -a DevHub
+  --username $USERNAME --setdefaultdevhubusername -a $MASTERORG
 script:
-- sfdx force:org:create -v DevHub -s -f config/project-scratch-def.json -a ciorg --wait 20
+- sfdx force:org:create -v $MASTERORG -s -f config/project-scratch-def.json -a ciorg --wait 20
 - sfdx force:org:display -u ciorg
 - sfdx force:source:push -u ciorg
 - sfdx force:apex:test:run -u ciorg --wait 10
