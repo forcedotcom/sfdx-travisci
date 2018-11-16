@@ -1,28 +1,21 @@
 sudo: true
-os: trusty
-cache: false
+
 env:
-- URL=https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
-before_install: 
+  - URL=https://developer.salesforce.com/media/salesforce-cli/sfdx-v5.6.22-f9533ba-linux-amd64.tar.xz
 
+before_install:
+  - wget -qO- $URL | tar xJf -
+  - ./heroku/install
+  - export PATH=./heroku/$(pwd):$PATH
 
-- export SFDX_AUTOUPDATE_DISABLE=false
-- export SFDX_USE_GENERIC_UNIX_KEYCHAIN=true
-- export SFDX_DOMAIN_RETRY=300
-- export SFDX_DISABLE_APP_HUB=true
-- export SFDX_LOG_LEVEL=DEBUG
-- mkdir sfdx
-- wget -qO- $URL | tar xJ -C sfdx --strip-components 1
-- "./sfdx/install"
-- export PATH=./sfdx/$(pwd):$PATH
-- sfdx --version
-- sfdx plugins --core
-- sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key
-  --username $USERNAME --setdefaultdevhubusername -a DevHub
+before_script:
+  - export SFDX_DISABLE_ENCRYPTION=true
+  - sfdx force --help
+  - sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key --username $USERNAME --setdefaultdevhubusername
+
 script:
-- sfdx force:org:create -v DevHub -s -f config/project-scratch-def.json -a ciorg --wait
-  20
-- sfdx force:org:display -u ciorg
-- sfdx force:source:push -u ciorg
-- sfdx force:apex:test:run -u ciorg --wait 10
-- sfdx force:org:delete -u ciorg -p
+  - sfdx force:org:create -s -f config/workspace-scratch-def.json -a travisciorg
+  - sfdx force:source:push -u travisciorg
+  - sfdx force:apex:test:run -r tap
+  - sleep 4m
+  - sfdx force:org:delete -u travisciorg -p
