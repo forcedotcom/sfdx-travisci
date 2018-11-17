@@ -19,7 +19,7 @@ before_install:
   --username $USERNAME --setdefaultdevhubusername -a DevHub
 script:
 - sfdx force:org:list
-- sfdx force:org:create --targetdevhubusername DevHub -s -f config/project-scratch-def.json -a ciorg 
+- sfdx force:org:create -s -f config/project-scratch-def.json -a ciorg 
 - sfdx force:org:display -u ciorg
 - sfdx force:source:push -u ciorg
 - sfdx force:apex:test:run -u ciorg --wait 10
