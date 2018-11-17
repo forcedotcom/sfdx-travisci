@@ -18,6 +18,7 @@ before_install:
 - sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key
   --username $USERNAME --setdefaultdevhubusername -a DevHub
 script:
+- sfdx force:org:list
 - sfdx force:org:create --targetdevhubusername DevHub -s -f config/project-scratch-def.json -a ciorg 
 - sfdx force:org:display -u ciorg
 - sfdx force:source:push -u ciorg
