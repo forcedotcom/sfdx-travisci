@@ -3,7 +3,7 @@ os: trusty
 cache: false
 env:
 - URL=https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
-before_install: - unset CI - unset TRAVIS - unset CONTINUOUS_INTEGRATION
+before_install:
 - export SFDX_AUTOUPDATE_DISABLE=false
 - export SFDX_USE_GENERIC_UNIX_KEYCHAIN=true
 - export SFDX_DOMAIN_RETRY=300
@@ -18,10 +18,8 @@ before_install: - unset CI - unset TRAVIS - unset CONTINUOUS_INTEGRATION
 - sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key
   --username $USERNAME --setdefaultdevhubusername -a DevHub
   script:
-- sfdx force:org:list
 - sfdx force:org:create -f config/project-scratch-def.json -a ciorg --wait 10
 - sfdx force:org:display -u ciorg
 - sfdx force:source:push -u ciorg
 - sfdx force:apex:test:run -u ciorg --wait 10
 - sfdx force:org:delete -u ciorg -p
--
