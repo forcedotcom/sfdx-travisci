@@ -7,5 +7,12 @@
     },
     "terminal.integrated.env.windows": {
         "SFDX_SET_CLIENT_IDS": "sfdx-vscode"
-    }
+    },
+
+    
+    "codescan.project":{
+        "projectKey":"sfdxtravisci",
+        "serverId":"local"
+    },  
+    
 }

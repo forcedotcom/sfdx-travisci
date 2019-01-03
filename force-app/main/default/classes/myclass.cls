@@ -4,7 +4,7 @@ public with sharing class myclass {
 	}
 
 	public String getAppVersion() {
-		system.System.debug('testing CI');
+		System.debug('testing CI');
 		return '1.0.0';		
 	}
 }
