@@ -3,8 +3,6 @@ os: trusty
 cache: false
 env:
 - URL=https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
-  global:
-    - secure:"ev3Za0LvVJNxb3ShC0ONmnoiUhFLUJM1AtB+c/vTr1HMNoFvQiBnofs67sdVQqXWn4+JDl6e0WAklzmpJtijPLcsPFfTn5J+KuQ98OITf/upjk9TsphJWCwfarXcTGbH/kYK2mTPZFD6oRi9XeMb7WgIxlwLiI2xyOM6Q2mRcgUQLBh/NUue2i2dMkJ2tKZzUCUxzpsXfH5mySgajcyYJPmTZYirB6zdRgNIKWLv+UO10UNE7XcvNy/5rSqim4EWi4iI4VIJ1Yrr8gjWrzTbFRgacvmR5KPX5AEB6HPAYpbhE73Y4LK3DX6Rdd3qT60tUe+orDT3urF+2unGv8pgy+lQ+25otINQMxjff9fYyeuDYq+Az0tLIcqSUDiVebwEn8qD07qBXy2FF/m3DugKreGG16iKAV24I+pWKIvHIjfesqYXU4viRMDPlcLoACHlfbHrXZ0EDKEvclHaOT1k9c3YVn/lFtcMqdGIK22HEarjad2Ae8Ww4yfnXXj9VX4caNApScPak7DuW6NdInoF9PDURgO8kJb8kTvd7NUgdKxAEoMPstZ1lvSKjmqkN+fZTTAZ+OFTGZOygM+8oPbM5dNcAJohINWFQoxY3XTPEGsO0vM0lgEtcCvnJmooIGGkGQgn54nYhsSOs2Pk23HCKotCtkPje2RuZtNIXrMOTNI="
 before_install:
 - openssl aes-256-cbc -K $encrypted_6f09a99743cb_key -iv $encrypted_6f09a99743cb_iv
   -in assets/server.key.enc -out assets/server.key -d
