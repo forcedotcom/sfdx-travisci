@@ -1,11 +1,22 @@
 {
-  "packageDirectories": [
-    {
-      "path": "force-app",
-      "default": true
+    "packageDirectories": [
+        {
+            "path": "force-app",
+            "default": true
+        },
+        {
+            "path": "force-app/main/default",
+            "package": "Travis CI",
+            "versionName": "Travis CI - Winter '19",
+            "versionNumber": "1.0.0.NEXT",
+            "default": false
+        }
+    ],
+    "namespace": "",
+    "sfdcLoginUrl": "https://login.salesforce.com",
+    "sourceApiVersion": "44.0",
+    "packageAliases": {
+        "Travis CI": "0Ho1U000000CaULSA0",
+        "Travis CI@1.0.0-1": "04t1U000002mJZxQAM"
     }
-  ],
-  "namespace": "",
-  "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "40.0"
 }
