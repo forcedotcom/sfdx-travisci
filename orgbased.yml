@@ -1,7 +1,3 @@
-branches:
-  only:
-  - travisdev
-  - travismaster
 sudo: true
 
 before_install:
