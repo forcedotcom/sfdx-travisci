@@ -26,8 +26,8 @@ If any any of these assumptions aren't true, the following steps won't work.
 
 6) Set your `Consumer Key` and `Username` using the Travis CLI. Note that this username is the username that you use to access your Dev Hub.
 
-    travis env set USERNAME <your_consumer_key>
-    travis env set CONSUMERKEY <your_username>
+    travis env set USERNAME <your_username>
+    travis env set CONSUMERKEY <your_consumer_key>
 
 7) Add your `server.key` that you generated previously to the folder called `assets`.
 
@@ -39,7 +39,7 @@ If any any of these assumptions aren't true, the following steps won't work.
 
 10) IMPORTANT! Remove your `server.key`: `rm assets/server.key`, you should never store keys or certificates in a public place.
 
-### Package Based Deployments
+### Package Deployments
 If your devops process includes creating new unlocked package version follow this flow.
 
 1) Copy the contents of packagebased.yml into .travis.yml
@@ -51,7 +51,7 @@ If your devops process includes creating new unlocked package version follow thi
 4) Commit the updated sfdx-project.json file
  
 
-### Org Based Deployments
+### Org Deployments
 If your devops process includes deploying to non-scratch orgs (i.e. Sandbox or Production) follow this flow.
 
 1) Copy the contents of orgbased.yml into .travis.yml
@@ -64,8 +64,8 @@ If your devops process includes deploying to non-scratch orgs (i.e. Sandbox or P
 
 3) Set your target `Consumer Key` and `Username` using the Travis CLI. Note that this username is the username that you use to access the target org.
 
-    travis env set UATUSERNAME <your_consumer_key>
-    travis env set UATCONSUMERKEY <your_username>
+    travis env set UATUSERNAME <your_username>
+    travis env set UATCONSUMERKEY <your_consumer_key>
 
 And you should be ready to go! Now when you commit and push a change, your change will kick off a Travis CI build.
 
