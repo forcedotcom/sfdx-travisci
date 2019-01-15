@@ -1,0 +1,67 @@
+#Gives permission to install SFDX
+sudo: true
+
+before_install:
+#
+# The before_install step will download the SFDX CLI and install it
+#
+
+#Decrypt server key
+- openssl aes-256-cbc -K $encrypted_807396767087_key -iv $encrypted_807396767087_iv
+  -in assets/server.key.enc -out assets/server.key -d
+#Assign variables
+- export CLIURL=https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz  
+- export SFDX_AUTOUPDATE_DISABLE=false
+- export SFDX_USE_GENERIC_UNIX_KEYCHAIN=true
+- export SFDX_DOMAIN_RETRY=300
+- export SFDX_DISABLE_APP_HUB=true
+- export SFDX_LOG_LEVEL=DEBUG
+#Create SFDX directory
+- mkdir sfdx
+#Install SFDX
+- wget -qO- $CLIURL | tar xJ -C sfdx --strip-components 1
+- "./sfdx/install"
+- export PATH=./sfdx/$(pwd):$PATH
+
+before_script:
+#
+# The before_script step initializes varibles used in the script step and authenticates to the devhub using JWT grant
+#
+
+#Assign variables
+- export ROOTDIR=force-app/main/default/
+- export TESTLEVEL=RunLocalTests
+#Update The name of your package here
+- export PACKAGENAME="Travis CI"
+- export PACKAGEVERSION=""
+- export TESTLEVEL=RunLocalTests
+#outputs CLI version
+- sfdx --version
+#outputs salsforcedx plugin version
+- sfdx plugins --core
+#Authorize DevHub
+- sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key --username $USERNAME --setdefaultdevhubusername -a HubOrg
+
+script:
+#Create Scratch Org
+- sfdx force:org:create -v HubOrg -s -f config/project-scratch-def.json -a ciorg --wait 10
+- sfdx force:org:display -u ciorg
+#Push Source Scratch Org
+- sfdx force:source:push -u ciorg
+#Run Unit Tests on Scratch Org
+- sfdx force:apex:test:run -u ciorg --wait 10 --resultformat tap --codecoverage --testlevel $TESTLEVEL
+#Delete Scratch Org
+- sfdx force:org:delete -u ciorg -p
+#Create Package Version
+- PACKAGEVERSION="$(sfdx force:package:version:create -p $PACKAGENAME -d force-app/main/default -x -w 10 --json -v HubOrg | jq '.result.SubscriberPackageVersionId' | tr -d '"')"
+- sleep 300 # Wait for package replication.
+- echo ${PACKAGEVERSION}
+#Create Scratch Org
+- sfdx force:org:create -v HubOrg -s -f config/project-scratch-def.json -a installorg --wait 10
+- sfdx force:org:display -u installorg
+#Install package in Scratch Org
+- sfdx force:package:install --package $PACKAGEVERSION -w 10 -u installorg
+#Run Unit Tests on Scratch Org
+- sfdx force:apex:test:run -u installorg --wait 10 --resultformat tap --codecoverage --testlevel $TESTLEVEL
+#Delete Scratch Org
+- sfdx force:org:delete -u installorg -p
