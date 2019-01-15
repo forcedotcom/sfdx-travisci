@@ -39,28 +39,28 @@ before_script:
 #outputs salsforcedx plugin version
 - sfdx plugins --core
 #Authorize DevHub
-- sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key --username $USERNAME --setdefaultdevhubusername -a HubOrg
+- sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key --username $USERNAME --setdefaultdevhubusername --setalias HubOrg
 
 script:
 #Create Scratch Org
-- sfdx force:org:create -v HubOrg -s -f config/project-scratch-def.json -a ciorg --wait 10
-- sfdx force:org:display -u ciorg
+- sfdx force:org:create --targetdevhubusername HubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias ciorg --wait 10
+- sfdx force:org:display --targetusername ciorg
 #Push Source Scratch Org
-- sfdx force:source:push -u ciorg
+- sfdx force:source:push --targetusername ciorg
 #Run Unit Tests on Scratch Org
-- sfdx force:apex:test:run -u ciorg --wait 10 --resultformat tap --codecoverage --testlevel $TESTLEVEL
+- sfdx force:apex:test:run --targetusername ciorg --wait 10 --resultformat tap --codecoverage --testlevel $TESTLEVEL
 #Delete Scratch Org
-- sfdx force:org:delete -u ciorg -p
+- sfdx force:org:delete --targetusername ciorg --noprompt
 #Create Package Version
-- PACKAGEVERSION="$(sfdx force:package:version:create -p $PACKAGENAME -d force-app/main/default -x -w 10 --json -v HubOrg | jq '.result.SubscriberPackageVersionId' | tr -d '"')"
+- PACKAGEVERSION="$(sfdx force:package:version:create --package $PACKAGENAME --path force-app/main/default --installationkeybypass --wait 10 --json --targetdevhubusername HubOrg | jq '.result.SubscriberPackageVersionId' | tr -d '"')"
 - sleep 300 # Wait for package replication.
 - echo ${PACKAGEVERSION}
 #Create Scratch Org
-- sfdx force:org:create -v HubOrg -s -f config/project-scratch-def.json -a installorg --wait 10
-- sfdx force:org:display -u installorg
+- sfdx force:org:create --targetdevhubusername HubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias installorg --wait 10
+- sfdx force:org:display --targetusername installorg
 #Install package in Scratch Org
-- sfdx force:package:install --package $PACKAGEVERSION -w 10 -u installorg
+- sfdx force:package:install --package $PACKAGEVERSION --wait 10 --targetusername installorg
 #Run Unit Tests on Scratch Org
-- sfdx force:apex:test:run -u installorg --wait 10 --resultformat tap --codecoverage --testlevel $TESTLEVEL
+- sfdx force:apex:test:run --targetusername installorg --wait 10 --resultformat tap --codecoverage --testlevel $TESTLEVEL
 #Delete Scratch Org
-- sfdx force:org:delete -u installorg -p
+- sfdx force:org:delete --targetusername installorg --noprompt
