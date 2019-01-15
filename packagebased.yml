@@ -34,7 +34,6 @@ before_script:
 #Update The name of your package here
 - export PACKAGENAME="Travis CI"
 - export PACKAGEVERSION=""
-- export TESTLEVEL=RunLocalTests
 #outputs CLI version
 - sfdx --version
 #outputs salsforcedx plugin version
