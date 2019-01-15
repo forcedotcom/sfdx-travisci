@@ -31,8 +31,8 @@ before_script:
 #Assign variables
 - export ROOTDIR=force-app/main/default/
 - export TESTLEVEL=RunLocalTests
-#Update The name of your package here
-- export PACKAGENAME="Travis CI"
+#Update the package ID (Package Id will start with 0Ho) or package alias here from the sfdx-project.json file
+- export PACKAGENAME="0Ho1U000000CaULSA0"
 - export PACKAGEVERSION=""
 #outputs CLI version
 - sfdx --version
@@ -52,7 +52,7 @@ script:
 #Delete Scratch Org
 - sfdx force:org:delete --targetusername ciorg --noprompt
 #Create Package Version
-- PACKAGEVERSION="$(sfdx force:package:version:create --package $PACKAGENAME --path force-app/main/default --installationkeybypass --wait 10 --json --targetdevhubusername HubOrg | jq '.result.SubscriberPackageVersionId' | tr -d '"')"
+- PACKAGEVERSION="$(sfdx force:package:version:create --package $PACKAGENAME --installationkeybypass --wait 10 --json --targetdevhubusername HubOrg | jq '.result.SubscriberPackageVersionId' | tr -d '"')"
 - sleep 300 # Wait for package replication.
 - echo ${PACKAGEVERSION}
 #Create Scratch Org
