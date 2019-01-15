@@ -3,7 +3,7 @@ sudo: true
 
 before_install:
 #
-# The before_install step will download the SFDX CLI and nstall it
+# The before_install step will download the SFDX CLI and install it
 #
 
 #Decrypt server key
