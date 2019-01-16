@@ -7,7 +7,7 @@ before_install:
 #
 
 #Decrypt server key
-- openssl aes-256-cbc -K $encrypted_807396767087_key -iv $encrypted_807396767087_iv
+- openssl aes-256-cbc -K $encrypted_7c51aa74e956_key -iv $encrypted_7c51aa74e956_iv
   -in assets/server.key.enc -out assets/server.key -d
 #Assign variables
 - export CLIURL=https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz  
