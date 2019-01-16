@@ -42,13 +42,15 @@ If any any of these assumptions aren't true, the following steps won't work.
 ### Package Deployments
 If your devops process includes creating new unlocked package versions follow this flow.
 
-1) Copy all the contents of package-sfdx-project.json into sfdx-project.json.
+1) Copy all the contents of package-sfdx-project.json into sfdx-project.json and save.
 
-2) Create the sample package running this command`sfdx force:package:create -r force-app/main/default/ -n "Travis CI" -d "Travis CI Package Example" -t Unlocked`
+2) Create the sample package running this command`sfdx force:package:create --path force-app/main/default/ --name "Travis CI" --description "Travis CI Package Example" --packagetype Unlocked`
 
-3) Create the first package version `sfdx force:package:version:create -p "Travis CI" -d force-app/main/default -x -w 10 --json -v <hub_name_here>`
+3) Create the first package version `sfdx force:package:version:create --package "Travis CI" --installationkeybypass --wait 10 --json --targetdevhubusername HubOrg`
 
-4) Commit the updated sfdx-project.json file
+4) In the .travis.myl Update the value in the `PACKAGENAME` variable to be Package Id in your sfdx-project.json file.  This id will start with 0Ho.
+
+5) Commit the updated sfdx-project.json and .travis.yml file
 
 And you should be ready to go! Now when you commit and push a change, your change will kick off a Travis CI build.
 
