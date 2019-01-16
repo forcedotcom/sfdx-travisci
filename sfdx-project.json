@@ -16,7 +16,7 @@
     "sfdcLoginUrl": "https://login.salesforce.com",
     "sourceApiVersion": "44.0",
     "packageAliases": {
-        "Travis CI": "0Ho1U000000CaULSA0",
-        "Travis CI@1.0.0-1": "04t1U000002mJZxQAM"
+        "Travis CI": "0Ho0N000000CaT3SAK",
+        "Travis CI@1.0.0-1": "04t0N000001E1ksQAC"
     }
 }

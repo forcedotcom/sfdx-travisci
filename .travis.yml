@@ -1,27 +1,66 @@
+#Gives permission to install SFDX
 sudo: true
-os: trusty
-cache: false
-env:
-- URL=https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
+
 before_install:
-- openssl aes-256-cbc -K $encrypted_7c51aa74e956_key -iv $encrypted_7c51aa74e956_iv
+#
+# The before_install step will download the SFDX CLI and install it
+#
+
+#Decrypt server key
+- openssl aes-256-cbc -K $encrypted_807396767087_key -iv $encrypted_807396767087_iv
   -in assets/server.key.enc -out assets/server.key -d
+#Assign variables
+- export CLIURL=https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz  
 - export SFDX_AUTOUPDATE_DISABLE=false
 - export SFDX_USE_GENERIC_UNIX_KEYCHAIN=true
 - export SFDX_DOMAIN_RETRY=300
 - export SFDX_DISABLE_APP_HUB=true
 - export SFDX_LOG_LEVEL=DEBUG
+#Create SFDX directory
 - mkdir sfdx
-- wget -qO- $URL | tar xJ -C sfdx --strip-components 1
+#Install SFDX
+- wget -qO- $CLIURL | tar xJ -C sfdx --strip-components 1
 - "./sfdx/install"
 - export PATH=./sfdx/$(pwd):$PATH
+
+before_script:
+#
+# The before_script step initializes varibles used in the script step and authenticates to the devhub using JWT grant
+#
+
+#Assign variables
+- export ROOTDIR=force-app/main/default/
+- export TESTLEVEL=RunLocalTests
+#Update the package ID (Package Id will start with 0Ho) or package alias here from the sfdx-project.json file
+- export PACKAGENAME="0Ho0N000000CaT3SAK"
+- export PACKAGEVERSION=""
+#outputs CLI version
 - sfdx --version
+#outputs salsforcedx plugin version
 - sfdx plugins --core
-- sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key
-  --username $USERNAME --setdefaultdevhubusername -a HubOrg
+#Authorize DevHub
+- sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key --username $USERNAME --setdefaultdevhubusername --setalias HubOrg
+
 script:
-- sfdx force:org:create -v HubOrg -s -f config/project-scratch-def.json -a ciorg --wait 4
-- sfdx force:org:display -u ciorg
-- sfdx force:source:push -u ciorg
-- sfdx force:apex:test:run -u ciorg --wait 10
-- sfdx force:org:delete -u ciorg -p
+#Create Scratch Org
+- sfdx force:org:create --targetdevhubusername HubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias ciorg --wait 10
+- sfdx force:org:display --targetusername ciorg
+#Push Source Scratch Org
+- sfdx force:source:push --targetusername ciorg
+#Run Unit Tests on Scratch Org
+- sfdx force:apex:test:run --targetusername ciorg --wait 10 --resultformat tap --codecoverage --testlevel $TESTLEVEL
+#Delete Scratch Org
+- sfdx force:org:delete --targetusername ciorg --noprompt
+#Create Package Version
+- PACKAGEVERSION="$(sfdx force:package:version:create --package $PACKAGENAME --installationkeybypass --wait 10 --json --targetdevhubusername HubOrg | jq '.result.SubscriberPackageVersionId' | tr -d '"')"
+- sleep 300 # Wait for package replication.
+- echo ${PACKAGEVERSION}
+#Create Scratch Org
+- sfdx force:org:create --targetdevhubusername HubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias installorg --wait 10
+- sfdx force:org:display --targetusername installorg
+#Install package in Scratch Org
+- sfdx force:package:install --package $PACKAGEVERSION --wait 10 --targetusername installorg
+#Run Unit Tests on Scratch Org
+- sfdx force:apex:test:run --targetusername installorg --wait 10 --resultformat tap --codecoverage --testlevel $TESTLEVEL
+#Delete Scratch Org
+- sfdx force:org:delete --targetusername installorg --noprompt
