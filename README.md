@@ -40,32 +40,15 @@ If any any of these assumptions aren't true, the following steps won't work.
 10) IMPORTANT! Remove your `server.key`: `rm assets/server.key`, you should never store keys or certificates in a public place.
 
 ### Package Deployments
-If your devops process includes creating new unlocked package version follow this flow.
+If your devops process includes creating new unlocked package versions follow this flow.
 
-1) Copy the contents of packagebased.yml into .travis.yml
+1) Copy all the contents of package-sfdx-project.json into sfdx-project.json.
 
 2) Create the sample package running this command`sfdx force:package:create -r force-app/main/default/ -n "Travis CI" -d "Travis CI Package Example" -t Unlocked`
 
 3) Create the first package version `sfdx force:package:version:create -p "Travis CI" -d force-app/main/default -x -w 10 --json -v <hub_name_here>`
 
 4) Commit the updated sfdx-project.json file
- 
-
-### Org Deployments
-If your devops process includes deploying to non-scratch orgs (i.e. Sandbox or Production) follow this flow.
-
-1) Copy the contents of orgbased.yml into .travis.yml
-
-2) Setup a JWT-based auth flow for the target orgs that you want to deploy to.  This example used the same server.crt file for the connected app in the target org.
-
-3) Confirm you can perform a JWT-based auth to the Target orgs: `sfdx force:auth:jwt:grant --clientid <your_consumer_key> --jwtkeyfile server.key --username <your_username>`
-
-**Note:** For more info on setting up JWT-based auth see [Authorize an Org Using the JWT-Based Flow](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_auth_jwt_flow.htm) in the [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev).
-
-3) Set your target `Consumer Key` and `Username` using the Travis CLI. Note that this username is the username that you use to access the target org.
-
-    travis env set UATUSERNAME <your_username>
-    travis env set UATCONSUMERKEY <your_consumer_key>
 
 And you should be ready to go! Now when you commit and push a change, your change will kick off a Travis CI build.
 
