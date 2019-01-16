@@ -31,7 +31,7 @@ before_script:
 #Assign variables
 - export ROOTDIR=force-app/main/default/
 - export TESTLEVEL=RunLocalTests
-#Update the package ID (Package Id will start with 0Ho) or package alias here from the sfdx-project.json file
+#Be sure to update the package ID (Package Id will start with 0Ho) or package alias here from the sfdx-project.json file
 - export PACKAGENAME="0Ho0N000000CaT3SAK"
 - export PACKAGEVERSION=""
 #outputs CLI version
