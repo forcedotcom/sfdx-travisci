@@ -44,7 +44,7 @@ If your devops process includes creating new unlocked package versions follow th
 
 1) Copy all the contents of package-sfdx-project.json into sfdx-project.json and save.
 
-2) Create the sample package running this command`sfdx force:package:create --path force-app/main/default/ --name "Travis CI" --description "Travis CI Package Example" --packagetype Unlocked`
+2) Create the sample package running this command `sfdx force:package:create --path force-app/main/default/ --name "Travis CI" --description "Travis CI Package Example" --packagetype Unlocked`
 
 3) Create the first package version `sfdx force:package:version:create --package "Travis CI" --installationkeybypass --wait 10 --json --targetdevhubusername HubOrg`
 
