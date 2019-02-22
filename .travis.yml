@@ -20,4 +20,4 @@ before_install:
 - sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key
   --username $USERNAME --setdefaultdevhubusername -a HubOrg
 script:
-- sfdx force:mdapi:retrieve -r ./mdapipkg -u admin@archtrial.com  -k /force-app/package.xml
+- sfdx force:mdapi:retrieve -r ./mdapipkg -u admin@archtrial.com  -k force-app/package.xml
