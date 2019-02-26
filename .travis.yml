@@ -21,4 +21,3 @@ before_install:
   --username $USERNAME --setdefaultdevhubusername -a HubOrg
 script:
 - sfdx force:mdapi:retrieve -r ./mdapipkg -u admin@archtrial.com  -k force-app/package.xml
-- sfdx force:mdapi:deploy -d ./mdapipkg
