@@ -4,22 +4,21 @@ cache: false
 env:
 - URL=https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
 before_install:
-- set SFDX_AUTOUPDATE_DISABLE=false
-- set SFDX_USE_GENERIC_UNIX_KEYCHAIN=true
-- set SFDX_DOMAIN_RETRY=300
-- set SFDX_DISABLE_APP_HUB=true
-- set SFDX_LOG_LEVEL=DEBUG
+- export SFDX_AUTOUPDATE_DISABLE=false
+- export SFDX_USE_GENERIC_UNIX_KEYCHAIN=true
+- export SFDX_DOMAIN_RETRY=300
+- export SFDX_DISABLE_APP_HUB=true
+- export SFDX_LOG_LEVEL=DEBUG
 - mkdir sfdx
 - wget -qO- $URL | tar xJ -C sfdx --strip-components 1
 - "./sfdx/install"
-- set PATH=./sfdx/$(pwd):$PATH
+- export PATH=./sfdx/$(pwd):$PATH
 - sfdx --version
 - sfdx plugins --core
-- sfdx force:auth:jwt:grant --clientid 3MVG9G9pzCUSkzZtzB03bKla2lmGMfX6Ln3QJPDG774WsC3dZxDKd5x_p1ra8S6Jd8u7vDplaR1DZ3yr02CzL --jwtkeyfile C:\certificates/server.key --username manjunath.mekala1@brave-hawk-ro4lcm.com --setdefaultdevhubusername -a HubOrg
+- sfdx force:auth:jwt:grant --clientid 3MVG9G9pzCUSkzZtzB03bKla2lmGMfX6Ln3QJPDG774WsC3dZxDKd5x_p1ra8S6Jd8u7vDplaR1DZ3yr02CzL --jwtkeyfile C:\certificates\server.key --username manjunath.mekala1@brave-hawk-ro4lcm.com --instanceurl https://login.salesforce.com --setdefaultdevhubusername
 script:
 - sfdx force:org:create -v HubOrg -s -f config/project-scratch-def.json -a ciorg --wait
-  2
+2
 - sfdx force:org:display -u ciorg
 - sfdx force:source:push -u ciorg
 - sfdx force:apex:test:run -u ciorg --wait 10
-- sfdx force:org:delete -u ciorg -p
