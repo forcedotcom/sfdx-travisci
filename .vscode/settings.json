@@ -8,5 +8,5 @@
     "terminal.integrated.env.windows": {
         "SFDX_SET_CLIENT_IDS": "sfdx-vscode"
     },
-    "eslint.nodePath": "c:\\Users\\manjunath.m1\\.vscode\\extensions\\salesforce.salesforcedx-vscode-lwc-45.13.0\\node_modules"
+    "eslint.nodePath": "c:\\Users\\manjunath.m1\\.vscode\\extensions\\salesforce.salesforcedx-vscode-lwc-45.14.0\\node_modules"
 }
