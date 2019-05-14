@@ -19,4 +19,4 @@ before_install:
   --username $USERNAME --setdefaultdevhubusername -a HubOrg
   script:
 - sfdx force:mdapi:deploy -u HubOrg
-- sfdx force:apex:test:run -u ciorg --wait 10
+- sfdx force:apex:test:run -u HubOrg --wait 10
