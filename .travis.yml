@@ -24,5 +24,4 @@ before_install:
 - sfdx force:source:push -u ciorg
 - sfdx force:apex:test:run -u ciorg --wait 10
 - sfdx force:org:delete -u ciorg -p
-- sfdx force:mdapi:deploy -u HubOrg
-
+- sfdx force:mdapi -u HubOrg
