@@ -1,6 +1,7 @@
 public with sharing class myclass {
 	public myclass() {
 	/* Test comments for deploy using travis */
+	/* sencond comment */
 	}
 
 	public String getAppVersion() {
