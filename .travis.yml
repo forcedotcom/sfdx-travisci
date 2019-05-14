@@ -20,5 +20,5 @@ before_install:
 script:
 
 - sfdx force:org:display -u HubOrg
-- sfdx force:source:push -u HubOrg
+- sfdx force:mdapi:deploy -u HubOrg
 - sfdx force:apex:test:run -u HubOrg --wait 10
