@@ -3,8 +3,7 @@ public with sharing class myclass {
 	/* Test comments for deploy using travis */
 	/* sencond comment */
 	/* Test comments for deploy using travis */
-	/* sencond comment */
-	/* sencond comment */
+
 	/* Third comments for deploy using travis */
 	/* sencond comment */
 	}
