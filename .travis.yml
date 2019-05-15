@@ -24,10 +24,10 @@ before_script:
 - export DEPLOYDIR=src
 - export TESTLEVEL=RunLocalTests
 - sfdx --version
-
-  script:
 - sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key
   --username $USERNAME --setdefaultdevhubusername -a HubOrg
+  script:
+
 #Deploy to target deployment org and run unit tests
 - sfdx force:mdapi:deploy --wait 10 --deploydir $DEPLOYDIR --targetusername manjunath.mekala1@brave-hawk-ro4lcm.com --testlevel $TESTLEVEL
   #Example shows how to run a check-only deploy.
