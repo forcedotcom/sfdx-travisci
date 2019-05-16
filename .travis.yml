@@ -41,4 +41,5 @@ script:
 #Runs unit tests on scratch org
 - sfdx force:apex:test:run --targetusername installorg --wait 10 --resultformat tap --codecoverage --testlevel $TESTLEVEL
 #Deletes scratch org
+#comment
 - sfdx force:org:delete --targetusername installorg --noprompt
