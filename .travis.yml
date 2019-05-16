@@ -13,32 +13,16 @@ before_install:
 - wget -qO- $URL | tar xJ -C sfdx --strip-components 1
 - "./sfdx/install"
 - export PATH=./sfdx/$(pwd):$PATH
+#Assign variables
+- export DEPLOYDIR=src
+- export TESTLEVEL=RunLocalTests
 - sfdx --version
 - sfdx plugins --core
 #Authorizes Dev Hub
 - sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key --username $USERNAME --setdefaultdevhubusername --setalias HubOrg
 
 script:
-#Creates scratch org
-- sfdx force:org:create --targetdevhubusername HubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias ciorg --wait 10 --durationdays 1
-- sfdx force:org:display --targetusername ciorg
-#Pushes source to scratch org
-- sfdx force:source:push --targetusername ciorg
-#Runs unit tests on scratch org
-- sfdx force:apex:test:run --targetusername ciorg --wait 10 --resultformat tap --codecoverage --testlevel $TESTLEVEL
-#Deletes scratch org
-- sfdx force:org:delete --targetusername ciorg --noprompt
-#Creates package version
-- PACKAGEVERSION="$(sfdx force:package:version:create --package $PACKAGENAME --installationkeybypass --wait 10 --json --targetdevhubusername HubOrg | jq '.result.SubscriberPackageVersionId' | tr -d '"')"
-- echo "Package Version Id - "${PACKAGEVERSION}
-- echo "Waiting for 5 minutes for package replication"
-- sleep 5m
-#Creates scratch org
-- sfdx force:org:create --targetdevhubusername HubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias installorg --wait 10 --durationdays 1
-- sfdx force:org:display --targetusername installorg
-#Installs package in scratch org
-- sfdx force:package:install --package $PACKAGEVERSION --wait 10 --targetusername installorg
-#Runs unit tests on scratch org
-- sfdx force:apex:test:run --targetusername installorg --wait 10 --resultformat tap --codecoverage --testlevel $TESTLEVEL
-#Deletes scratch org
-- sfdx force:org:delete --targetusername installorg --noprompt
+#Authorize target deployment org
+- sfdx force:auth:jwt:grant --instanceurl https://login.salesforce.com  --clientid $CONSUMERKEY --jwtkeyfile assets/server.key --username $USERNAME --setalias HubOrg
+  #Deploy to target deployment org and run unit tests
+- sfdx force:mdapi:deploy --wait 10 --deploydir $DEPLOYDIR --targetusername HubOrg --testlevel $TESTLEVEL
