@@ -1,0 +1,388 @@
+<apex:page controller="DreamHouseSampleDataController">
+    <apex:slds />
+    <html>
+
+    <apex:remoteObjects >
+
+        <apex:remoteObjectModel name="Broker__c" jsShorthand="Broker">
+            <apex:remoteObjectField name="Name" jsShorthand="name" />
+            <apex:remoteObjectField name="Title__c" jsShorthand="title" />
+            <apex:remoteObjectField name="Phone__c" jsShorthand="phone" />
+            <apex:remoteObjectField name="Mobile_Phone__c" jsShorthand="mobile_phone" />
+            <apex:remoteObjectField name="Email__c" jsShorthand="email" />
+            <apex:remoteObjectField name="Picture__c" jsShorthand="picture" />
+        </apex:remoteObjectModel>
+
+        <apex:remoteObjectModel name="Property__c" jsShorthand="Property">
+            <apex:remoteObjectField name="Name" jsShorthand="name" />
+            <apex:remoteObjectField name="Address__c" jsShorthand="address" />
+            <apex:remoteObjectField name="City__c" jsShorthand="city" />
+            <apex:remoteObjectField name="State__c" jsShorthand="state" />
+            <apex:remoteObjectField name="Zip__c" jsShorthand="zip" />
+            <apex:remoteObjectField name="Price__c" jsShorthand="price" />
+            <apex:remoteObjectField name="Assessed_Value__c" jsShorthand="assessed" />
+            <apex:remoteObjectField name="Date_Listed__c" jsShorthand="dateListed" />
+            <apex:remoteObjectField name="Title__c" jsShorthand="title" />
+            <apex:remoteObjectField name="Beds__c" jsShorthand="bedrooms" />
+            <apex:remoteObjectField name="Baths__c" jsShorthand="bathrooms" />
+            <apex:remoteObjectField name="Status__c" jsShorthand="status" />
+            <apex:remoteObjectField name="Broker__c" jsShorthand="brokerId" />
+            <apex:remoteObjectField name="Picture__c" jsShorthand="pic" />
+            <apex:remoteObjectField name="Thumbnail__c" jsShorthand="thumb" />
+            <apex:remoteObjectField name="Description__c" jsShorthand="description" />
+            <apex:remoteObjectField name="Location__Latitude__s" jsShorthand="lat" />
+            <apex:remoteObjectField name="Location__Longitude__s" jsShorthand="long" />
+            <apex:remoteObjectField name="Tags__c" jsShorthand="tags" />
+        </apex:remoteObjectModel>
+    </apex:remoteObjects>
+
+    <body style="padding:0;margin:0">
+
+        <div class="slds-scope">
+            <div class="slds-page-header" role="banner">
+                <div class="slds-media">
+                    <div class="slds-media__figure">
+
+                    </div>
+                    <div class="slds-media__body">
+                        <p class="slds-page-header__title slds-truncate slds-align-middle" title="DreamHouse Sample Data">DreamHouse Sample Data</p>
+                        <p class="slds-text-body--small slds-page-header__info">Sample data for the DreamHouse Application</p>
+                    </div>
+                </div>
+            </div>
+            <div id="content" style="margin:20px">
+                <div style="padding-bottom:20px">Click the button below to iinitialize the Property, Broker, and Favorite objects with sample data.
+                    <div style="color:red">All existing records in these objects will be deleted.</div>
+                </div>
+                <button class="slds-button slds-button--brand" onclick="initialize()">Initialize Sample Data</button>
+            </div>
+        </div>
+
+        <script>
+
+            function getRandomNumber(min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+            var brokers = [
+                {
+                    name: "Caroline Kingsley",
+                    title: "Senior Broker",
+                    phone: "617-244-3672",
+                    mobile_phone: "617-244-3672",
+                    email: "caroline@dreamhouse.demo",
+                    picture: "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/caroline_kingsley.jpg"
+                },
+                {
+                    name: "Michael Jones",
+                    title: "Senior Broker",
+                    phone: "617-244-3672",
+                    mobile_phone: "617-244-3672",
+                    email: "michael@dreamhouse.demo",
+                    picture: "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/michael_jones.jpg"
+                },
+                {
+                    name: "Jonathan Bradley",
+                    title: "Senior Broker",
+                    phone: "617-244-3672",
+                    mobile_phone: "617-244-3672",
+                    email: "jonathan@dreamhouse.demo",
+                    picture: "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/jonathan_bradley.jpg"
+                },
+                {
+                    name: "Jennifer Wu",
+                    title: "Senior Broker",
+                    phone: "617-244-3672",
+                    mobile_phone: "617-244-3672",
+                    email: "jen@dreamhouse.demo",
+                    picture: "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/jennifer_wu.jpg"
+                },
+                {
+                    name: "Olivia Green",
+                    title: "Senior Broker",
+                    phone: "617-244-3672",
+                    mobile_phone: "617-244-3672",
+                    email: "olivia@dreamhouse.demo",
+                    picture: "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/olivia_green.jpg"
+                },
+                {
+                    name: "Miriam Aupont",
+                    title: "Senior Broker",
+                    phone: "617-244-3672",
+                    mobile_phone: "617-244-3672",
+                    email: "miriam@dreamhouse.demo",
+                    picture: "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/miriam_aupont.jpg"
+                },
+                {
+                    name: "Michelle Lambert",
+                    title: "Senior Broker",
+                    phone: "617-244-3672",
+                    mobile_phone: "617-244-3672",
+                    email: "michelle@dreamhouse.demo",
+                    picture: "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/michelle_lambert.jpg"
+                },
+                {
+                    name: "Victor Ochoa",
+                    title: "Senior Broker",
+                    phone: "617-244-3672",
+                    mobile_phone: "617-244-3672",
+                    email: "victor@dreamhouse.demo",
+                    picture: "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/victor_ochoa.jpg"
+                }
+            ];
+
+            var properties = [
+                {
+                    address: "18 Henry St",
+                    city: "Cambridge",
+                    state: "MA",
+                    zip: "01742",
+                    price: 975000,
+                    title: "Stunning Colonial",
+                    bedrooms: 4,
+                    bathrooms: 3,
+                    long: -71.11095,
+                    lat: 42.35663,
+                    pic: "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house01.jpg",
+                    thumb: "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house01sq.jpg",
+                    description: "Bacon ipsum dolor amet ribeye meatball ham hock swine sausage frankfurter tail cow ball tip pork chop leberkas brisket turkey beef. Landjaeger boudin beef ribs leberkas. Prosciutto beef ribs sirloin, capicola short ribs frankfurter bacon. Picanha filet mignon boudin, bacon jerky meatball turkey.",
+                    broker: 0,
+                    tags: "Colonial"
+                },
+                {
+                    address: "24 Pearl St",
+                    city: "Cambridge",
+                    state: "MA",
+                    zip: "02420",
+                    price: 1200000,
+                    title: "Ultimate Sophistication",
+                    bedrooms: 5,
+                    bathrooms: 4,
+                    long: -71.10869,
+                    lat: 42.359103,
+                    pic: "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house02.jpg",
+                    thumb: "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house02sq.jpg",
+                    description: "Carouser Blimey main sheet lad bounty brig piracy aft sloop log. Run a rig furl Nelsons folly measured fer yer chains ho chandler hulk prow mutiny wench. Bilge water wherry lanyard piracy port rum cackle fruit topgallant trysail bilge.",
+                    broker: 1,
+                    tags: "Victorian"
+                },
+                {
+                    address: "61 West Cedar St",
+                    city: "Boston",
+                    state: "MA",
+                    zip: "02420",
+                    price: 825000,
+                    title: "Modern City Living",
+                    bedrooms: 5,
+                    bathrooms: 4,
+                    long: -71.070061,
+                    lat: 42.359986,
+                    pic: "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house03.jpg",
+                    thumb: "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house03sq.jpg",
+                    description: "Pulling teeth this proposal is a win-win situation which will cause a stellar paradigm shift, and produce a multi-fold increase in deliverables for turd polishing, and first-order optimal strategies at the end of the day UI great plan! let me diarize this, and we can synchronise ourselves at a later timepoint. When does this sunset? future-proof.",
+                    broker: 2,
+                    tags: "Modern"
+                },
+                {
+                    address: "32 Prince st",
+                    city: "Cambridge",
+                    state: "MA",
+                    zip: "02420",
+                    price: 930000,
+                    title: "Live in the Trees",
+                    bedrooms: 5,
+                    bathrooms: 4,
+                    long: -71.110448,
+                    lat: 42.360642,
+                    pic: "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house04.jpg",
+                    thumb: "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house04sq.jpg",
+                    description: "Distillery meditation before they sold out umami. Typewriter craft beer actually, raw denim gluten-free roof party before they sold out quinoa bitters dreamcatcher tousled ennui vice small batch sartorial.",
+                    broker: 3,
+                    tags: "Contemporary"
+                },
+                {
+                    address: "211 Charles Street",
+                    city: "Boston",
+                    state: "MA",
+                    zip: "02420",
+                    price: 850000,
+                    title: "Waterfront in the City",
+                    bedrooms: 3,
+                    bathrooms: 2,
+                    long: -71.084454,
+                    lat: 42.368168,
+                    pic: "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house05.jpg",
+                    thumb: "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house05sq.jpg",
+                    description: "Green juice 8-bit scenester cupidatat venmo, ramps eu pickled ea cornhole. Odio veniam trust fund, marfa normcore mlkshk kitsch anim culpa distillery vexillologist pinterest consequat. Microdosing commodo stumptown, tote bag pour-over normcore kickstarter.",
+                    broker: 4,
+                    tags: "Modern"
+                },
+                {
+                    address: "448 Hanover St",
+                    city: "Boston",
+                    state: "MA",
+                    zip: "02420",
+                    price: 725000,
+                    title: "Quiet Retreat",
+                    bedrooms: 4,
+                    bathrooms: 2,
+                    long: -71.052617,
+                    lat: 42.366855,
+                    pic: "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house06.jpg",
+                    thumb: "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house06sq.jpg",
+                    description: "Blimey Admiral of the Black Jolly Roger pirate Buccaneer line ballast spirits chantey topmast. Plate Fleet heave down booty Chain Shot nipper spike cutlass furl pinnace bounty. Gabion ahoy piracy coffer killick schooner main sheet holystone careen barque.",
+                    broker: 5,
+                    tags: "Colonial"
+                },
+                {
+                    address: "127 Endicott St",
+                    city: "Boston",
+                    state: "MA",
+                    zip: "02420",
+                    price: 450000,
+                    title: "City Living",
+                    bedrooms: 3,
+                    bathrooms: 1,
+                    long: -71.057352,
+                    lat: 42.365003,
+                    pic: "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house07.jpg",
+                    thumb: "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house07sq.jpg",
+                    description: "Ad placeat sartorial, qui celiac ramps fap lumbersexual cray truffaut meh small batch godard. Single-origin coffee dolore gastropub pickled blue bottle, master cleanse migas cupidatat.",
+                    broker: 6,
+                    tags: "Victorian"
+                },
+                {
+                    address: "48 Brattle St",
+                    city: "Cambridge",
+                    state: "MA",
+                    zip: "02420",
+                    price: 450000,
+                    title: "Heart of Harvard Square",
+                    bedrooms: 5,
+                    bathrooms: 4,
+                    long: -71.121653,
+                    lat: 42.374117,
+                    pic: "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house10.jpg",
+                    thumb: "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house10sq.jpg",
+                    description: "Can you ballpark the cost per unit for me market-facing. Going forward put a record on and see who dances, yet powerpoint Bunny. Moving the goalposts paddle on both sides, or future-proof, yet move the needle Q1 strategic fit, for usabiltiy.",
+                    broker: 7,
+                    tags: "Colonial"
+                },
+                {
+                    address: "121 Harborwalk Drive",
+                    city: "Boston",
+                    state: "MA",
+                    zip: "02420",
+                    price: 450000,
+                    title: "Seaport District Retreat",
+                    bedrooms: 3,
+                    bathrooms: 3,
+                    long: -71.049327,
+                    lat: 42.35695,
+                    pic: "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house09.jpg",
+                    thumb: "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house09sq.jpg",
+                    description: "Anim iPhone eiusmod non normcore, ugh officia. Blog ullamco stumptown, microdosing put a bird on it nihil farm-to-table pour-over squid chillwave seitan activated charcoal. Offal nesciunt lyft odio banjo. Pabst assumenda biodiesel, iPhone ethical veniam paleo in kale chips art party vaporware butcher.",
+                    broker: 0,
+                    tags: "Modern"
+                },
+                {
+                    address: "503 Park Drive",
+                    city: "Boston",
+                    state: "MA",
+                    zip: "02420",
+                    price: 650000,
+                    title: "City Living",
+                    bedrooms: 2,
+                    bathrooms: 2,
+                    long: -71.105475,
+                    lat: 42.347400,
+                    pic: "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house08.jpg",
+                    thumb: "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house08sq.jpg",
+                    description: "Cray kogi small batch edison bulb. Ugh you probably haven't heard of them cold-pressed art party. Nostrud you probably haven't heard of them waistcoat poke cardigan.",
+                    broker: 1,
+                    tags: "Modern"
+                },
+                {
+                    address: "95 Gloucester St",
+                    city: "Boston",
+                    state: "MA",
+                    zip: "02420",
+                    price: 690000,
+                    title: "Architectural Details",
+                    bedrooms: 3,
+                    bathrooms: 3,
+                    lat: 42.349693,
+                    long: -71.084407,
+                    pic: "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house11.jpg",
+                    thumb: "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house11sq.jpg",
+                    description: "Aesthetic neutra raclette retro tofu, laborum hexagon YOLO 3 wolf moon banh mi man braid slow-carb single-origin coffee kale chips. Mustache XOXO authentic 90's keffiyeh, jianbing kinfolk chillwave duis small batch prism.",
+                    broker: 0,
+                    tags: "Contemporary"
+                },
+                {
+                    address: "145 Commonwealth Ave",
+                    city: "Boston",
+                    state: "MA",
+                    zip: "02420",
+                    price: 845000,
+                    title: "Contemporary Luxury",
+                    bedrooms: 4,
+                    bathrooms: 3,
+                    lat: 42.352466,
+                    long: -71.075311,
+                    pic: "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house12.jpg",
+                    thumb: "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house12sq.jpg",
+                    description: "Tunguska event two ghostly white figures in coveralls and helmets are soflty dancing vanquish the impossible kindling the energy hidden in matter brain is the seed of intelligence. A very small stage in a vast cosmic arena rich in mystery hearts of the stars a mote of dust suspended in a sunbeam.",
+                    broker: 1,
+                    tags: "Victorian"
+                }
+            ];
+
+            function initialize() {
+                "use strict";
+
+                DreamHouseSampleDataController.deleteAll(function (result, event) {
+                    if (event.status) {
+                        load();
+                    } else {
+                        alert("Something went wrong deleting existing records");
+                    }
+                });
+
+            }
+
+            function load() {
+                "use strict";
+
+                var broker = new SObjectModel.Broker();
+                var property = new SObjectModel.Property();
+
+                var propertyIds = new Array();
+
+                for (var i = 0; i < brokers.length; i++) {
+                    let index = i;
+                    broker.create(brokers[index], function (err, brokerId) {
+                        for (var j = 0; j < properties.length; j++) {
+                            if (properties[j].broker == index) {
+                                properties[j].name = properties[j].address;
+                                properties[j].status = "Available";
+                                properties[j].brokerId = brokerId[0];
+                                properties[j].assessed = properties[j].price * getRandomNumber(65, 90) / 100;
+                                properties[j].dateListed = new Date(new Date() - getRandomNumber(3, 50) * 86400000);
+                                delete properties[j].broker;
+                                property.create(properties[j], function (err, propertyId) {
+                                    console.log(err || propertyId);
+                                    propertyIds.push(propertyId[0]);
+                                });
+                            }
+                        }
+                    });
+                }
+
+                alert("Successfully imported " + properties.length + " properties and " + brokers.length + " brokers");
+            }        
+        </script>
+    </body>
+
+    </html>
+</apex:page>
