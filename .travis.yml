@@ -25,4 +25,4 @@ script:
 #Authorize target deployment org
 - sfdx force:auth:jwt:grant --instanceurl https://login.salesforce.com  --clientid $CONSUMERKEY --jwtkeyfile assets/server.key --username $USERNAME --setalias HubOrg
   #Deploy to target deployment org and run unit tests
-- sfdx force:mdapi:deploy -d ./mdAPIZIP/unpackaged.zip -u HubOrg -w 10
+- sfdx force:mdapi:deploy -d --deploydir ./mdAPIZIP/unpackaged.zip -u HubOrg -w 10
