@@ -4,6 +4,7 @@ global with sharing class DreamHouseSampleDataController {
     global static void deleteAll() {
         DELETE [SELECT ID FROM property__c];    
         DELETE [SELECT ID FROM broker__c];
-        /* Commented for testing 123*/
+        /* Commented for testing */
+		 /* Commented for testing 123*/
     }    
 }
