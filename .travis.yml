@@ -21,3 +21,4 @@ before_install:
 
 script:
 - sfdx force:org:list
+- git branch
