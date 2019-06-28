@@ -1,11 +1,9 @@
 {
-  "packageDirectories": [
-    {
-      "path": "force-app",
-      "default": true
+  "orgName": "Account Geolocation App",
+  "edition": "Developer",
+  "settings": {
+    "orgPreferenceSettings": {
+      "s1EncryptedStoragePref2": false
     }
-  ],
-  "namespace": "",
-  "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "40.0"
+  }
 }

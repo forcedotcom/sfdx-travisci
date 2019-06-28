@@ -1,0 +1,17 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "Account",
+                "referenceId": "AccountRef1"
+            },
+            "Name": "Marriott Marquis",
+            "BillingStreet": "780 Mission St",
+            "BillingCity": "San Francisco",
+            "BillingState": "CA",
+            "BillingPostalCode": "94103",
+            "Phone": "(415) 896-1600",
+            "Website": "www.marriott.com"
+        }
+    ]
+}
