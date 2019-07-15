@@ -5,8 +5,8 @@ For a fully guided walk through of setting up and configuring this sample, see t
 This repository shows one way you can successfully setup Salesforce DX with Travis CI. We make a few assumptions in this README:
 
 - You know how to get your Github repository setup with Travis CI. (Here's their [Getting Started guide](https://docs.travis-ci.com/user/getting-started/).)
-- You've installed the [Travis CLI](https://github.com/travis-ci/travis.rb#installation). 
-- You have properly setup JWT-Based Authorization Flow (i.e. headless). I recommend using [these steps for generating your Self-Signed SSL Certificate](https://devcenter.heroku.com/articles/ssl-certificate-self). 
+- You've installed the [Travis CLI](https://github.com/travis-ci/travis.rb#installation).
+- You have properly setup JWT-Based Authorization Flow (i.e. headless). I recommend using [these steps for generating your Self-Signed SSL Certificate](https://devcenter.heroku.com/articles/ssl-certificate-self).
 
 If any any of these assumptions aren't true, the following steps won't work.
 
@@ -18,7 +18,7 @@ If any any of these assumptions aren't true, the following steps won't work.
 
    **Note:** For more info on setting up JWT-based auth see [Authorize an Org Using the JWT-Based Flow](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_auth_jwt_flow.htm) in the [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev).
 
-3) [Fork](http://help.github.com/fork-a-repo/) this repo into your github account using the fork link at the top of the page.
+3) [Fork](https://help.github.com/fork-a-repo/) this repo into your github account using the fork link at the top of the page.
 
 4) Clone your forked repo locally: `git clone https://github.com/<git_username>/sfdx-travisci.git`
 
@@ -45,7 +45,7 @@ Enjoy!
 
 ## Contributing to the Repository ###
 
-If you find any issues or opportunities for improving this repository, fix them!  Feel free to contribute to this project by [forking](http://help.github.com/fork-a-repo/) this repository and make changes to the content.  Once you've made your changes, share them back with the community by sending a pull request. Please see [How to send pull requests](http://help.github.com/send-pull-requests/) for more information about contributing to Github projects.
+If you find any issues or opportunities for improving this repository, fix them!  Feel free to contribute to this project by [forking](https://help.github.com/fork-a-repo/) this repository and make changes to the content.  Once you've made your changes, share them back with the community by sending a pull request. Please see [How to create pull requests](https://help.github.com/en/articles/creating-a-pull-request/) for more information about contributing to Github projects.
 
 ## Reporting Issues ###
 
