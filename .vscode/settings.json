@@ -7,5 +7,6 @@
     },
     "terminal.integrated.env.windows": {
         "SFDX_SET_CLIENT_IDS": "sfdx-vscode"
-    }
+    },
+    "eslint.nodePath": "/Users/kharrison/.vscode/extensions/salesforce.salesforcedx-vscode-lwc-46.6.0/node_modules"
 }
