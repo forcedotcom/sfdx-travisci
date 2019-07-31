@@ -10,3 +10,4 @@ node_modules
 selenium-client-jars/
 test/artifacts
 .vscode/settings.json
+.vim-force.com/
