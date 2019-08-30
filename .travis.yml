@@ -22,7 +22,7 @@ before_install:
 - sfdx force:auth:jwt:grant --clientid 3MVG9KsVczVNcM8x0JJ5je_MfNJTUZqlqpFyqB26aN2mCEsdjAaiF4FnqWIrzM3IFHO6xa11zhtDdOIiRSM.w --jwtkeyfile assets/server.key --username nemochandra@ccv.com --setdefaultdevhubusername
 script:
 - sfdx force:org:create -s -f config/project-scratch-def.json -a ciorg --wait
-  2
+  4
 - sfdx force:org:display -u ciorg
 - sfdx force:source:push -u ciorg
 - sfdx force:apex:test:run -u ciorg --wait 10
