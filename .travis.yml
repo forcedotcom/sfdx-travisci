@@ -1,13 +1,13 @@
 sudo: true
 os: trusty
 cache: false
-
 env:
-- URL=https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
-
+  matrix:
+  - URL=https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
+  global:
+    secure: amzvxo2Ln/8cZGwQoeV3xNYKsRozn2mNriEJMKgzSoH0v6MszGVgGaSRdpvT5cNvNkSeTFvBAG/POqqk39tJfY+kWLqyV0aVnshCuKN0dzawVL8F+/dG7Uha0ERwu1SWhwgUNhuRbkwjt3XGN5C1VfY+XZdr+fiEFTHlzB5tzZD2I5zsHorRa9SEABWfOCxWmZXXYbxqWQF5MWKNDUrdetwhU6iV4/zXOVy7Uh7Vaucs9sv8zUqH1aD3UUgSQPzgUmdGst1qtfNw/KFJ+pqgvLRtGCexHUv67uTFaiQ9LLynBB3LxVVGfAjWX3y8kQlXkw6fFNTJqOR3GATAFjxPsvjzHQ26uybsgRRWf2NH0FAAhYbWbT7uhKo4pP7Lsh+wZzQFc69sM/N8dzImpavR3CkSfbEEfsSMLFs62dfyP4uQnffgDRhuL6kVsaCBuhGIXI4TDy3cRJ6cx+GeIVxbGGVdYa4sZMH+NqXew1FxW5QjHLc/aSAhYjj6G1Bocm4VKnoeGfLEkENt9BL6evi+Brqa7DuJ+O5tCnq1J0Ab7boyijJHaYGyPEOe/z0a7fBnKgd6rzxv28oUUnkZelMYGAN2QH820N6cNYFBQChh0svSTyZ6+0u8ApnS122y46npCnNxTFCRG+MB4If2cYHihKvq8rvy/YjicClPlKPa90w=
 before_install:
-- openssl aes-256-cbc -K $encrypted_b1fbf710b918_key -iv $encrypted_b1fbf710b918_iv
-  -in assets/server.key.enc -out assets/server.key -d
+- openssl aes-256-cbc -k "Bah28dahDon82dul" -in assets/server.key.enc -out assets/server.key -d
 - export SFDX_AUTOUPDATE_DISABLE=false
 - export SFDX_USE_GENERIC_UNIX_KEYCHAIN=true
 - export SFDX_DOMAIN_RETRY=300
@@ -19,10 +19,10 @@ before_install:
 - export PATH=./sfdx/$(pwd):$PATH
 - sfdx --version
 - sfdx plugins --core
-- sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key --username $USERNAME --setdefaultdevhubusername -a HubOrg
-
+- sfdx force:auth:jwt:grant --clientid 3MVG9KsVczVNcM8x0JJ5je_MfNJTUZqlqpFyqB26aN2mCEsdjAaiF4FnqWIrzM3IFHO6xa11zhtDdOIiRSM.w --jwtkeyfile assets/server.key --username nemochandra@ccv.com --setdefaultdevhubusername
 script:
-- sfdx force:org:create -v HubOrg -s -f config/project-scratch-def.json -a ciorg --wait 2
+- sfdx force:org:create -s -f config/project-scratch-def.json -a ciorg --wait
+  4
 - sfdx force:org:display -u ciorg
 - sfdx force:source:push -u ciorg
 - sfdx force:apex:test:run -u ciorg --wait 10
