@@ -1,7 +1,11 @@
 {
-    "orgName": "wade.wegner Example",
+    "orgName": "travisCI",
     "edition": "Developer",
-    "orgPreferences" : {
-        "enabled": ["S1DesktopEnabled"]
+    "settings": {
+        "orgPreferenceSettings": {
+            "s1DesktopEnabled": true,
+            "selfSetPasswordInApi": true,
+            "s1EncryptedStoragePref2": false
+        }
     }
 }
