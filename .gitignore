@@ -9,3 +9,5 @@ node_modules
 .settings
 selenium-client-jars/
 test/artifacts
+sfdx-travisci/
+assets/server.key
