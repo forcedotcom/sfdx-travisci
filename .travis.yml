@@ -19,6 +19,8 @@ before_install:
 - sfdx plugins --core
 - sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key
   --username $USERNAME --setdefaultdevhubusername -a HubOrg
+- sfdx force:auth:jwt:grant --clientid $CONSUMERKEY_TEST --jwtkeyfile assets/server.key
+  --username $USERNAME_TEST -a TestOrg
 script:
 - sfdx force:org:create -v HubOrg -s -f config/project-scratch-def.json -a ciorg --wait
   3 --loglevel DEBUG
@@ -26,8 +28,6 @@ script:
 - sfdx force:source:push -u ciorg
 - sfdx force:apex:test:run -u ciorg --wait 10
 - sfdx force:org:delete -u ciorg -p
-- sfdx force:auth:jwt:grant --clientid $CONSUMERKEY_TEST --jwtkeyfile assets/server.key
-  --username $USERNAME_TEST -a TestOrg
 - sfdx force:source:convert --rootdir force-app --outputdir tmp_convert
 - zip -r build.zip tmp_convert
 - rm -r tmp_convert
