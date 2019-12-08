@@ -29,4 +29,5 @@ script:
 - sfdx force:apex:test:run -u ciorg --wait 10
 - sfdx force:org:delete -u ciorg -p
 - sfdx force:source:convert --rootdir force-app --outputdir tmp_convert
-
+- zip -r build.zip tmp_convert
+- sfdx force:mdapi:deploy --zipfile build.zip --targetusername TestOrg \ --testlevel RunLocalTests
