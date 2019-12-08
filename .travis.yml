@@ -22,7 +22,7 @@ before_install:
 - sfdx force:auth:jwt:grant --clientid $CONSUMERKEY_TEST --jwtkeyfile assets/server.key
   --username $USERNAME_TEST -a TestOrg
 script:
-- sfdx force:org:create -v HubOrg -s -f config/project-scratch-def.json -a ciorg --wait
+- sfdx force:org:create -v TestOrg -s -f config/project-scratch-def.json -a ciorg --wait
   3 --loglevel DEBUG
 - sfdx force:org:display -u ciorg
 - sfdx force:source:push -u ciorg
@@ -30,4 +30,4 @@ script:
 - sfdx force:org:delete -u ciorg -p
 - sfdx force:source:convert --rootdir force-app --outputdir tmp_convert
 - zip -r build.zip tmp_convert
-- sfdx force:mdapi:deploy --zipfile build.zip --targetusername TestOrg \ --testlevel RunLocalTests
+- sfdx force:mdapi:deploy --zipfile build.zip --targetusername HubOrg --testlevel RunLocalTests
