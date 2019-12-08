@@ -31,3 +31,4 @@ script:
 - sfdx force:source:convert --rootdir force-app --outputdir tmp_convert
 - zip -r build.zip tmp_convert
 - sfdx force:mdapi:deploy --zipfile build.zip --targetusername HubOrg --testlevel RunLocalTests
+- sfdx force:mdapi:deploy:report --targetusername HubOrg
