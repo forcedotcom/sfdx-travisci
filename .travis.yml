@@ -26,10 +26,4 @@ script:
 - sfdx force:source:push -u ciorg
 - sfdx force:apex:test:run -u ciorg --wait 10
 - sfdx force:org:delete -u ciorg -p
-- sfdx force:auth:jwt:grant --clientid $CONSUMERKEY_TEST --jwtkeyfile assets/server.key
-  --username $USERNAME_TEST -a TestOrg
-- sfdx force:source:convert --rootdir force-app --outputdir tmp_convert
-- zip -r build.zip tmp_convert
-- rm -r tmp_convert
-- sfdx force:mdapi:deploy --zipfile build.zip --targetusername TestOrg \
---testlevel RunLocalTests
+
