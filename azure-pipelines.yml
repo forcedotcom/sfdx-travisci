@@ -28,7 +28,7 @@ jobs:
       #git diff-tree --no-commit-id --name-only -r $(Build.SourceVersion)
       #git diff --name-only  
       git status
-      git diff master Test007
+      git diff Test007 master
       #$a = git diff --name-only
       #Write-Output $a
       #Write-Output "##vso[task.setvariable variable=fileName]$a"
