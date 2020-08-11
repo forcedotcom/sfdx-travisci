@@ -18,8 +18,7 @@ jobs:
   steps:
   - powershell:
 
-      #$files = $(git diff HEAD HEAD~ --name-only);
-      $files = $(git diff --name-only HEAD HEAD~1);
+      $files = $(git diff HEAD HEAD~ --name-only);
       $temp = $files -split ' ';
       $count = $temp.Length;
       Write-Output "Total changed $count files";
@@ -27,3 +26,15 @@ jobs:
         $nameOfChangedFile = $temp[$i];
         echo "Changed File - $nameOfChangedFile";
       }
+
+      #TODO :: email notify #$Attachment = "C:\Temp\Drogon.jpg"
+    $From = "vivek@infoglen.com";
+      $To = "prashant@infoglen.com";
+      $Cc = "vivek@infoglen.com";
+
+      $Subject = "Commit Changes";
+      $Body = "<h2>Hi, look at these pics of Drogon!</h2><br><br>";
+      $Body += “He is so cute!” ;
+      $SMTPServer = "smtp.mailtrap.io";
+      $SMTPPort = "587";
+      Send-MailMessage -From $From -to $To -Cc $Cc -Subject $Subject -Body $Body -BodyAsHtml -SmtpServer $SMTPServer -Port $SMTPPort -UseSsl -Credential (Get-Credential);
