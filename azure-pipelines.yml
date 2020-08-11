@@ -27,13 +27,13 @@ jobs:
         echo "Changed File - $nameOfChangedFile";
       }
 
-      $EmailTo = "vj.vivekjoshi@gmail.com"
-      $EmailFrom = "vj.vivekjoshi@gmail.com"
-      $Subject = "Test" 
-      $Body = "Test Body" 
-      $SMTPServer = "smtp.gmail.com" 
-      $SMTPMessage = New-Object System.Net.Mail.MailMessage($EmailFrom,$EmailTo,$Subject,$Body)
-      $SMTPClient = New-Object Net.Mail.SmtpClient($SmtpServer, 587) 
-      $SMTPClient.EnableSsl = $true 
+      $EmailTo = "vj.vivekjoshi@gmail.com";
+      $EmailFrom = "vj.vivekjoshi@gmail.com";
+      $Subject = "Test";
+      $Body = "Test Body";
+      $SMTPServer = "smtp.gmail.com"; 
+      $SMTPMessage = New-Object System.Net.Mail.MailMessage($EmailFrom,$EmailTo,$Subject,$Body);
+      $SMTPClient = New-Object Net.Mail.SmtpClient($SmtpServer, 587); 
+      $SMTPClient.EnableSsl = $true; 
       $SMTPClient.Credentials = New-Object System.Net.NetworkCredential("vj.vivekjoshi@gmail.com", "Nanasi#Gmail1@#12345"); 
-      $SMTPClient.Send($SMTPMessage)
+      $SMTPClient.Send($SMTPMessage);
