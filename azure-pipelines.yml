@@ -26,7 +26,7 @@ jobs:
   - powershell:
       #get the changed template
       #git diff-tree --no-commit-id --name-only -r $(Build.SourceVersion)
-      git diff --name-only  
+      #git diff --name-only  
       $a = git diff --name-only
       Write-Output $a
       #Write-Output "##vso[task.setvariable variable=fileName]$a"
