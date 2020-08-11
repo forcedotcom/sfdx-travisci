@@ -27,15 +27,13 @@ jobs:
         echo "Changed File - $nameOfChangedFile";
       }
 
-      $From = "vivek@infoglen.com";
-      $To = "vivek@infoglen.com";
-      $Cc = "vivek@infoglen.com";
-      $Subject = "Commit Changes";
-      $Body = "<h2>Hi, look at these pics of Drogon!</h2><br><br>";
-      $Body += "He is so cute!";
-      $SMTPServer = "smtp.mailtrap.io";
-      $SMTPPort = "587";
-      (Get-Credential).password | ConvertFrom-SecureString > MailPW.txt -Force
-      $pw = Get-Content .\MailPW.txt | ConvertTo-SecureString - Force
-      $cred = New-Object System.Management.Automation.PSCredential "vivek@infoglen.com", $pw
-      Send-MailMessage -From $From -to $To -Cc $Cc -Subject $Subject -Body $Body -BodyAsHtml -SmtpServer $SMTPServer -Port $SMTPPort -UseSsl -Credential $cred -Force
+      $EmailTo = "vj.vivekjoshi@gmail.com"
+      $EmailFrom = "vj.vivekjoshi@gmail.com"
+      $Subject = "Test" 
+      $Body = "Test Body" 
+      $SMTPServer = "smtp.gmail.com" 
+      $SMTPMessage = New-Object System.Net.Mail.MailMessage($EmailFrom,$EmailTo,$Subject,$Body)
+      $SMTPClient = New-Object Net.Mail.SmtpClient($SmtpServer, 587) 
+      $SMTPClient.EnableSsl = $true 
+      $SMTPClient.Credentials = New-Object System.Net.NetworkCredential("vj.vivekjoshi@gmail.com", "Nanasi#Gmail1@#12345"); 
+      $SMTPClient.Send($SMTPMessage)
