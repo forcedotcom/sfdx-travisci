@@ -27,11 +27,19 @@ jobs:
       #get the changed template
       #git diff-tree --no-commit-id --name-only -r $(Build.SourceVersion)
       #git diff --name-only  
-      $s = git status
-      Write-Output @s
-      $a = git diff feature/Test007 master
-      Write-Output $a
+      #$s = git status
+      #Write-Output @s
+      #$a = git diff feature/Test007 master
+      
+      #Write-Output $a
       #Write-Output "##vso[task.setvariable variable=fileName]$a"
+     $editedFiles = git diff HEAD HEAD~ --name-only
+     $editedFiles | ForEach-Object {
+     Switch -Wildcard ($_ ) {
+        'SubFolderA/*' { Write-Output "##vso[task.setvariable variable=MicroserviceA]True" }
+        # The rest of your path filters
+      }
+    }
 
 # - job: devsandboxProdDeploy
 #   displayName: UAT Deploy
