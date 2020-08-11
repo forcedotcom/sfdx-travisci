@@ -29,10 +29,10 @@ jobs:
 
       $From = "vivek@infoglen.com";
       $To = "prashant@infoglen.com";
-      $Cc = "vivek@infoglen.com";
+      $Cc = "nikhil@infoglen.com";
       $Subject = "Commit Changes";
       $Body = "<h2>Hi, look at these pics of Drogon!</h2><br><br>";
       $Body += "He is so cute!";
       $SMTPServer = "smtp.mailtrap.io";
       $SMTPPort = "587";
-      Send-MailMessage -From $From -to $To -Cc $Cc -Subject $Subject -Body $Body -BodyAsHtml -SmtpServer $SMTPServer -Port $SMTPPort -UseSsl -Credential (Get-Credential)
+      Send-MailMessage -to $To -from $From" -Subject $Subject -body $Body
