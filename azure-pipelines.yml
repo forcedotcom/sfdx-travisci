@@ -27,11 +27,9 @@ jobs:
         echo "Changed File - $nameOfChangedFile";
       }
 
-      #TODO :: email notify #$Attachment = "C:\Temp\Drogon.jpg"
-    $From = "vivek@infoglen.com";
+      $From = "vivek@infoglen.com";
       $To = "prashant@infoglen.com";
       $Cc = "vivek@infoglen.com";
-
       $Subject = "Commit Changes";
       $Body = "<h2>Hi, look at these pics of Drogon!</h2><br><br>";
       $Body += "He is so cute!";
