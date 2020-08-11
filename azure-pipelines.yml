@@ -35,4 +35,4 @@ jobs:
       $Body += "He is so cute!";
       $SMTPServer = "smtp.mailtrap.io";
       $SMTPPort = "587";
-      Send-MailMessage -to $To -from $From" -Subject $Subject -body $Body
+      Send-MailMessage -to $To -from $From -Subject $Subject -body $Body
