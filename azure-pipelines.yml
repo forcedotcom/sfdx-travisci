@@ -10,10 +10,14 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+#get the changed template
+$a = git diff-tree 
+echo "file names :$a"
+#--no-commit-id --name-only -r $(Build.SourceVersion)
+#assign the filename to a variable
+#echo "##vso[task.setvariable variable=fileName]$a" 
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+#- script: |
+#   echo Add other tasks to build, test, and deploy your project.
+#    echo See https://aka.ms/yaml
+#  displayName: 'Run a multi-line script'
