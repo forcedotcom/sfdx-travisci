@@ -24,6 +24,11 @@ jobs:
       #assign the filename to a variable
       #echo "##vso[task.setvariable variable=fileName]$a" 
   - powershell:
+
+      $files = $(git diff HEAD HEAD~ --name-only)
+      $temp = $files -split ' '
+      $count = $temp.Length
+      Write-Output "Total changed $count files"
       #get the changed template
       #git diff-tree --no-commit-id --name-only -r $(Build.SourceVersion)
       #git diff --name-only  
@@ -33,13 +38,15 @@ jobs:
       
       #Write-Output $a
       #Write-Output "##vso[task.setvariable variable=fileName]$a"
-     $editedFiles = git diff HEAD HEAD~ --name-only
-     $editedFiles | ForEach-Object {
-     Switch -Wildcard ($_ ) {
-        'SubFolderA/*' { Write-Output "##vso[task.setvariable variable=MicroserviceA]True" }
-        # The rest of your path filters
-      }
-    }
+     #$editedFiles = git diff HEAD HEAD~ --name-only
+     #$editedFiles | ForEach-Object {
+     #Switch -Wildcard ($_ ) {
+      #  'SubFolderA/*' { Write-Output "##vso[task.setvariable variable=MicroserviceA]True" }
+        
+      #}
+    
+    #}
+   
 
 # - job: devsandboxProdDeploy
 #   displayName: UAT Deploy
