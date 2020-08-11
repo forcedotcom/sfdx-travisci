@@ -25,7 +25,9 @@ jobs:
       #echo "##vso[task.setvariable variable=fileName]$a" 
   - powershell:
       #get the changed template
-      $a = git diff-tree --no-commit-id --name-only -r $(Build.SourceVersion)  
+      #git diff-tree --no-commit-id --name-only -r $(Build.SourceVersion)  
+      $a = git diff origin
+      
       Write-Output "##vso[task.setvariable variable=fileName]$a"
 
 # - job: devsandboxProdDeploy
