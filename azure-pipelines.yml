@@ -30,7 +30,8 @@ jobs:
       $count = $temp.Length;
       Write-Output "Total changed $count files";
       For ($i=0; $i -lt $temp.Length; $i++){
-        
+        $nameOfChangedFile = $temp[$i]
+        echo "Changed File - $nameOfChangedFile"
       }
       #get the changed template
       #git diff-tree --no-commit-id --name-only -r $(Build.SourceVersion)
