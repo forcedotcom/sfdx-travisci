@@ -16,13 +16,6 @@ jobs:
   displayName: Production Deploy
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   steps:
-#get the changed template
-
-#        $a = git diff-tree 
- #     echo "file names :$a"
-      #--no-commit-id --name-only -r $(Build.SourceVersion)
-      #assign the filename to a variable
-      #echo "##vso[task.setvariable variable=fileName]$a" 
   - powershell:
 
       $files = $(git diff HEAD HEAD~ --name-only);
@@ -33,65 +26,3 @@ jobs:
         $nameOfChangedFile = $temp[$i];
         echo "Changed File - $nameOfChangedFile";
       }
-      #get the changed template
-      #git diff-tree --no-commit-id --name-only -r $(Build.SourceVersion)
-      #git diff --name-only  
-      #$s = git status
-      #Write-Output @s
-      #$a = git diff feature/Test007 master
-      
-      #Write-Output $a
-      #Write-Output "##vso[task.setvariable variable=fileName]$a"
-     #$editedFiles = git diff HEAD HEAD~ --name-only
-     #$editedFiles | ForEach-Object {
-     #Switch -Wildcard ($_ ) {
-      #  'SubFolderA/*' { Write-Output "##vso[task.setvariable variable=MicroserviceA]True" }
-        
-      #}
-    
-    #}
-   
-
-# - job: devsandboxProdDeploy
-#   displayName: UAT Deploy
-#   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/uat'))
-#   steps:
-#     - task: UseNode@1
-#     - bash: 
-#         npm install  --global sfdx-cli@7.45.1
-#       displayName: Install Salesforce CLI
-#     - bash: 
-#         sfdx force:auth:jwt:grant --clientid $(uatClientId) --jwtkeyfile ./server.key --username $(uatUserName) --instanceurl $(ProdInstanceUrl) -a prod
-#       displayName: Authorize salesforce org
-#     - bash: 
-#         sfdx force:source:deploy -l RunLocalTests -p ./force-app -u prod -w 10
-#       displayName: Deploying  Metadata to the Org
-
-# - job: QADeploy
-#   displayName: QA Deploy
-#   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/qa'))
-#   steps:
-#     - task: UseNode@1
-#     - bash: 
-#         npm install  --global sfdx-cli@7.45.1
-#       displayName: Install Salesforce CLI
-#     - bash: 
-#         sfdx force:auth:jwt:grant --clientid $(qaClient) --jwtkeyfile ./server.key --username $(qaUsername) --instanceurl $(ProdInstanceUrl) -a prod
-#       displayName: Authorize salesforce org
-#     - bash: 
-#         sfdx force:source:deploy -l RunLocalTests -p ./force-app -u prod -w 10
-#       displayName: Deploying  Metadata to the Org
-
-# - job: devsandboxDeploy
-#   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/devSandbox'))
-#   steps:
-#     - task: UseNode@1
-#     - bash: 
-#         npm install  --global sfdx-cli@7.45.1
-#       displayName: Install Salesforce CLI
-#     - bash: 
-#         sfdx force:auth:jwt:grant --clientid $(devSanboxKey) --jwtkeyfile ./server.key --username $(devSandbox) --instanceurl $(devLogin) -a prod
-#       displayName: Authorize salesforce org
-#     - bash: 
-#         sfdx force:source:deploy -l RunLocalTests -p ./force-app -u prod -w 10
-#       displayName: Deploying Metadata to the Org
