@@ -28,8 +28,8 @@ jobs:
       #git diff-tree --no-commit-id --name-only -r $(Build.SourceVersion)
       #git diff --name-only  
       git status
-      git diff Test007 master
-      $a = git diff
+      
+      $a = git diff Test007 master
       Write-Output $a
       #Write-Output "##vso[task.setvariable variable=fileName]$a"
 
