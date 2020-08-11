@@ -19,7 +19,7 @@ jobs:
   - powershell:
 
       #$files = $(git diff HEAD HEAD~ --name-only);
-      $files = $(git diff --name-only);
+      $files = $(git diff --name-only HEAD HEAD~1);
       $temp = $files -split ' ';
       $count = $temp.Length;
       Write-Output "Total changed $count files";
