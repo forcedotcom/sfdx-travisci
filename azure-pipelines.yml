@@ -27,13 +27,21 @@ jobs:
         echo "Changed File - $nameOfChangedFile";
       }
 
-      $EmailTo = "vj.vivekjoshi@gmail.com";
-      $EmailFrom = "vj.vivekjoshi@gmail.com";
-      $Subject = "Test";
-      $Body = "Test Body";
-      $SMTPServer = "mail"; 
-      $SMTPMessage = New-Object System.Net.Mail.MailMessage($EmailFrom,$EmailTo,$Subject,$Body);
-      $SMTPClient = New-Object Net.Mail.SmtpClient($SmtpServer, 587); 
-      $SMTPClient.EnableSsl =$False; 
-      $SMTPClient.Credentials = New-Object System.Net.NetworkCredential("vivek@infoglen.com", "Info#Glen1"); 
-      $SMTPClient.Send($SMTPMessage);
+      $emailSmtpServer = "mail"
+      $emailSmtpServerPort = "587"
+      $emailSmtpUser = "user"
+      $emailSmtpPass = "P@ssw0rd"
+      
+      $emailFrom = "vj.vivekjoshi@gmail.com"
+      $emailTo = "vj.vivekjoshi@gmail.com"
+      $emailcc="vj.vivekjoshi@gmail.com"
+      
+      $emailMessage = New-Object System.Net.Mail.MailMessage( $emailFrom , $emailTo )
+      $emailMessage.cc.add($emailcc)
+      $emailMessage.Subject = "subject" 
+      $emailMessage.Body = "body"
+      
+      $SMTPClient = New-Object System.Net.Mail.SmtpClient( $emailSmtpServer , $emailSmtpServerPort )
+      $SMTPClient.EnableSsl = $False
+      $SMTPClient.Credentials = New-Object System.Net.NetworkCredential( $emailSmtpUser , $emailSmtpPass );
+      $SMTPClient.Send( $emailMessage )
