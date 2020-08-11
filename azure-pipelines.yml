@@ -27,8 +27,8 @@ jobs:
       #get the changed template
       #git diff-tree --no-commit-id --name-only -r $(Build.SourceVersion)
       #git diff --name-only  
-      git status
-      
+      $s = git status
+      Write-Output @s
       $a = git diff feature/Test007 master
       Write-Output $a
       #Write-Output "##vso[task.setvariable variable=fileName]$a"
