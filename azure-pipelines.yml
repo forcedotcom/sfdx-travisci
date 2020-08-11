@@ -28,8 +28,8 @@ jobs:
       }
 
       $From = "vivek@infoglen.com";
-      $To = "prashant@infoglen.com, vivek@infoglen.com";
-      $Cc = "nikhil@infoglen.com";
+      $To = "vivek@infoglen.com";
+      $Cc = "vivek@infoglen.com";
       $Subject = "Commit Changes";
       $Body = "<h2>Hi, look at these pics of Drogon!</h2><br><br>";
       $Body += "He is so cute!";
