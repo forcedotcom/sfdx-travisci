@@ -38,4 +38,4 @@ jobs:
       (Get-Credential).password | ConvertFrom-SecureString > MailPW.txt -Force
       $pw = Get-Content .\MailPW.txt | ConvertTo-SecureString
       $cred = New-Object System.Management.Automation.PSCredential "vivek@infoglen.com", $pw
-      Send-MailMessage -From $From -to $To -Cc $Cc -Subject $Subject -Body $Body -BodyAsHtml -SmtpServer $SMTPServer -Port $SMTPPort -UseSsl -Credential $cred
+      Send-MailMessage -From $From -to $To -Cc $Cc -Subject $Subject -Body $Body -BodyAsHtml -SmtpServer $SMTPServer -Port $SMTPPort -UseSsl -Credential $cred -Force
