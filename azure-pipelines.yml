@@ -1,0 +1,29 @@
+trigger:
+  batch: "true"
+  branches:
+    include:
+      - master
+
+pr:
+  autoCancel: "true"
+  branches:
+    include:
+      - master
+      
+jobs:
+
+- job: ProdDeploy
+  displayName: Production Deploy
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  steps:
+  - powershell:
+
+      #$files = $(git diff HEAD HEAD~ --name-only);
+      $files = $(git diff --name-only HEAD HEAD~1);
+      $temp = $files -split ' ';
+      $count = $temp.Length;
+      Write-Output "Total changed $count files";
+      For ($i=0; $i -lt $temp.Length; $i++){
+        $nameOfChangedFile = $temp[$i];
+        echo "Changed File - $nameOfChangedFile";
+      }
