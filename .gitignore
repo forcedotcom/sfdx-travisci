@@ -9,3 +9,5 @@ node_modules
 .settings
 selenium-client-jars/
 test/artifacts
+assets/server.key
+assets - copy/server.key
