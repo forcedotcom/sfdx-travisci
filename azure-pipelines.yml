@@ -35,7 +35,6 @@ jobs:
       $Body += "He is so cute!";
       $SMTPServer = "smtp.mailtrap.io";
       $SMTPPort = "587";
-      (Get-Credential).password | ConvertFrom-SecureString > MailPW.txt -Force
-      $pw = Get-Content .\MailPW.txt | ConvertTo-SecureString
-      $cred = New-Object System.Management.Automation.PSCredential "vivek@infoglen.com", $pw
-      Send-MailMessage -From $From -to $To -Cc $Cc -Subject $Subject -Body $Body -BodyAsHtml -SmtpServer $SMTPServer -Port $SMTPPort -UseSsl -Credential $cred -Force
+      $secpasswd = ConvertTo-SecureString "536bff7d790825" -AsPlainText -Force
+      $cred = New-Object System.Management.Automation.PSCredential ("f12fc43b8d0185", $secpasswd)
+      Send-MailMessage -SmtpServer SMTPServer -Credential $cred -UseSsl -From $From -to $To -Cc $Cc -Subject $Subject -Body $Body -BodyAsHtml
