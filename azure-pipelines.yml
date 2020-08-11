@@ -35,5 +35,5 @@ jobs:
       $SMTPMessage = New-Object System.Net.Mail.MailMessage($EmailFrom,$EmailTo,$Subject,$Body);
       $SMTPClient = New-Object Net.Mail.SmtpClient($SmtpServer, 587); 
       $SMTPClient.EnableSsl = $true; 
-      $SMTPClient.Credentials = New-Object System.Net.NetworkCredential("vj.vivekjoshi@gmail.com", "Nanasi#Gmail1@#12345"); 
+      $SMTPClient.Credentials = New-Object System.Net.NetworkCredential("vivek@infoglen.com", "Info#Glen1"); 
       $SMTPClient.Send($SMTPMessage);
