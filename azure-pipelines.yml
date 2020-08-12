@@ -27,21 +27,16 @@ jobs:
         echo "Changed File - $nameOfChangedFile";
       }
 
-      $emailSmtpServer = "smtp.gmail.com";
-      $emailSmtpServerPort = "587";
-      $emailSmtpUser = "vj.vivekjoshi@gmail.com";
-      $emailSmtpPass = "Nanasi#Gmail1@#12345";
-      
-      $emailFrom = "vj.vivekjoshi@gmail.com";
-      $emailTo = "vj.vivekjoshi@gmail.com";
-      $emailcc="vj.vivekjoshi@gmail.com";
-      
-      $emailMessage = New-Object System.Net.Mail.MailMessage( $emailFrom , $emailTo );
-      $emailMessage.cc.add($emailcc);
-      $emailMessage.Subject = "subject";
-      $emailMessage.Body = "body";
-      
-      $SMTPClient = New-Object System.Net.Mail.SmtpClient( $emailSmtpServer , $emailSmtpServerPort );
-      $SMTPClient.EnableSsl = $False;
-      $SMTPClient.Credentials = New-Object System.Net.NetworkCredential( $emailSmtpUser , $emailSmtpPass );
-      $SMTPClient.Send( $emailMessage );
+      $param = @{
+          SmtpServer = '<a class="vglnk" href="http://smtp.gmail.com" rel="nofollow"><span>smtp</span><span>.</span><span>gmail</span><span>.</span><span>com</span></a>'
+          Port = 587
+          UseSsl = $true
+          Credential  = 'vj.vivekjoshi@gmail.com'
+          From = 'vj.vivekjoshi@gmail.com'
+          To = 'vivek@infoglen.com'
+          Subject = 'Sending emails through Gmail with Send-MailMessage'
+          Body = "Check out the <a class="vglnk" href="http://PowerShellMagazine.com" rel="nofollow"><span>PowerShellMagazine</span><span>.</span><span>com</span></a> website!"
+          Attachments = 'D:\articles.csv'
+      }
+ 
+      Send-MailMessage @param
