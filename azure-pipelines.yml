@@ -22,18 +22,27 @@ jobs:
       $temp = $files -split ' ';
       $count = $temp.Length;
       Write-Output "Total changed $count files";
+
+      $bodyEmail = "<Html><Body>";
+      $bodyEmail = $bodyEmail + "Hi, <BR/>Following are the modified components:<BR/>"
+      $bodyEmail = $bodyEmail + "<Table border="1px" border-collapse="collapse">";
+      $bodyEmail = $bodyEmail + "<TH>Modified Metadata</TH>";
       For ($i=0; $i -lt $temp.Length; $i++){
         $nameOfChangedFile = $temp[$i];
         echo "Changed File - $nameOfChangedFile";
+        $bodyEmail = $bodyEmail + "<TR><TD>" + $nameOfChangedFile + "</TD></TR>";
       }
-      $EmFrom = "Enter From Email";
-      $username = "Enter User Name";
-      $pwd = "Enter Password";
-      $EmTo = " Enter To Email ";
-      $Server = " Enter SMTP Server Name ";
-      $port = 000;
+      $bodyEmail = $bodyEmail + "</Table>";
+      $bodyEmail = $bodyEmail + "</Body></Html>";
+
+      $EmFrom = "donorhub@cipherfrolics.com";
+      $username = "donorhub@cipherfrolics.com";
+      $pwd = "Password@1";
+      $EmTo = "vivek@infoglen.com;vj.vivekjoshi@gmail.com";
+      $Server = "webmail.cipherfrolics.com";
+      $port = 25;
       $Subj = "Following are the components modified";
-      $Bod = $temp;
+      $Bod = $bodyEmail;
       $securepwd = ConvertTo-SecureString $pwd -AsPlainText -Force;
       $cred = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $username, $securepwd;
       Send-MailMessage -To $EmTo -From $EmFrom -Body $Bod -Subject $Subj -SmtpServer $Server -port $port -Credential $cred;
