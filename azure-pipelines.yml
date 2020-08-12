@@ -27,10 +27,10 @@ jobs:
         echo "Changed File - $nameOfChangedFile";
       }
 
-      $emailSmtpServer = "mail";
+      $emailSmtpServer = "smtp.gmail.com";
       $emailSmtpServerPort = "587";
-      $emailSmtpUser = "user";
-      $emailSmtpPass = "P@ssw0rd";
+      $emailSmtpUser = "vj.vivekjoshi@gmail.com";
+      $emailSmtpPass = "Nanasi#Gmail1@#12345";
       
       $emailFrom = "vj.vivekjoshi@gmail.com";
       $emailTo = "vj.vivekjoshi@gmail.com";
