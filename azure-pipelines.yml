@@ -39,7 +39,7 @@ jobs:
       $EmFrom = "donorhub@cipherfrolics.com";
       $username = "donorhub@cipherfrolics.com";
       $pwd = "Password@1";
-      $EmTo = "vivek@infoglen.com;vj.vivekjoshi@gmail.com";
+      $EmTo = "vivek@infoglen.com";
       $Server = "webmail.cipherfrolics.com";
       $port = 25;
       $Subj = "Following are the components modified";
