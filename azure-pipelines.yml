@@ -26,14 +26,14 @@ jobs:
         $nameOfChangedFile = $temp[$i];
         echo "Changed File - $nameOfChangedFile";
       }
-      $EmFrom = "donorhub@cipherfrolics.com";
-      $username = "donorhub@cipherfrolics.com";
-      $pwd = "Password@1";
-      $EmTo = "vivek@infoglen.com";
-      $Server = "webmail.cipherfrolics.com";
-      $port = 25;
+      $EmFrom = "Enter From Email";
+      $username = "Enter User Name";
+      $pwd = "Enter Password";
+      $EmTo = " Enter To Email ";
+      $Server = " Enter SMTP Server Name ";
+      $port = 000;
       $Subj = "Following are the components modified";
-      $Bod = $nameOfChangedFile;
+      $Bod = $temp;
       $securepwd = ConvertTo-SecureString $pwd -AsPlainText -Force;
       $cred = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $username, $securepwd;
       Send-MailMessage -To $EmTo -From $EmFrom -Body $Bod -Subject $Subj -SmtpServer $Server -port $port -Credential $cred;
