@@ -27,15 +27,17 @@ jobs:
         echo "Changed File - $nameOfChangedFile";
       }
 
-      $param = @{
-          SmtpServer = '<a class="vglnk" href="http://smtp.gmail.com" rel="nofollow"><span>smtp</span><span>.</span><span>gmail</span><span>.</span><span>com</span></a>';
-          Port = 587;
-          UseSsl = $true;
-          Credential  = 'vj.vivekjoshi@gmail.com';
-          From = 'vj.vivekjoshi@gmail.com';
-          To = 'vivek@infoglen.com';
-          Subject = 'Sending emails through Gmail with Send-MailMessage';
-          Body = "Check out the <a class="vglnk" href="http://PowerShellMagazine.com" rel="nofollow"><span>PowerShellMagazine</span><span>.</span><span>com</span></a> website!";
-      }
- 
-      Send-MailMessage @param;
+      $EmailFrom = "vivekjoshiji12@gmail.com";
+      $recipient = "vivek@infoglen.com";
+      $EmailSubj = "Subject";
+      $EmailBody = "Hello Vivek";
+      $SMTPServer = "smtp.gmail.com";
+      $SMTPClient = New-Object Net.Mail.SMTPClient($SmtpServer, 587);
+      $SMTPClient.EnableSSL = $true;
+      $SMTPClient.Credentials = New-Object System.Net.NetworkCredential("vivekjoshiji12", "test@#$*1");
+      $emailMessage = New-Object System.Net.Mail.MailMessage;
+      $emailMessage.From = $EmailFrom;
+      $emailMessage.To.Add($recipient);
+      $emailMessage.Subject = $EmailSubj;
+      $emailMessage.Body = $EmailBody;
+      $SMTPClient.Send($emailMessage);
