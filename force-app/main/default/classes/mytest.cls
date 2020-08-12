@@ -5,7 +5,7 @@ private class mytest {
     static void myUnitTest() {
         myclass demo = new myclass();
 
-        System.assertEquals(demo.getAppVersion(), '1.0.0efsfsfsfsfsf TESTing again');
+        System.assertEquals(demo.getAppVersion(), '1.0.0efsfsfsfsfsf TESTing again sddadda');
 
         // Uncomment the following line to cause a build failure
         // System.assert(false);

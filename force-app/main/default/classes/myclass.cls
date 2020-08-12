@@ -7,7 +7,7 @@ public with sharing class myclass {
 		System.debug('for testing2');
 		System.debug('for testing1');
 
-		System.debug('for testing3-Vivek 00 TESTING YAML EMAIL');
+		System.debug('for testing3-Vivek 00 TESTING YAML EMAILasasasasas');
 
 		return '1.0.0';
 	}
