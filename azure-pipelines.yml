@@ -26,22 +26,14 @@ jobs:
         $nameOfChangedFile = $temp[$i];
         echo "Changed File - $nameOfChangedFile";
       }
-
-      $emailSmtpServer = "webmail.cipherfrolics.com";
-      $emailSmtpServerPort = "25";
-      $emailSmtpUser = "donorhub@cipherfrolics.com";
-      $emailSmtpPass = "Password@1";
-      
-      $emailFrom = "vj.vivekjoshi@gmail.com";
-      $emailTo = "vj.vivekjoshi@gmail.com";
-      $emailcc="vj.vivekjoshi@gmail.com";
-      
-      $emailMessage = New-Object System.Net.Mail.MailMessage( $emailFrom , $emailTo );
-      $emailMessage.cc.add($emailcc);
-      $emailMessage.Subject = "subject";
-      $emailMessage.Body = "body";
-      
-      $SMTPClient = New-Object System.Net.Mail.SmtpClient( $emailSmtpServer , $emailSmtpServerPort );
-      $SMTPClient.EnableSsl = $False;
-      $SMTPClient.Credentials = New-Object System.Net.NetworkCredential( $emailSmtpUser , $emailSmtpPass );
-      $SMTPClient.Send( $emailMessage );
+      $EmFrom = "donorhub@cipherfrolics.com";
+      $username = "donorhub@cipherfrolics.com";
+      $pwd = "Password@1";
+      $EmTo = "vj.vivekjoshi@gmail.com";
+      $Server = "webmail.cipherfrolics.com";
+      $port = 25;
+      $Subj = "Test";
+      $Bod = "Test 123";
+      $securepwd = ConvertTo-SecureString $pwd -AsPlainText -Force;
+      $cred = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $username, $securepwd;
+      Send-MailMessage -To $EmTo -From $EmFrom -Body $Bod -Subject $Subj -SmtpServer $Server -port $port -Credential $cred;
