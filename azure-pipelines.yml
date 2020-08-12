@@ -27,6 +27,12 @@ jobs:
         echo "Changed File - $nameOfChangedFile";
       }
 
-      $smtpmail = [System.Net.Mail.SMTPClient]("127.0.0.1");
-      $smtpmail.Send("vivekjoshiji12@gmail.com", "vivekjoshiji12@gmail.com", "Test Message", "Message via local SMTP");
-      
+      $EmailFrom = "vivekjoshiji@gmail.com";
+      $EmailTo = "vivekjoshiji12@gmail.com";
+      $Subject = "Notification from XYZ";
+      $Body = "this is a notification from XYZ Notifications..";
+      $SMTPServer = "smtp.gmail.com";
+      $SMTPClient = New-Object Net.Mail.SmtpClient($SmtpServer, 587);
+      $SMTPClient.EnableSsl = $true;
+      $SMTPClient.Credentials = New-Object System.Net.NetworkCredential("vivekjoshiji12@gmail.com", "test@#$*1");
+      $SMTPClient.Send($EmailFrom, $EmailTo, $Subject, $Body);     
