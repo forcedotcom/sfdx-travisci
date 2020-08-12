@@ -25,7 +25,7 @@ jobs:
 
       $bodyEmail = "<Html><Body>";
       $bodyEmail = $bodyEmail + "Hi, <BR/>Following are the modified components:<BR/>";
-      $bodyEmail = $bodyEmail + "<Table border=\"1px\" border-collapse=\"collapse\">";
+      $bodyEmail = $bodyEmail + "<Table border=\`"1px\`" border-collapse=\`"collapse\`">";
       $bodyEmail = $bodyEmail + "<TH>Modified Metadata</TH>";
       For ($i=0; $i -lt $temp.Length; $i++){
         $nameOfChangedFile = $temp[$i];
