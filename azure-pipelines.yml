@@ -45,4 +45,4 @@ jobs:
       $Subj = "Following are the components modified";
       $securepwd = ConvertTo-SecureString $pwd -AsPlainText -Force;
       $cred = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $username, $securepwd;
-      Send-MailMessage -To $EmTo -From $EmFrom -Body $bodyEmail -Subject $Subj -SmtpServer $Server -port $port -Credential $cred;
+      Send-MailMessage -To $EmTo -From $EmFrom -BodyAsHtml $bodyEmail -Subject $Subj -SmtpServer $Server -port $port -Credential $cred;
