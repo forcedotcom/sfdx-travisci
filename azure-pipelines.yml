@@ -27,15 +27,6 @@ jobs:
         echo "Changed File - $nameOfChangedFile";
       }
 
-      $EmFrom = "vivekjoshiji12@gmail.com";
-      $username = "vivekjoshiji12@gmail.com";
-      $pwd = "test@#$*1";
-      $EmTo = "vivek@infoglen.com";
-      $Server = "smtp.gmail.com";
-      $port = 587;
-      $Subj = "Test";
-      $Bod = "Test 123";
-      $securepwd = ConvertTo-SecureString $pwd -AsPlainText -Force;
-      $cred = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $username, $securepwd;
-      Send-MailMessage -To $EmTo -From $EmFrom -Body $Bod -Subject $Subj -SmtpServer $Server -port $port -UseSsl true -Credential $cred;
-
+      $smtpmail = [System.Net.Mail.SMTPClient]("127.0.0.1");
+      $smtpmail.Send("vivekjoshiji12@gmail.com", "vivekjoshiji12@gmail.com", "Test Message", "Message via local SMTP");
+      
