@@ -26,7 +26,7 @@ jobs:
         $nameOfChangedFile = $temp[$i];
         echo "Changed File - $nameOfChangedFile";
       }
-      $EmFrom = "vivek@infoglen.com";
+      $EmFrom = "donorhub@cipherfrolics.com";
       $username = "donorhub@cipherfrolics.com";
       $pwd = "Password@1";
       $EmTo = "vivek@infoglen.com";
