@@ -24,16 +24,16 @@ jobs:
       Write-Output "Total changed $count files";
 
       $bodyEmail = "<Html><Body>";
-      $bodyEmail = $bodyEmail \+ "Hi, <BR/>Following are the modified components:<BR/>";
-      $bodyEmail = $bodyEmail \+ "<Table border=\`"1px\`" border-collapse=\`"collapse\`">";
-      $bodyEmail = $bodyEmail \+ "<TH>Modified Metadata</TH>";
+      $bodyEmail = $bodyEmail + "Hi, <BR/>Following are the modified components:<BR/>";
+      $bodyEmail = $bodyEmail + "<Table border=1>";
+      $bodyEmail = $bodyEmail + "<TH>Modified Metadata</TH>";
       For ($i=0; $i -lt $temp.Length; $i++){
         $nameOfChangedFile = $temp[$i];
         echo "Changed File - $nameOfChangedFile";
-        $bodyEmail = $bodyEmail \+ "<TR><TD>" \+ $nameOfChangedFile \+ "</TD></TR>";
+        $bodyEmail = $bodyEmail + "<TR><TD>" + $nameOfChangedFile + "</TD></TR>";
       }
-      $bodyEmail = $bodyEmail \+ "</Table>";
-      $bodyEmail = $bodyEmail \+ "</Body></Html>";
+      $bodyEmail = $bodyEmail + "</Table>";
+      $bodyEmail = $bodyEmail + "</Body></Html>";
 
       $EmFrom = "donorhub@cipherfrolics.com";
       $username = "donorhub@cipherfrolics.com";
