@@ -28,7 +28,7 @@ jobs:
       }
 
       $emailSmtpServer = "webmail.cipherfrolics.com";
-      $emailSmtpServerPort = "143";
+      $emailSmtpServerPort = "25";
       $emailSmtpUser = "donorhub@cipherfrolics.com";
       $emailSmtpPass = "Password@1";
       
