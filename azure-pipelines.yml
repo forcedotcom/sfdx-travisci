@@ -27,17 +27,15 @@ jobs:
         echo "Changed File - $nameOfChangedFile";
       }
 
-      $EmailFrom = "vivekjoshiji12@gmail.com";
-      $recipient = "vivek@infoglen.com";
-      $EmailSubj = "Subject";
-      $EmailBody = "Hello Vivek";
-      $SMTPServer = "smtp.gmail.com";
-      $SMTPClient = New-Object Net.Mail.SMTPClient($SmtpServer, 587);
-      $SMTPClient.EnableSSL = $true;
-      $SMTPClient.Credentials = New-Object System.Net.NetworkCredential("vivekjoshiji12", "test@#$*1");
-      $emailMessage = New-Object System.Net.Mail.MailMessage;
-      $emailMessage.From = $EmailFrom;
-      $emailMessage.To.Add($recipient);
-      $emailMessage.Subject = $EmailSubj;
-      $emailMessage.Body = $EmailBody;
-      $SMTPClient.Send($emailMessage);
+      $EmFrom = "vivekjoshiji12@gmail.com"
+      $username = "vivekjoshiji12@gmail.com"
+      $pwd = "test@#$*1"
+      $EmTo = "vivek@infoglen.com"
+      $Server = "smtp.gmail.com"
+      $port = 587
+      $Subj = "Test"
+      $Bod = "Test 123"
+      $securepwd = ConvertTo-SecureString $pwd -AsPlainText -Force
+      $cred = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $username, $securepwd
+      Send-MailMessage -To $EmTo -From $EmFrom -Body $Bod -Subject $Subj -Attachments $Att -SmtpServer $Server -port $port -UseSsl  -Credential $cred
+
