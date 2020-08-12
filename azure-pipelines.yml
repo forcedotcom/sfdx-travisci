@@ -37,5 +37,5 @@ jobs:
       $Bod = "Test 123";
       $securepwd = ConvertTo-SecureString $pwd -AsPlainText -Force;
       $cred = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $username, $securepwd;
-      Send-MailMessage -To $EmTo -From $EmFrom -Body $Bod -Subject $Subj -SmtpServer $Server -port $port -UseSsl $true -Credential $cred;
+      Send-MailMessage -To $EmTo -From $EmFrom -Body $Bod -Subject $Subj -SmtpServer $Server -port $port -UseSsl true -Credential $cred;
 
