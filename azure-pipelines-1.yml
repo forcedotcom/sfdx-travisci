@@ -29,7 +29,7 @@ jobs:
   - powershell: |
 
        echo $(PAT_TOKEN)
-       $env:AZURE_DEVOPS_EXT_PAT = $(PAT_TOKEN)
+       echo $env:AZURE_DEVOPS_EXT_PAT
        echo $(allowAutoMerge);
        if($(allowAutoMerge) -eq 1){
           write-host("*****Initiating AutoMerge To master******");
