@@ -2,18 +2,27 @@
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
-
 trigger:
-- feature/Test1234
+  batch: "true"
+  branches:
+    include:
+      - feature/Test1234
 
-pool:
-  vmImage: 'ubuntu-latest'
+pr:
+  autoCancel: "true"
+  branches:
+    include:
+      - feature/Test1234
+      
+jobs:
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- job: ProdDeploy
+  displayName: Production Deploy
+  steps:
+  - powershell:
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+        git checkout feature/Test1234
+        git pull origin feature/Test1234
+        git checkout master
+        git merge feature/Test1234
+        git push origin master
