@@ -19,12 +19,13 @@ variables:
 jobs:
 
 - job: AutoMergeToMaster
-  
   displayName: Auto Merge
   steps: 
   - checkout: self
     persistCredentials: true
     clean: true
+    env:
+      AZURE_DEVOPS_EXT_PAT: $(pat_token)
   - powershell: |
   
        echo $(allowAutoMerge);
