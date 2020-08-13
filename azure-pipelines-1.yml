@@ -30,6 +30,8 @@ jobs:
        echo $(allowAutoMerge);
        if($(allowAutoMerge) -eq 1){
           write-host("*****Initiating AutoMerge To master******");
+          $isCommitFromHotFix = 1;
+          Set-Variable -Name "$isCommitFromHotFix" -Value "1";
           git --version
           git config --global user.email "Prashantsxn8@gmail.com"
           git config --global user.name "Prashantsaxena88811"
@@ -38,8 +40,7 @@ jobs:
           git checkout master
           git merge feature/Test1234
           git push origin master
-          $isCommitFromHotFix = 1;
-          Set-Variable -Name $isCommitFromHotFix -Value 1
+          
        }else {
           write-host("No Auto Merge")
        }
