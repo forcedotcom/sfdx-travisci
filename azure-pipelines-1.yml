@@ -28,9 +28,9 @@ jobs:
       AZURE_DEVOPS_EXT_PAT: "w6hmwl5giih6wchrrxckertlsepwlloqhs3me2ejv424z3curtpa"
   - powershell: |
 
-       echo ${AZURE_DEVOPS_EXT_PAT}
+       echo $(AZURE_DEVOPS_EXT_PAT)
        $env:AZURE_DEVOPS_EXT_PAT = "w6hmwl5giih6wchrrxckertlsepwlloqhs3me2ejv424z3curtpa"
-       echo ${AZURE_DEVOPS_EXT_PAT}
+       echo $(AZURE_DEVOPS_EXT_PAT)
        echo $(allowAutoMerge);
        if($(allowAutoMerge) -eq 1){
           write-host("*****Initiating AutoMerge To master******");
