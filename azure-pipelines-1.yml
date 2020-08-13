@@ -13,15 +13,15 @@ pr:
   branches:
     include:
       - feature/Test1234
+variables:
+  - group: TestVariableGroup
+  - name: allowAutoMerge
+    value: $(variables.allowAutoMerge)
       
 jobs:
 
 - job: AutoMergeToMaster
-  variables:
-  - group: TestVariableGroup
-  - name: allowAutoMerge
-    value: $(variables.allowAutoMerge)
-
+  
   displayName: Auto Merge
   steps: 
   - checkout: self
