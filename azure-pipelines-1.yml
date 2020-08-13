@@ -17,13 +17,18 @@ pr:
 jobs:
 
 - job: AutoMergeToMaster
+  variables:
+  - group: TestVariableGroup
+  - name: autoMergeFlag
+    value: $[variables.allowAutoMerge]
+
   displayName: Auto Merge
   steps:
   - checkout: self
     persistCredentials: true
     clean: true
   - powershell: |
-       Write-Output $TestVariableGroup.allowAutoMerge
+       echo "Value - $autoMergeFlag";
        git --version
        git config --global user.email "Prashantsxn8@gmail.com"
        git config --global user.name "Prashantsaxena88811"
