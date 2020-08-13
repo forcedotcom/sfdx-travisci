@@ -42,8 +42,9 @@ jobs:
           git checkout master
           git merge feature/Test1234
           git push origin master
-          Write-Host "##vso[task.setvariable variable=isCommitFromHotFix;]testValue";
+          # Write-Host "##vso[task.setvariable variable=isCommitFromHotFix;]testValue";
 
+          az devops login --organization https://dev.azure.com/PrashantsaxenaSF/
           # Base64-encodes the Personal Access Token (PAT) appropriately
           $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f "","$(PAT_TOKEN)")))
           $url = "https://dev.azure.com/PrashantsaxenaSF/TestProject-Vivek/_apis/distributedtask/variablegroups/1?api-version=5.0-preview.1"
