@@ -20,15 +20,16 @@ jobs:
   variables:
   - group: TestVariableGroup
   - name: allowAutoMerge
-    value: $[variables.alllowAutoMerge]
+    value: "Hello $[variables.allowAutoMerge]"
 
   displayName: Auto Merge
-  steps:
+  steps: 
   - checkout: self
     persistCredentials: true
     clean: true
   - powershell: |
-       echo "Value 1- $(allowAutoMerge)" $(alllowAutoMerge);
+       echo "Value 1- $(allowAutoMerge)" $(allowAutoMerge);
+       echo "Value 1- $(variables.allowAutoMerge)" $(variables.allowAutoMerge);
        git --version
        git config --global user.email "Prashantsxn8@gmail.com"
        git config --global user.name "Prashantsaxena88811"
