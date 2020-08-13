@@ -28,10 +28,10 @@ jobs:
     persistCredentials: true
     clean: true
   - powershell: |
-       echo "Value 1- $allowAutoMerge" $allowAutoMerge;
-       echo "Value 2- " $[variables.allowAutoMerge];
-       echo "Value 3- " $alllowAutoMerge;
-       echo "Value 4- " $[variables.alllowAutoMerge];
+       echo "Value 1- $(allowAutoMerge)" $(allowAutoMerge);
+       echo "Value 2- " $([variables.allowAutoMerge]);
+       echo "Value 3- " $(alllowAutoMerge);
+       echo "Value 4- " $([variables.alllowAutoMerge]);
        git --version
        git config --global user.email "Prashantsxn8@gmail.com"
        git config --global user.name "Prashantsaxena88811"
