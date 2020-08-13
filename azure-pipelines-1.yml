@@ -38,7 +38,7 @@ jobs:
           git checkout master
           git merge feature/Test1234
           git push origin master
-          az pipelines variable-group variable update --group-id 2 --name isCommitFromHotFix --value 1 --organization https://dev.azure.com/PrashantsaxenaSF/
+          az pipelines variable-group variable update --group-id 2 --name isCommitFromHotFix --value 1 --organization https://dev.azure.com/PrashantsaxenaSF/ --project TestProject-Vivek
        }else {
           write-host("No Auto Merge")
        }
