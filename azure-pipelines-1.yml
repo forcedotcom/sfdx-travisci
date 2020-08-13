@@ -17,8 +17,6 @@ pr:
 jobs:
 
 - job: AutoMergeToMaster
-  variables:
-  - group: TestVariableGroup
   displayName: Auto Merge
   steps:
   - checkout: self
