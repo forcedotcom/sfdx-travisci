@@ -27,6 +27,7 @@ jobs:
     env:
       AZURE_DEVOPS_EXT_PAT: $(pat_token)
   - powershell: |
+       echo ${AZURE_DEVOPS_EXT_PAT}
        $env:AZURE_DEVOPS_EXT_PAT = $(pat_token)
        echo $(allowAutoMerge);
        echo $(pat_token);
