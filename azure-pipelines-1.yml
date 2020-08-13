@@ -28,9 +28,7 @@ jobs:
   - powershell: |
   
        echo $(allowAutoMerge);
-       $initiateAutoMerge = $(allowAutoMerge);
-       echo $(initiateAutoMerge);
-       if($(initiateAutoMerge) -eq 1){
+       if($(allowAutoMerge) -eq 1){
           write-host("*****Initiating AutoMerge To master******");
           git --version
           git config --global user.email "Prashantsxn8@gmail.com"
