@@ -28,7 +28,6 @@ jobs:
     persistCredentials: true
     clean: true
   - powershell: |
-       echo "Value 1-" $(TestVariableGroup.allowAutoMerge)
        echo "Value 1-" $(allowAutoMerge)
        git --version
        git config --global user.email "Prashantsxn8@gmail.com"
