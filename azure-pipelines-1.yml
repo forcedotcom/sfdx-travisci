@@ -19,6 +19,9 @@ jobs:
 - job: AutoMergeToMaster
   variables:
   - group: TestVariableGroup
+  - name: allowAutoMerge
+    value: $[variables.allowAutoMerge]
+
   displayName: Auto Merge
   steps: 
   - checkout: self
@@ -27,6 +30,7 @@ jobs:
   - powershell: |
        echo "Value 1-" $(TestVariableGroup)
        echo "Value 1-" $(TestVariableGroup.allowAutoMerge)
+       echo "Value 1-" $(allowAutoMerge)
        git --version
        git config --global user.email "Prashantsxn8@gmail.com"
        git config --global user.name "Prashantsaxena88811"
