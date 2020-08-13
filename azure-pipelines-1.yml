@@ -27,8 +27,9 @@ jobs:
     env:
       AZURE_DEVOPS_EXT_PAT: $(pat_token)
   - powershell: |
-  
+       $env:AZURE_DEVOPS_EXT_PAT = $(pat_token)
        echo $(allowAutoMerge);
+       echo $(pat_token);
        if($(allowAutoMerge) -eq 1){
           write-host("*****Initiating AutoMerge To master******");
           git --version
@@ -39,7 +40,8 @@ jobs:
           git checkout master
           git merge feature/Test1234
           git push origin master
-          az devops login --org --organization https://dev.azure.com/PrashantsaxenaSF/
+          
+          az devops login --organization https://dev.azure.com/PrashantsaxenaSF/
           az pipelines variable-group variable update --group-id 2 --name isCommitFromHotFix --value 1 --organization https://dev.azure.com/PrashantsaxenaSF/ --project TestProject-Vivek
        }else {
           write-host("No Auto Merge")
