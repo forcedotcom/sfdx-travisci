@@ -19,10 +19,9 @@ jobs:
 - job: ProdDeploy
   displayName: Production Deploy
   steps:
-  - powershell:
-
-       $ git checkout feature/Test1234
-       $ git pull origin feature/Test1234
-       $ git checkout master
-       $ git merge feature/Test1234
-       $ git push origin master
+  - checkout: self
+    persistCredentials: true
+    clean: true
+  - powershell: |
+       git --version
+      
