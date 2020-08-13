@@ -32,7 +32,7 @@ jobs:
        echo $env:AZURE_DEVOPS_EXT_PAT
        echo $(allowAutoMerge);
        if($(allowAutoMerge) -eq 1){
-          Write-Host "##vso[task.setvariable variable=isCommitFromHotFix;]1";
+          Write-Host "##vso[task.setvariable variable="isCommitFromHotFix";]1";
           write-host("*****Initiating AutoMerge To master******");
           git --version
           git config --global user.email "Prashantsxn8@gmail.com"
