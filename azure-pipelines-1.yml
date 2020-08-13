@@ -25,10 +25,12 @@ jobs:
     persistCredentials: true
     clean: true
     env:
-      AZURE_DEVOPS_EXT_PAT: $(pat_token)
+      AZURE_DEVOPS_EXT_PAT: "w6hmwl5giih6wchrrxckertlsepwlloqhs3me2ejv424z3curtpa"
   - powershell: |
+
        echo ${AZURE_DEVOPS_EXT_PAT}
-       $env:AZURE_DEVOPS_EXT_PAT = $(pat_token)
+       $env:AZURE_DEVOPS_EXT_PAT = "w6hmwl5giih6wchrrxckertlsepwlloqhs3me2ejv424z3curtpa"
+       echo ${AZURE_DEVOPS_EXT_PAT}
        echo $(allowAutoMerge);
        echo $(pat_token);
        if($(allowAutoMerge) -eq 1){
