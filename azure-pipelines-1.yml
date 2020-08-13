@@ -26,6 +26,7 @@ jobs:
     persistCredentials: true
     clean: true
   - powershell: |
+  
        echo $allowAutoMerge;
        $initiateAutoMerge = $allowAutoMerge;
        echo $initiateAutoMerge;
