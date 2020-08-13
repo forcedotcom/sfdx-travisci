@@ -32,7 +32,6 @@ jobs:
        $env:AZURE_DEVOPS_EXT_PAT = "w6hmwl5giih6wchrrxckertlsepwlloqhs3me2ejv424z3curtpa"
        echo ${AZURE_DEVOPS_EXT_PAT}
        echo $(allowAutoMerge);
-       echo $(pat_token);
        if($(allowAutoMerge) -eq 1){
           write-host("*****Initiating AutoMerge To master******");
           git --version
