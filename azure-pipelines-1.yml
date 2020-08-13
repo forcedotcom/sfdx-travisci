@@ -26,7 +26,7 @@ jobs:
     persistCredentials: true
     clean: true
   - powershell: |
-       echo $allowAutoMerge
+       echo $(allowAutoMerge)
        if($allowAutoMerge -eq "1"){
           write-host("*****Initiating AutoMerge To master******");
           git --version
