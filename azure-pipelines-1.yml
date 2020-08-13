@@ -39,6 +39,8 @@ jobs:
           git merge feature/Test1234
           git push origin master
           $(allowAutoMerge) = 1;
+          $isCommitFromHotFix = 1;
+          Set-Variable -Name $isCommitFromHotFix -Value 1
        }else {
           write-host("No Auto Merge")
        }
