@@ -20,7 +20,7 @@ jobs:
   variables:
   - group: TestVariableGroup
   - name: allowAutoMerge
-    value: "Hello $[variables.allowAutoMerge]"
+    value: $env:ALLOWAUTOMERGE
 
   displayName: Auto Merge
   steps: 
