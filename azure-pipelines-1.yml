@@ -40,7 +40,7 @@ jobs:
           git checkout master
           git merge feature/Test1234
           git push origin master
-          
+          az pipelines variable-group variable update --group-id 2 --name isCommitFromHotFix --value 1
        }else {
           write-host("No Auto Merge")
        }
