@@ -44,16 +44,13 @@ jobs:
           git push origin master
           Write-Host "##vso[task.setvariable variable=isCommitFromHotFix;]testValue";
 
-          $id = 2
+          # Base64-encodes the Personal Access Token (PAT) appropriately
+          $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f "",$(PAT_TOKEN))))
+          $url = "https://dev.azure.com/PrashantsaxenaSF/TestProject-Vivek/_apis/distributedtask/variablegroups/1?api-version=5.0-preview.1"
 
-          # This is using some environment variables provided by the pipeline to build the URL
-          $url = ("$($env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI)$env:SYSTEM_TEAMPROJECTID/_apis/distributedtask/variablegroups/{0}?api-version=5.0-preview" -f $id)
-
-          # You might find it useful to us a GET method to grab the variable group, update it and then convert it to this json string rather than doing this here
-          $json = '{"id":$id,"type":"Vsts","name":"TestVariableGroup","<Variable Name":{"isCommitFromHotFix":{"isSecret":false,"value":"1"}}}'
-
-          $pipeline = Invoke-RestMethod -Uri $url -Method Put -Body $json -ContentType "application/json" -Headers @{Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"}
-
+          $json = '{"id":2,"type":"Vsts","name":"TestVariableGroup","variables":{"isCommitFromHotFix":{"isSecret":false,"value":"0931"}}}'
+          $pipeline = Invoke-RestMethod -Uri $url -Method Put -Body $json -ContentType "application/json" -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)}
+          Write-Host "New Variable Value:" $pipeline.variables.isCommitFromHotFix.value 
        }else {
           write-host("No Auto Merge")
        }
