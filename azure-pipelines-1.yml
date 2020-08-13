@@ -15,8 +15,6 @@ pr:
       - feature/Test1234
 variables:
   - group: TestVariableGroup
-  - name: allowAutoMerge
-    value: $(variables.allowAutoMerge)
       
 jobs:
 
@@ -29,6 +27,7 @@ jobs:
     clean: true
   - powershell: |
        echo "Value 1-" $(allowAutoMerge)
+       echo $allowAutoMerge
        git --version
        git config --global user.email "Prashantsxn8@gmail.com"
        git config --global user.name "Prashantsaxena88811"
