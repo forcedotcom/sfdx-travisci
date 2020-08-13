@@ -45,7 +45,7 @@ jobs:
           Write-Host "##vso[task.setvariable variable=isCommitFromHotFix;]testValue";
 
           # Base64-encodes the Personal Access Token (PAT) appropriately
-          $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f "",$(PAT_TOKEN))))
+          $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f "","$(PAT_TOKEN)")))
           $url = "https://dev.azure.com/PrashantsaxenaSF/TestProject-Vivek/_apis/distributedtask/variablegroups/1?api-version=5.0-preview.1"
 
           $json = '{"id":2,"type":"Vsts","name":"TestVariableGroup","variables":{"isCommitFromHotFix":{"isSecret":false,"value":"0931"}}}'
