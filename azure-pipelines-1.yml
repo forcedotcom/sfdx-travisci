@@ -92,7 +92,8 @@ jobs:
               Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"
            }
           # Set new value for the specific variable
-          $vgresponse.variables.$variableName.value = "0711"
+          echo $vgresponse.variables.$variableName.Value
+          $vgresponse.variables.$variableName.Value = "0711"
           ####****************** update the modified object **************************
           $json = @($vgresponse) | ConvertTo-Json -Depth 99
           $updatedvg = Invoke-RestMethod -Uri $baseUri -Method Put -Body $json -ContentType "application/json" -Headers @{
