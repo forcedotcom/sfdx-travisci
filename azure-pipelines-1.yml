@@ -50,7 +50,7 @@ jobs:
           Write-Host $url
 
           function CreateJsonBody{
-            $value = @{"id"=2,"type"="Vsts","name"="TestVariableGroup","variables":{"isCommitFromHotFix":{"isSecret"=false,"value"="0930"}}}"@
+            $value = '{"id":2,"type":"Vsts","name":"TestVariableGroup","variables":{"isCommitFromHotFix":{"isSecret":false,"value":"0931"}}}'
             return $value
           }
           $json = CreateJsonBody
