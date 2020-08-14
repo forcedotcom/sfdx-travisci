@@ -61,8 +61,8 @@ jobs:
           $result = Invoke-RestMethod -Uri $call -Method Get -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)}
 
           $groupId = (2)
-          Write-Host $(result.value)
-          echo $(result.value)
+          Write-Host $result.value
+          echo $result.value
           foreach($group in $result.value) {
               Write-Host  $group.name
               if($group.name.Equals($variableGroupName)) {
