@@ -55,7 +55,7 @@ jobs:
 
           # GET https://{accountName}.visualstudio.com/{project}/_apis/distributedtask/variablegroups?api-version=4.1-preview.1
           # get variable groups and find our one
-          $call = $vstsUri + $projectName + "/_apis/distributedtask/variablegroups?api-version=4.1-preview.1"
+          $call = "https://dev.azure.com/PrashantsaxenaSF/TestProject-Vivek/_apis/distributedtask/variablegroups?api-version=4.1-preview.1"
           $result = Invoke-RestMethod -Uri $call -Method Get -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)}
 
           $groupId = (-1)
@@ -75,7 +75,7 @@ jobs:
           }
 
           # get full json for our group
-          $call = $vstsUri + $projectName + "/_apis/distributedtask/variablegroups/" + $groupId + "?api-version=4.1-preview.1"
+          $call = "https://dev.azure.com/PrashantsaxenaSF/TestProject-Vivek/_apis/distributedtask/variablegroups/" + $groupId + "?api-version=4.1-preview.1"
           $group = Invoke-RestMethod -Uri $call -Method Get -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)}
 
           # https://docs.microsoft.com/en-us/rest/api/vsts/_apis/distributedtask/variablegroups/variablegroups/update?view=vsts-rest-4.1
@@ -84,7 +84,7 @@ jobs:
           $group.variables.sendNotification += @{"value" = "New Secret Value"}
           $group.variables.sendNotification += @{"isSecret" = $true}
 
-          $call = $vstsUri + $projectName + "/_apis/distributedtask/variablegroups/" + $groupId + "?api-version=4.1-preview.1"
+          $call = "https://dev.azure.com/PrashantsaxenaSF/TestProject-Vivek/_apis/distributedtask/variablegroups/" + $groupId + "?api-version=4.1-preview.1"
           $result = Invoke-RestMethod -Uri $call -Method Put -ContentType "application/json" -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)} -Body (ConvertTo-Json $group -Depth 10)      
 
          }else {
