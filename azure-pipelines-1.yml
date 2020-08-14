@@ -49,7 +49,7 @@ jobs:
 
           $personalAccessToken = $PAT_TOKEN
           $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f "",$personalAccessToken)))
-          $accountname = "dev.azure.com"
+          $accountname = "PrashantsaxenaSF"
           $variableGroupName = "TestVariableGroup"
           $projectName = "TestProject-Vivek"
 
