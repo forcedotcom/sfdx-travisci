@@ -81,6 +81,8 @@ jobs:
           }
 
           # if we can't find the group, throw an error
+          Write-Host "Group Id is " $groupId
+          Write-Host "Group Id is " $(groupId)
           if($groupId -lt 0) {
 
               throw("Couldn't find group")
