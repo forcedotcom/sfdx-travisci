@@ -42,7 +42,7 @@ jobs:
           write-host "ENV is 1 " $PAT_TOKEN
           write-host "ENV is 2 " $(PAT_TOKEN)
           $PATToken = $PAT_TOKEN
-          Write-Host "ENV is " $env:AZURE_DEVOPS_EXT_PAT
+          Write-Host "ENV is " $PATToken
           $env:AZURE_DEVOPS_EXT_PAT = $PATToken
           Write-Host "ENV is " $env:AZURE_DEVOPS_EXT_PAT
           #'f3s5p4b4soqlcef7yqjx3bwfpy5e6c4nw5f3wgwf3s7hw6ghvepa'
