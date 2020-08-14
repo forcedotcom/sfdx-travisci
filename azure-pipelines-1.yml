@@ -49,7 +49,7 @@ jobs:
           Write-Host "##vso[task.setvariable variable=allowAutoMerge;]testvalue";
 
 
-          $url = "$($env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI)$env:SYSTEM_TEAMPROJECTID/_apis/distributedtask/variablegroups/2?api-version=5.0-preview.1"
+          $url = "https://dev.azure.com/PrashantsaxenaSF/TestProject-Vivek/_apis/distributedtask/variablegroups/1?api-version=5.0-preview.1"
           Write-Host $url
 
           function CreateJsonBody
