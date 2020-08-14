@@ -70,8 +70,8 @@ jobs:
           $pass= "PrashantSF@123"
           $secpasswd = ConvertTo-SecureString $pass -AsPlainText -Force
           $credential = New-Object System.Management.Automation.PSCredential($user, $secpasswd)
-          # $outResult = Invoke-RestMethod -Uri $Url -Method Put -Body $jsonBody -ContentType "application/json" -Headers @{Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"}
-          $outResult = Invoke-RestMethod -Uri $Url -Method Put -Body $jsonBody -ContentType "application/json" -Credential $credential
+          $outResult = Invoke-RestMethod -Uri $Url -Method Put -Body $jsonBody -ContentType "application/json" -Headers @{Authorization = "Bearer $PAT_TOKEN"}
+          # $outResult = Invoke-RestMethod -Uri $Url -Method Put -Body $jsonBody -ContentType "application/json" -Credential $credential
     
          }else {
           write-host("No Auto Merge")
