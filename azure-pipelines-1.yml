@@ -88,12 +88,16 @@ jobs:
           # Base64-encodes the Personal Access Token (PAT) appropriately
           $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $user,$token)))
           $baseUri = "$collectionurl/$project/_apis/distributedtask/variablegroups/$($variablegroupid)?api-version=5.0-preview.1"
-          $vgresponse = Invoke-RestMethod -Method Get -Uri $baseUri -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)} 
+          $vgresponse = Invoke-RestMethod -Method Get -Uri $baseUri -Headers @{
+              Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"
+           }
           # Set new value for the specific variable
           $vgresponse.variables.$variableName.value = "0711"
           ####****************** update the modified object **************************
           $json = @($vgresponse) | ConvertTo-Json -Depth 99
-          $updatedvg = Invoke-RestMethod -Uri $baseUri -Method Put -Body $json -ContentType "application/json" -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)}
+          $updatedvg = Invoke-RestMethod -Uri $baseUri -Method Put -Body $json -ContentType "application/json" -Headers @{
+              Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"
+          }
           Cls
           write-host "==========================================================" 
           Write-host "The value of Varialbe '$variableName' is updated to" $updatedvg.variables.$variableName.value
