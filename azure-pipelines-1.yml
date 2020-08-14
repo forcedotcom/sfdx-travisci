@@ -67,4 +67,4 @@ jobs:
         groups=$(az pipelines variable-group list --org $ORGANIZATION_URL -p $PROJECT --group-name $targetGroup | jq -r ".[].name")
         for group in $groups; do
         echo $group
-        az pipelines variable-group list --org $ORGANIZATION_URL -p $PROJECT --group-name $group | grep $findString
+        az pipelines variable-group list --org $ORGANIZATION_URL -p $PROJECT --group-name $group | grep $findString;
