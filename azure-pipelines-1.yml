@@ -79,7 +79,7 @@ jobs:
           # Write-Host "New Variable Value:" $pipeline.variables.isCommitFromHotFix.value
 
 
-          $personalAccessToken = $(PAT_TOKEN)
+          $personalAccessToken = $PAT_TOKEN
           $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f "",$personalAccessToken)))
           $accountname = "dev.azure.com"
           $variableGroupName = "TestVariableGroup"
