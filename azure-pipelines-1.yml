@@ -27,6 +27,8 @@ jobs:
     env:
       AZURE_DEVOPS_EXT_PAT: $(PAT_TOKEN)
       SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+    
+
   - powershell: |
 
        echo $(PAT_TOKEN)
@@ -46,6 +48,10 @@ jobs:
           git checkout master
           git merge feature/Test1234
           git push origin master
+
+          # echo $env:AZURE_DEVOPS_EXT_PAT | az devops login
+          # az devops configure -d organization = https://dev.azure.com/PrashantsaxenaSF/TestProject-Vivek
+          # az pipelines variable-group variable update --id 2 --name isCommitFromHotFix --value 2
 
           # Base64-encodes the Personal Access Token (PAT) appropriately
           # $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f "","$(PAT_TOKEN)")))
@@ -71,6 +77,51 @@ jobs:
           # }
 
           # Write-Host "New Variable Value:" $pipeline.variables.isCommitFromHotFix.value
+
+
+          $personalAccessToken = $(PAT_TOKEN)
+          $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f "",$personalAccessToken)))
+          $accountname = "dev.azure.com"
+          $variableGroupName = "TestVariableGroup"
+          $projectName = "TestProject-Vivek"
+
+          $vstsUri = "https://" + $accountname + ".visualstudio.com/"
+
+          # GET https://{accountName}.visualstudio.com/{project}/_apis/distributedtask/variablegroups?api-version=4.1-preview.1
+          # get variable groups and find our one
+          $call = $vstsUri + $projectName + "/_apis/distributedtask/variablegroups?api-version=4.1-preview.1"
+          $result = Invoke-RestMethod -Uri $call -Method Get -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)}
+
+          $groupId = (2)
+          foreach($group in $result.value) {
+              if($group.name.Equals($variableGroupName)) {
+
+                  $groupId = $group.id
+                  break;
+              }
+          }
+
+          # if we can't find the group, throw an error
+          if($groupId -lt 0) {
+
+              throw("Couldn't find group")
+
+          }
+
+          # get full json for our group
+          $call = $vstsUri + $projectName + "/_apis/distributedtask/variablegroups/" + $groupId + "?api-version=4.1-preview.1"
+          $group = Invoke-RestMethod -Uri $call -Method Get -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)}
+
+          # https://docs.microsoft.com/en-us/rest/api/vsts/_apis/distributedtask/variablegroups/variablegroups/update?view=vsts-rest-4.1
+          # update variable group by id
+          $group.variables.isCommitFromHotFix = @{}
+          $group.variables.isCommitFromHotFix += @{"value" = "New Secret Value"}
+          $group.variables.isCommitFromHotFix += @{"isSecret" = $false}
+
+          $call = $vstsUri + $projectName + "/_apis/distributedtask/variablegroups/" + $groupId + "?api-version=4.1-preview.1"
+          $result = Invoke-RestMethod -Uri $call -Method Put -ContentType "application/json" -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)} -Body (ConvertTo-Json $group -Depth 10) 
+
+
          }else {
           write-host("No Auto Merge")
        }
