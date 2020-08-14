@@ -25,8 +25,8 @@ jobs:
     persistCredentials: true
     clean: true
     env:
-      AZURE_DEVOPS_EXT_PAT: $(PAT_TOKEN)
-      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+      AZURE_DEVOPS_EXT_PAT: $PAT_TOKEN
+      SYSTEM_ACCESSTOKEN: $System.AccessToken
     
 
   - powershell: |
@@ -35,6 +35,9 @@ jobs:
        Write-Host "This is a script that could use $env:SYSTEM_ACCESSTOKEN"
        echo $env:AZURE_DEVOPS_EXT_PAT
        echo $(allowAutoMerge);
+       echo $System.AccessToken
+       $env:SYSTEM_ACCESSTOKEN =  $System.AccessToken
+       echo $env:SYSTEM_ACCESSTOKEN
        if($(allowAutoMerge) -eq 1){
 
            Write-Host "##vso[task.setvariable variable="isCommitFromHotFix";value=23]23";
