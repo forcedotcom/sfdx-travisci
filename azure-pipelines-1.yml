@@ -54,9 +54,6 @@ jobs:
           $token = "w6hmwl5giih6wchrrxckertlsepwlloqhs3me2ejv424z3curtpa"
           $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $user,$token)))
 
-          $personalToken = "w6hmwl5giih6wchrrxckertlsepwlloqhs3me2ejv424z3curtpa"
-          $token =[System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$($personalToken)"))
-          $header = @{authorization = "Basic $token"}
               
           $Url = "https://dev.azure.com/PrashantsaxenaSF/TestProject-Vivek/_apis/distributedtask/variablegroups/2?api-version=5.1-preview.1"
           function createJsonBody{
@@ -68,7 +65,8 @@ jobs:
           $jsonBody = createJsonBody
           write-host " jsonBody is " $jsonBody
 
-          $outResult = Invoke-RestMethod -Uri $Url -Method Put -Body $json -ContentType "application/json" -Headers $header
+          $outResult = Invoke-RestMethod -Uri $Url -Method Put -Body $jsonBody -ContentType "application/json" -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)}
+
     
          }else {
           write-host("No Auto Merge")
