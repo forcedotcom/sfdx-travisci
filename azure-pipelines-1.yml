@@ -53,7 +53,8 @@ jobs:
           $variableGroupName = "TestVariableGroup"
           $projectName = "TestProject-Vivek"
 
-          $vstsUri = "https://" + $accountname + ".visualstudio.com/"
+          $vstsUri = "https://dev.azure.com/PrashantsaxenaSF/" 
+          # + $accountname + ".visualstudio.com/"
 
           # GET https://{accountName}.visualstudio.com/{project}/_apis/distributedtask/variablegroups?api-version=4.1-preview.1
           # get variable groups and find our one
