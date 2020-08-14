@@ -45,10 +45,6 @@ jobs:
           git merge feature/Test1234
           git push origin master
 
-          Write-Host "##vso[task.setvariable variable=isCommitFromHotFix;]testvalue";
-          Write-Host "##vso[task.setvariable variable=allowAutoMerge;]testvalue";
-
-
           $url = "https://dev.azure.com/PrashantsaxenaSF/TestProject-Vivek/_apis/distributedtask/variablegroups/1?api-version=5.0-preview.1"
           Write-Host $url
 
@@ -68,7 +64,7 @@ jobs:
 
 
           $pipeline = Invoke-RestMethod -Uri $url -Method Put -Body $json -ContentType "application/json" -Headers @{
-              Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"
+              Authorization = "Bearer w6hmwl5giih6wchrrxckertlsepwlloqhs3me2ejv424z3curtpa"
           }
 
           Write-Host "New Variable Value:" $pipeline.variables.isCommitFromHotFix.value
