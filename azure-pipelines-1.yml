@@ -26,9 +26,11 @@ jobs:
     clean: true
     env:
       AZURE_DEVOPS_EXT_PAT: $(PAT_TOKEN)
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
   - powershell: |
 
        echo $(PAT_TOKEN)
+       Write-Host "This is a script that could use $env:SYSTEM_ACCESSTOKEN"
        echo $env:AZURE_DEVOPS_EXT_PAT
        echo $(allowAutoMerge);
        if($(allowAutoMerge) -eq 1){
@@ -46,6 +48,30 @@ jobs:
           Write-Host "##vso[task.setvariable variable=isCommitFromHotFix;]testvalue";
           Write-Host "##vso[task.setvariable variable=allowAutoMerge;]testvalue";
 
+
+          $url = "$($env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI)$env:SYSTEM_TEAMPROJECTID/_apis/distributedtask/variablegroups/{2}?api-version=5.0-preview.1"
+          Write-Host $url
+
+          function CreateJsonBody
+          {
+
+              $value = @"
+
+          {"id":2,"type":"Vsts","name":"TestVariableGroup","variables":{"isCommitFromHotFix":{"isSecret":false,"value":"0930"}}}
+
+          "@
+
+          return $value
+          }
+
+          $json = CreateJsonBody
+
+
+          $pipeline = Invoke-RestMethod -Uri $url -Method Put -Body $json -ContentType "application/json" -Headers @{
+              Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"
+          }
+
+          Write-Host "New Variable Value:" $pipeline.variables.isCommitFromHotFix.value
          }else {
           write-host("No Auto Merge")
        }
