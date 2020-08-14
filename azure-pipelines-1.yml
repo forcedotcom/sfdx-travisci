@@ -29,18 +29,8 @@ jobs:
       SYSTEM_ACCESSTOKEN: $System.AccessToken
   - powershell: |
 
-       Write-Host $(PAT_TOKEN)
-       Write-Host "This is a script that could use $env:SYSTEM_ACCESSTOKEN"
-       Write-Host $env:AZURE_DEVOPS_EXT_PAT
-       Write-Host $(allowAutoMerge);
-       Write-Host $System.AccessToken
-
        if($(allowAutoMerge) -eq 1){
 
-          Write-Host "Before " $(isCommitFromHotFix)
-          Write-Host "##vso[task.setvariable variable=isCommitFromHotFix;]crushed tomatoes"
-          Write-Host "After " $(isCommitFromHotFix)
-          
           git --version
           git config --global user.email "Prashantsxn8@gmail.com"
           git config --global user.name "Prashantsaxena88811"
@@ -51,24 +41,52 @@ jobs:
           git push origin master
           
           $user = "Prashant.saxenaSF@outlook.com"
-          $token = "w6hmwl5giih6wchrrxckertlsepwlloqhs3me2ejv424z3curtpa"
-          $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $user,$token)))
+          #$token = "w6hmwl5giih6wchrrxckertlsepwlloqhs3me2ejv424z3curtpa"
+          #$base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $user,$token)))
 
-              
-          $Url = "https://dev.azure.com/PrashantsaxenaSF/TestProject-Vivek/_apis/distributedtask/variablegroups/2?api-version=5.1-preview.1"
-          function createJsonBody{
-            # $value = '{"id":2,"type":"Vsts","name":"TestVariableGroup","variables":{"isCommitFromHotFix":{"value":"0931"}}}'
-            $value = '{"variables":{"allowAutoMerge":{"value":"value1"}},"id":2,"type":"Vsts","name":"TestVariableGroup"}'
-            return $value
-           }
-          # $jsonBody='{"variables": {"allowAutoMerge": {"value": "value1"},"isCommitFromHotFix": {"value": "value2"}},"type": "Vsts","name": "TestVariableGroup","description": "Updated variable group"}
-          $jsonBody = createJsonBody
-          write-host " jsonBody is " $jsonBody
+          $personalAccessToken = $PAT_TOKEN
+          $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $user,$personalAccessToken)))
+          $accountname = "dev.azure.com"
+          $variableGroupName = "myvariablegroup"
+          $projectName = "TestProject-Vivek"
 
-          $outResult = Invoke-RestMethod -Uri $Url -Method Put -Body $jsonBody -ContentType "application/json" -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)}
-          # $outResult = Invoke-RestMethod -Uri $Url -Method Put -Body $jsonBody -ContentType "application/json" -Headers @{Authorization = "Bearer $PAT_TOKEN"}
-          # 
-          Write-Host $(allowAutoMerge);
+          $vstsUri = "https://" + $accountname + "/"
+          #+ ".visualstudio.com/"
+
+          # GET https://{accountName}.visualstudio.com/{project}/_apis/distributedtask/variablegroups?api-version=4.1-preview.1
+          # get variable groups and find our one
+          $call = $vstsUri + $projectName + "/_apis/distributedtask/variablegroups?api-version=4.1-preview.1"
+          $result = Invoke-RestMethod -Uri $call -Method Get -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)}
+
+          $groupId = (-1)
+          foreach($group in $result.value) {
+              if($group.name.Equals($variableGroupName)) {
+
+                  $groupId = $group.id
+                  break;
+              }
+          }
+          Write-Host $groupId 
+          # if we can't find the group, throw an error
+          if($groupId -lt 0) {
+
+              throw("Couldn't find group")
+
+          }
+
+          # get full json for our group
+          $call = $vstsUri + $projectName + "/_apis/distributedtask/variablegroups/" + $groupId + "?api-version=4.1-preview.1"
+          $group = Invoke-RestMethod -Uri $call -Method Get -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)}
+
+          # https://docs.microsoft.com/en-us/rest/api/vsts/_apis/distributedtask/variablegroups/variablegroups/update?view=vsts-rest-4.1
+          # update variable group by id
+          $group.variables.sendNotification = @{}
+          $group.variables.sendNotification += @{"value" = "New Secret Value"}
+          $group.variables.sendNotification += @{"isSecret" = $true}
+
+          $call = $vstsUri + $projectName + "/_apis/distributedtask/variablegroups/" + $groupId + "?api-version=4.1-preview.1"
+          $result = Invoke-RestMethod -Uri $call -Method Put -ContentType "application/json" -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)} -Body (ConvertTo-Json $group -Depth 10)      
+
          }else {
           write-host("No Auto Merge")
        }
