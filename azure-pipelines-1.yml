@@ -60,6 +60,7 @@ jobs:
           $jsonBody = createJsonBody
           write-host " jsonBody is " $jsonBody
 
+          $outResult = Invoke-RestMethod -Uri $Url -Method Put -Body $jsonBody -ContentType "application/json" -SkipHeaderValidation
     
          }else {
           write-host("No Auto Merge")
