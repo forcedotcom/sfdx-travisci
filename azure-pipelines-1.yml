@@ -65,14 +65,18 @@ jobs:
           $jsonBody = createJsonBody
           write-host " jsonBody is " $jsonBody
 
-          $root = 'REST_SERVICE_URL'
           $user = "Prashant.saxenaSF@outlook.com"
           $pass= "PrashantSF@123"
-          $secpasswd = ConvertTo-SecureString $pass -AsPlainText -Force
-          $credential = New-Object System.Management.Automation.PSCredential($user, $secpasswd)
-          $outResult = Invoke-RestMethod -Uri $Url -Method Put -Body $jsonBody -ContentType "application/json" -Headers @{Authorization = "Bearer $PAT_TOKEN"}
-          # $outResult = Invoke-RestMethod -Uri $Url -Method Put -Body $jsonBody -ContentType "application/json" -Credential $credential
-    
+          $pair = "${user}:${pass}"
+          $bytes = [System.Text.Encoding]::ASCII.GetBytes($pair)
+          $base64 = [System.Convert]::ToBase64String($bytes)
+          $basicAuthValue = "Basic $base64"
+          $headers = @{ Authorization = $basicAuthValue }
+
+          $outResult = Invoke-RestMethod -Uri $Url -Method Put -Body $jsonBody -ContentType "application/json" -Headers $headers
+          # $outResult = Invoke-RestMethod -Uri $Url -Method Put -Body $jsonBody -ContentType "application/json" -Headers @{Authorization = "Bearer $PAT_TOKEN"}
+          # 
+          Write-Host $(allowAutoMerge);
          }else {
           write-host("No Auto Merge")
        }
