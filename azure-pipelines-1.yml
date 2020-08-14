@@ -35,7 +35,8 @@ jobs:
        echo $(allowAutoMerge);
        if($(allowAutoMerge) -eq 1){
 
-           Write-Host "##vso[task.setvariable variable="isCommitFromHotFix";value=23]";
+           Write-Host "##vso[task.setvariable variable="isCommitFromHotFix";value=23]23";
+           Write-Host "##vso[task.setVariable variable=TestVariableGroup;]{'isCommitFromHotFix':{'value':'A'}}"
           # write-host("*****Initiating AutoMerge To master******");
           git --version
           git config --global user.email "Prashantsxn8@gmail.com"
