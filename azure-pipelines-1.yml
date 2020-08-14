@@ -79,50 +79,27 @@ jobs:
           # Write-Host "New Variable Value:" $pipeline.variables.isCommitFromHotFix.value
 
 
-          $personalAccessToken = $PAT_TOKEN
-          $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f "",$personalAccessToken)))
-          $accountname = "dev.azure.com"
-          $variableGroupName = "TestVariableGroup"
-          $projectName = "TestProject-Vivek"
-
-          $vstsUri = "https://" + $accountname + ".visualstudio.com/"
-
-          # GET https://{accountName}.visualstudio.com/{project}/_apis/distributedtask/variablegroups?api-version=4.1-preview.1
-          # get variable groups and find our one
-          $call = $vstsUri + $projectName + "/_apis/distributedtask/variablegroups?api-version=4.1-preview.1"
-          $result = Invoke-RestMethod -Uri $call -Method Get -ContentType "application/json" -Headers @{
-              Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"
-           }
-          $groupId = (2)
-          foreach($group in $result.value) {
-              if($group.name.Equals($variableGroupName)) {
-
-                  $groupId = $group.id
-                  break;
-              }
-          }
-
-          # if we can't find the group, throw an error
-          if($groupId -lt 0) {
-
-              throw("Couldn't find group")
-
-          }
-
-          # get full json for our group
-          $call = $vstsUri + $projectName + "/_apis/distributedtask/variablegroups/" + $groupId + "?api-version=4.1-preview.1"
-          $group = Invoke-RestMethod -Uri $call -Method Get -ContentType "application/json" -Headers @{
-              Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"
-           }
-          # https://docs.microsoft.com/en-us/rest/api/vsts/_apis/distributedtask/variablegroups/variablegroups/update?view=vsts-rest-4.1
-          # update variable group by id
-          $group.variables.isCommitFromHotFix = @{}
-          $group.variables.isCommitFromHotFix += @{"value" = "New Secret Value"}
-          $group.variables.isCommitFromHotFix += @{"isSecret" = $false}
-
-          $call = $vstsUri + $projectName + "/_apis/distributedtask/variablegroups/" + $groupId + "?api-version=4.1-preview.1"
-          $result = Invoke-RestMethod -Uri $call -Method Put -ContentType "application/json" -Headers @{Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"} -Body (ConvertTo-Json $group -Depth 10) 
-
+          Param(
+            [string]$collectionurl = "https://dev.azure.com/PrashantsaxenaSF", 
+            [string]$project = "TestProject-Vivek",
+            [string]$variablegroupid = "2",    #Variable Group which needs to be updated
+            [string]$variableName = "isCommitFromHotFix", #The specific variable which needs to be updated
+            [string]$user = "Prashant.saxenaSF@outlook.com",
+            [string]$token = $PAT_TOKEN
+          )
+          # Base64-encodes the Personal Access Token (PAT) appropriately
+          $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $user,$token)))
+          $baseUri = "$collectionurl/$project/_apis/distributedtask/variablegroups/$($variablegroupid)?api-version=5.0-preview.1"
+          $vgresponse = Invoke-RestMethod -Method Get -Uri $baseUri -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)} 
+          # Set new value for the specific variable
+          $vgresponse.variables.$variableName.value = "0711"
+          ####****************** update the modified object **************************
+          $json = @($vgresponse) | ConvertTo-Json -Depth 99
+          $updatedvg = Invoke-RestMethod -Uri $baseUri -Method Put -Body $json -ContentType "application/json" -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)}
+          Cls
+          write-host "==========================================================" 
+          Write-host "The value of Varialbe '$variableName' is updated to" $updatedvg.variables.$variableName.value
+          write-host "=========================================================="
 
          }else {
           write-host("No Auto Merge")
