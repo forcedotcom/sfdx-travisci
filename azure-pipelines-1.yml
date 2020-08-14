@@ -37,6 +37,11 @@ jobs:
        $env:SYSTEM_ACCESSTOKEN =  $System.AccessToken
        Write-Host $env:SYSTEM_ACCESSTOKEN
        if($(allowAutoMerge) -eq 1){
+          
+          # set environment variable for current process
+          $env:AZURE_DEVOPS_EXT_PAT = $PAT_TOKEN
+          az devops login --organization https://dev.azure.com/PrashantsaxenaSF
+          az pipelines variable-group variable update --group-id 2 --name isCommitFromHotFix --value "1" --organization https://dev.azure.com/PrashantsaxenaSF/ --project TestProject-Vivek
 
           git --version
           git config --global user.email "Prashantsxn8@gmail.com"
@@ -61,11 +66,7 @@ jobs:
 
           Write-Host "New Variable Value:" $pipeline.variables.allowAutoMerge.value
 
-          # set environment variable for current process
-          $env:AZURE_DEVOPS_EXT_PAT = $PAT_TOKEN
-          az devops login --organization https://dev.azure.com/PrashantsaxenaSF
-          az pipelines variable-group variable update --group-id 2 --name isCommitFromHotFix --value "1" --organization https://dev.azure.com/PrashantsaxenaSF/ --project TestProject-Vivek
-
+         
          }else {
           write-host("No Auto Merge")
        }
