@@ -50,17 +50,21 @@ jobs:
           git merge feature/Test1234
           git push origin master
           
-          $Url = "https://dev.azure.com/PrashantsaxenaSF/TestProject-Vivek/_apis/distributedtask/variablegroups/1?api-version=5.1-preview.1"
+          $user = "Prashant.saxenaSF"
+          $token = "w6hmwl5giih6wchrrxckertlsepwlloqhs3me2ejv424z3curtpa"
+          $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $user,$token)))
+
+          $Url = "https://dev.azure.com/PrashantsaxenaSF/TestProject-Vivek/_apis/distributedtask/variablegroups/2?api-version=5.1-preview.1"
           function createJsonBody{
             # $value = '{"id":2,"type":"Vsts","name":"TestVariableGroup","variables":{"isCommitFromHotFix":{"value":"0931"}}}'
-            $value = '{"variables":{"allowAutoMerge":{"value":"value1"}},"id":1,"type":"Vsts","name":"TestVariableGroup"}'
+            $value = '{"variables":{"allowAutoMerge":{"value":"value1"}},"id":2,"type":"Vsts","name":"TestVariableGroup"}'
             return $value
            }
           # $jsonBody='{"variables": {"allowAutoMerge": {"value": "value1"},"isCommitFromHotFix": {"value": "value2"}},"type": "Vsts","name": "TestVariableGroup","description": "Updated variable group"}
           $jsonBody = createJsonBody
           write-host " jsonBody is " $jsonBody
 
-          $outResult = Invoke-RestMethod -Uri $Url -Method Put -Body $jsonBody -ContentType "application/json" -SkipHeaderValidation
+          $outResult = Invoke-RestMethod -Uri $Url -Method Put -Body $json -ContentType "application/json" -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)}
     
          }else {
           write-host("No Auto Merge")
