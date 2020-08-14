@@ -27,9 +27,6 @@ jobs:
     env:
       AZURE_DEVOPS_EXT_PAT: $PAT_TOKEN
       SYSTEM_ACCESSTOKEN: $System.AccessToken
-
-    
-
   - powershell: |
 
        Write-Host $(PAT_TOKEN)
@@ -41,9 +38,8 @@ jobs:
        Write-Host $env:SYSTEM_ACCESSTOKEN
        if($(allowAutoMerge) -eq 1){
 
-
-           # Write-Host "##vso[task.setvariable variable="isCommitFromHotFix";value=23]23";
-           # Write-Host "##vso[task.setVariable variable=TestVariableGroup;]{'isCommitFromHotFix':{'value':'A'}}"
+          # Write-Host "##vso[task.setvariable variable="isCommitFromHotFix";value=23]23";
+          # Write-Host "##vso[task.setVariable variable=TestVariableGroup;]{'isCommitFromHotFix':{'value':'A'}}"
           # write-host("*****Initiating AutoMerge To master******");
           git --version
           git config --global user.email "Prashantsxn8@gmail.com"
@@ -54,9 +50,9 @@ jobs:
           git merge feature/Test1234
           git push origin master
 
-          # echo $env:AZURE_DEVOPS_EXT_PAT | az devops login
-          # az devops configure -d organization = https://dev.azure.com/PrashantsaxenaSF/TestProject-Vivek
-          # az pipelines variable-group variable update --id 2 --name isCommitFromHotFix --value 2
+           echo $env:AZURE_DEVOPS_EXT_PAT | az devops login
+           az devops configure -d organization = https://dev.azure.com/PrashantsaxenaSF/TestProject-Vivek
+           az pipelines variable-group variable update --id 2 --name isCommitFromHotFix --value 2
 
           # Base64-encodes the Personal Access Token (PAT) appropriately
           # $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f "","$(PAT_TOKEN)")))
