@@ -50,7 +50,7 @@ jobs:
           git merge feature/Test1234
           git push origin master
           
-          $user = "Prashant.saxenaSF"
+          $user = "Prashant.saxenaSF@outlook.com"
           $token = "w6hmwl5giih6wchrrxckertlsepwlloqhs3me2ejv424z3curtpa"
           $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $user,$token)))
 
@@ -65,8 +65,8 @@ jobs:
           $jsonBody = createJsonBody
           write-host " jsonBody is " $jsonBody
 
-          $outResult = Invoke-RestMethod -Uri $Url -Method Put -Body $jsonBody -ContentType "application/json" -Headers @{Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"}
-
+          # $outResult = Invoke-RestMethod -Uri $Url -Method Put -Body $jsonBody -ContentType "application/json" -Headers @{Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"}
+          $outResult = Invoke-RestMethod -Uri $Url -Method Put -Body $jsonBody -ContentType "application/json" -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)}
     
          }else {
           write-host("No Auto Merge")
