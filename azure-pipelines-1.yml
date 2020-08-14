@@ -90,8 +90,9 @@ jobs:
           # GET https://{accountName}.visualstudio.com/{project}/_apis/distributedtask/variablegroups?api-version=4.1-preview.1
           # get variable groups and find our one
           $call = $vstsUri + $projectName + "/_apis/distributedtask/variablegroups?api-version=4.1-preview.1"
-          $result = Invoke-RestMethod -Uri $call -Method Get -ContentType "application/json" -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)}
-                   
+          $result = Invoke-RestMethod -Uri $call -Method Get -ContentType "application/json" -Headers @{
+              Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"
+           }
           $groupId = (2)
           foreach($group in $result.value) {
               if($group.name.Equals($variableGroupName)) {
@@ -110,8 +111,9 @@ jobs:
 
           # get full json for our group
           $call = $vstsUri + $projectName + "/_apis/distributedtask/variablegroups/" + $groupId + "?api-version=4.1-preview.1"
-          $group = Invoke-RestMethod -Uri $call -Method Get -ContentType "application/json" -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)}
-
+          $group = Invoke-RestMethod -Uri $call -Method Get -ContentType "application/json" -Headers @{
+              Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"
+           }
           # https://docs.microsoft.com/en-us/rest/api/vsts/_apis/distributedtask/variablegroups/variablegroups/update?view=vsts-rest-4.1
           # update variable group by id
           $group.variables.isCommitFromHotFix = @{}
@@ -119,7 +121,7 @@ jobs:
           $group.variables.isCommitFromHotFix += @{"isSecret" = $false}
 
           $call = $vstsUri + $projectName + "/_apis/distributedtask/variablegroups/" + $groupId + "?api-version=4.1-preview.1"
-          $result = Invoke-RestMethod -Uri $call -Method Put -ContentType "application/json" -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)} -Body (ConvertTo-Json $group -Depth 10) 
+          $result = Invoke-RestMethod -Uri $call -Method Put -ContentType "application/json" -Headers @{Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"} -Body (ConvertTo-Json $group -Depth 10) 
 
 
          }else {
