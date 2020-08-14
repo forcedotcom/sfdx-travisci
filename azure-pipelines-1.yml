@@ -40,53 +40,11 @@ jobs:
           git merge feature/Test1234
           git push origin master
           
-          $user = "Prashant.saxenaSF@outlook.com"
-          #$token = "w6hmwl5giih6wchrrxckertlsepwlloqhs3me2ejv424z3curtpa"
-          #$base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $user,$token)))
-
-          $personalAccessToken = $PAT_TOKEN
-          $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $user,$personalAccessToken)))
-          $accountname = "dev.azure.com"
-          $variableGroupName = "myvariablegroup"
-          $projectName = "TestProject-Vivek"
-
-          $vstsUri = "https://" + $accountname + "/"
-          #+ ".visualstudio.com/"
-
-          # GET https://{accountName}.visualstudio.com/{project}/_apis/distributedtask/variablegroups?api-version=4.1-preview.1
-          # get variable groups and find our one
-          $call = "https://dev.azure.com/PrashantsaxenaSF/TestProject-Vivek/_apis/distributedtask/variablegroups?api-version=4.1-preview.1"
-          $result = Invoke-RestMethod -Uri $call -Method Get -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)}
-
-          $groupId = (-1)
-          foreach($group in $result.value) {
-              if($group.name.Equals($variableGroupName)) {
-
-                  $groupId = $group.id
-                  break;
-              }
-          }
-          Write-Host $groupId 
-          # if we can't find the group, throw an error
-          if($groupId -lt 0) {
-
-              throw("Couldn't find group")
-
-          }
-
-          # get full json for our group
-          $call = "https://dev.azure.com/PrashantsaxenaSF/TestProject-Vivek/_apis/distributedtask/variablegroups/" + $groupId + "?api-version=4.1-preview.1"
-          $group = Invoke-RestMethod -Uri $call -Method Get -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)}
-
-          # https://docs.microsoft.com/en-us/rest/api/vsts/_apis/distributedtask/variablegroups/variablegroups/update?view=vsts-rest-4.1
-          # update variable group by id
-          $group.variables.sendNotification = @{}
-          $group.variables.sendNotification += @{"value" = "New Secret Value"}
-          $group.variables.sendNotification += @{"isSecret" = $true}
-
-          $call = "https://dev.azure.com/PrashantsaxenaSF/TestProject-Vivek/_apis/distributedtask/variablegroups/" + $groupId + "?api-version=4.1-preview.1"
-          $result = Invoke-RestMethod -Uri $call -Method Put -ContentType "application/json" -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)} -Body (ConvertTo-Json $group -Depth 10)      
-
+          az extension add --name azure-devops
+          az login
+          az devops configure --defaults organization=https://dev.azure.com/PrashantsaxenaSF project=TestProject-Vivek
+          az pipelines variable-group variable update --group-id 2 --name isCommitFromHotFix --value 1 --organization https://dev.azure.com/PrashantsaxenaSF/ --project TestProject-Vivek
+ 
          }else {
           write-host("No Auto Merge")
        }
