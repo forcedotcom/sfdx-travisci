@@ -31,13 +31,13 @@ jobs:
 
   - powershell: |
 
-       echo $(PAT_TOKEN)
+       Write-Host $(PAT_TOKEN)
        Write-Host "This is a script that could use $env:SYSTEM_ACCESSTOKEN"
-       echo $env:AZURE_DEVOPS_EXT_PAT
-       echo $(allowAutoMerge);
-       echo $System.AccessToken
+       Write-Host $env:AZURE_DEVOPS_EXT_PAT
+       Write-Host $(allowAutoMerge);
+       Write-Host $System.AccessToken
        $env:SYSTEM_ACCESSTOKEN =  $System.AccessToken
-       echo $env:SYSTEM_ACCESSTOKEN
+       Write-Host $env:SYSTEM_ACCESSTOKEN
        if($(allowAutoMerge) -eq 1){
 
            Write-Host "##vso[task.setvariable variable="isCommitFromHotFix";value=23]23";
