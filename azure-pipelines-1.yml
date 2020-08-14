@@ -51,7 +51,7 @@ jobs:
           git push origin master
           
           $user = "Prashant.saxenaSF@outlook.com"
-          $token = "PrashantSF@123"
+          $token = "w6hmwl5giih6wchrrxckertlsepwlloqhs3me2ejv424z3curtpa"
           $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $user,$token)))
 
               
@@ -65,15 +65,7 @@ jobs:
           $jsonBody = createJsonBody
           write-host " jsonBody is " $jsonBody
 
-          $user = "Prashant.saxenaSF@outlook.com"
-          $pass= "PrashantSF@123"
-          $pair = "${user}:${pass}"
-          $bytes = [System.Text.Encoding]::ASCII.GetBytes($pair)
-          $base64 = [System.Convert]::ToBase64String($bytes)
-          $basicAuthValue = "Basic $base64"
-          $headers = @{ Authorization = $basicAuthValue }
-
-          $outResult = Invoke-RestMethod -Uri $Url -Method Put -Body $jsonBody -ContentType "application/json" -Headers $headers
+          $outResult = Invoke-RestMethod -Uri $Url -Method Put -Body $jsonBody -ContentType "application/json" -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)}
           # $outResult = Invoke-RestMethod -Uri $Url -Method Put -Body $jsonBody -ContentType "application/json" -Headers @{Authorization = "Bearer $PAT_TOKEN"}
           # 
           Write-Host $(allowAutoMerge);
