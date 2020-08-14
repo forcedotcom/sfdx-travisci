@@ -51,7 +51,7 @@ jobs:
           git push origin master
           
           $user = "Prashant.saxenaSF@outlook.com"
-          $token = "w6hmwl5giih6wchrrxckertlsepwlloqhs3me2ejv424z3curtpa"
+          $token = "PrashantSF@123"
           $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $user,$token)))
 
               
