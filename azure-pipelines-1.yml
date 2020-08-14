@@ -37,9 +37,9 @@ jobs:
        $env:SYSTEM_ACCESSTOKEN =  $System.AccessToken
        Write-Host $env:SYSTEM_ACCESSTOKEN
        if($(allowAutoMerge) -eq 1){
-          
+          Write-Host "Before " $(isCommitFromHotFix)
           Write-Host "##vso[task.setvariable variable=isCommitFromHotFix;]crushed tomatoes"
-
+          Write-Host "After " $(isCommitFromHotFix)
           # set environment variable for current process
           # $env:AZURE_DEVOPS_EXT_PAT = $PAT_TOKEN
           #az devops login --organization https://dev.azure.com/PrashantsaxenaSF
