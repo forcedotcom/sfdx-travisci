@@ -50,6 +50,16 @@ jobs:
           git merge feature/Test1234
           git push origin master
           
+          $Url = "https://dev.azure.com/PrashantsaxenaSF/TestProject-Vivek/_apis/distributedtask/variablegroups/2?api-version=5.1-preview.1"
+          function createJsonBody{
+            # $value = '{"id":2,"type":"Vsts","name":"TestVariableGroup","variables":{"isCommitFromHotFix":{"value":"0931"}}}'
+            $value = '{"variables":{"allowAutoMerge":{"value":"value1"}},"type":"Vsts","name":"TestVariableGroup"}'
+            return $value
+           }
+          # $jsonBody='{"variables": {"allowAutoMerge": {"value": "value1"},"isCommitFromHotFix": {"value": "value2"}},"type": "Vsts","name": "TestVariableGroup","description": "Updated variable group"}
+          $jsonBody = createJsonBody
+          write-host " jsonBody is " $jsonBody
+
     
          }else {
           write-host("No Auto Merge")
