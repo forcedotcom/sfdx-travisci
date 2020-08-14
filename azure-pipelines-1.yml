@@ -15,6 +15,8 @@ pr:
       - feature/Test1234
 variables:
   - group: TestVariableGroup
+  - name: patToken
+    value: $[variables.PAT_TOKEN]
       
 jobs:
 
@@ -39,8 +41,8 @@ jobs:
           git merge feature/Test1234
           git push origin master
           
-          write-host "ENV is 2 " $(PAT_TOKEN)
-          $env:AZURE_DEVOPS_EXT_PAT = $PAT_TOKEN
+          write-host "ENV is 2 " $(patToken)
+          $env:AZURE_DEVOPS_EXT_PAT = $patToken
           Write-Host "ENV is 4 " $env:AZURE_DEVOPS_EXT_PAT
           #'f3s5p4b4soqlcef7yqjx3bwfpy5e6c4nw5f3wgwf3s7hw6ghvepa'
           az pipelines variable-group variable update --group-id 2 --name isCommitFromHotFix --value 1.5 --organization https://dev.azure.com/PrashantsaxenaSF/ --project TestProject-Vivek
