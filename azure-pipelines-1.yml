@@ -57,7 +57,7 @@ jobs:
 
           # GET https://{accountName}.visualstudio.com/{project}/_apis/distributedtask/variablegroups?api-version=4.1-preview.1
           # get variable groups and find our one
-          $call = $vstsUri + $projectName + "/_apis/distributedtask/variablegroups?api-version=4.1-preview.1"
+          $call = $vstsUri + $projectName + "/_apis/distributedtask/variablegroups?api-version=5.1-preview.1"
           $result = Invoke-RestMethod -Uri $call -Method Get -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)}
 
           $groupId = (-1)
@@ -89,7 +89,7 @@ jobs:
           $group.variables.isCommitFromHotFix += @{"value" = "New Secret Value"}
           $group.variables.isCommitFromHotFix += @{"isSecret" = $true}
 
-          $call = $vstsUri + $projectName + "/_apis/distributedtask/variablegroups/" + $groupId + "?api-version=4.1-preview.1"
+          $call = $vstsUri + $projectName + "/_apis/distributedtask/variablegroups/" + $groupId + "?api-version=5.1-preview.1"
           $result = Invoke-RestMethod -Uri $call -Method Put -ContentType "application/json" -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)} -Body (ConvertTo-Json $group -Depth 10) 
 
          }else {
