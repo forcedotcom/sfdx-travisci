@@ -92,7 +92,6 @@ jobs:
               Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"
            }
           # Set new value for the specific variable
-          echo $(vgresponse.variables)
           function CreateJsonBody{
             $value = '{"id":2,"type":"Vsts","name":"TestVariableGroup","variables":{"isCommitFromHotFix":{"value":"0931"}}}'
             return $value
