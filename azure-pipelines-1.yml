@@ -51,7 +51,7 @@ jobs:
           Write-Host $url
 
           function CreateJsonBody{
-            $value = '{"id":2,"type":"Vsts","name":"TestVariableGroup","variables":{"isCommitFromHotFix":{"isSecret":false,"value":"0931"}}}'
+            $value = '{"id":2,"type":"Vsts","name":"TestVariableGroup","variables":{"allowAutoMerge":{"isSecret":false,"value":"0931"}}}'
             return $value
           }
           $json = CreateJsonBody
@@ -59,7 +59,7 @@ jobs:
               Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"
           }
 
-          Write-Host "New Variable Value:" $pipeline.variables.isCommitFromHotFix.value
+          Write-Host "New Variable Value:" $pipeline.variables.allowAutoMerge.value
 
          }else {
           write-host("No Auto Merge")
