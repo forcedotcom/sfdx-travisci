@@ -34,8 +34,7 @@ jobs:
        Write-Host $env:AZURE_DEVOPS_EXT_PAT
        Write-Host $(allowAutoMerge);
        Write-Host $System.AccessToken
-       $env:SYSTEM_ACCESSTOKEN =  $System.AccessToken
-       Write-Host $env:SYSTEM_ACCESSTOKEN
+
        if($(allowAutoMerge) -eq 1){
 
           Write-Host "Before " $(isCommitFromHotFix)
