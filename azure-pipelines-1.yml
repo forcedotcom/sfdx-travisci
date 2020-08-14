@@ -79,14 +79,12 @@ jobs:
           # Write-Host "New Variable Value:" $pipeline.variables.isCommitFromHotFix.value
 
 
-          Param(
-            [string]$collectionurl = "https://dev.azure.com/PrashantsaxenaSF", 
-            [string]$project = "TestProject-Vivek",
-            [string]$variablegroupid = "2",    #Variable Group which needs to be updated
-            [string]$variableName = "isCommitFromHotFix", #The specific variable which needs to be updated
-            [string]$user = "Prashant.saxenaSF@outlook.com",
-            [string]$token = $PAT_TOKEN
-          )
+          $collectionurl = "https://dev.azure.com/PrashantsaxenaSF"; 
+          $project = "TestProject-Vivek";
+          $variablegroupid = "2";
+          $variableName = "isCommitFromHotFix";
+          $user = "Prashant.saxenaSF@outlook.com";
+          $token = $PAT_TOKEN;
           # Base64-encodes the Personal Access Token (PAT) appropriately
           $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $user,$token)))
           $baseUri = "$collectionurl/$project/_apis/distributedtask/variablegroups/$($variablegroupid)?api-version=5.0-preview.1"
