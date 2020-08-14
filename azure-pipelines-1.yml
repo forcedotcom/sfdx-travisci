@@ -47,20 +47,9 @@ jobs:
           git merge feature/Test1234
           git push origin master
 
-          # 5
-          # $collectionurl = "https://dev.azure.com/PrashantsaxenaSF"; 
-          # $project = "TestProject-Vivek";
-          # $variablegroupid = "2";
-          # $variableName = "isCommitFromHotFix";
-          # $user = "Prashant.saxenaSF@outlook.com";
-          # $token = $PAT_TOKEN;
-          # Base64-encodes the Personal Access Token (PAT) appropriately
-          # $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $user,$token)))
-          # $baseUri = "$collectionurl/$project/_apis/distributedtask/variablegroups/$($variablegroupid)?api-version=5.0-preview.1"
- 
           $personalAccessToken = $PAT_TOKEN
           $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f "",$personalAccessToken)))
-          $accountname = "PrashantsaxenaSF"
+          $accountname = "dev.azure.com"
           $variableGroupName = "TestVariableGroup"
           $projectName = "TestProject-Vivek"
 
@@ -72,7 +61,9 @@ jobs:
           $result = Invoke-RestMethod -Uri $call -Method Get -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)}
 
           $groupId = (-1)
+          Write-Host $result.value
           foreach($group in $result.value) {
+              Write-Host  $group.name
               if($group.name.Equals($variableGroupName)) {
                   Write-Host  $group.id
                   $groupId = $group.id
@@ -82,7 +73,6 @@ jobs:
 
           # if we can't find the group, throw an error
           Write-Host "Group Id is " $groupId
-          Write-Host "Group Id is " $(groupId)
           if($groupId -lt 0) {
 
               throw("Couldn't find group")
