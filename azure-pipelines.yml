@@ -9,7 +9,9 @@ pr:
   branches:
     include:
       - master
-      
+variables:
+  - group: TestVariableGroup
+
 jobs:
 
 - job: ProdDeploy
@@ -45,4 +47,12 @@ jobs:
       $Subj = "Following are the components modified";
       $securepwd = ConvertTo-SecureString $pwd -AsPlainText -Force;
       $cred = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $username, $securepwd;
-      Send-MailMessage -To $EmTo -From $EmFrom -BodyAsHtml $bodyEmail -Subject $Subj -SmtpServer $Server -port $port -Credential $cred;
+      
+      try {
+          Send-MailMessage -To $EmTo -From $EmFrom -BodyAsHtml $bodyEmail -Subject $Subj -SmtpServer $Server -port $port -Credential $cred;
+          $env:AZURE_DEVOPS_EXT_PAT = 'f3s5p4b4soqlcef7yqjx3bwfpy5e6c4nw5f3wgwf3s7hw6ghvepa'
+          az pipelines variable-group variable update --group-id 2 --name isCommitFromHotFix --value 0 --organization https://dev.azure.com/PrashantsaxenaSF/ --project TestProject-Vivek
+      }
+      catch {
+          Write-Output "An error occurred that could not be resolved."
+      }
