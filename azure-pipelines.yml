@@ -20,42 +20,42 @@ jobs:
   steps:
   - powershell:
 
-    if($(isCommitFromHotFix) -eq 1){
+      if($(isCommitFromHotFix) -eq 1){
 
-      $files = $(git diff HEAD HEAD~ --name-only);
-      $temp = $files -split ' ';
-      $count = $temp.Length;
-      Write-Output "Total changed $count files";
+        $files = $(git diff HEAD HEAD~ --name-only);
+        $temp = $files -split ' ';
+        $count = $temp.Length;
+        Write-Output "Total changed $count files";
 
-      $bodyEmail = "<Html><Body>";
-      $bodyEmail = $bodyEmail + "Hi, <BR/>Following are the modified components:<BR/>";
-      $bodyEmail = $bodyEmail + "<Table border=1>";
-      $bodyEmail = $bodyEmail + "<TH>Modified Metadata</TH>";
-      For ($i=0; $i -lt $temp.Length; $i++){
-        $nameOfChangedFile = $temp[$i];
-        echo "Changed File - $nameOfChangedFile";
-        $bodyEmail = $bodyEmail + "<TR><TD>" + $nameOfChangedFile + "</TD></TR>";
-      }
-      $bodyEmail = $bodyEmail + "</Table>";
-      $bodyEmail = $bodyEmail + "</Body></Html>";
-      Write-Output "Email Body is $bodyEmail";
+        $bodyEmail = "<Html><Body>";
+        $bodyEmail = $bodyEmail + "Hi, <BR/>Following are the modified components:<BR/>";
+        $bodyEmail = $bodyEmail + "<Table border=1>";
+        $bodyEmail = $bodyEmail + "<TH>Modified Metadata</TH>";
+        For ($i=0; $i -lt $temp.Length; $i++){
+          $nameOfChangedFile = $temp[$i];
+          echo "Changed File - $nameOfChangedFile";
+          $bodyEmail = $bodyEmail + "<TR><TD>" + $nameOfChangedFile + "</TD></TR>";
+        }
+        $bodyEmail = $bodyEmail + "</Table>";
+        $bodyEmail = $bodyEmail + "</Body></Html>";
+        Write-Output "Email Body is $bodyEmail";
 
-      $EmFrom = "donorhub@cipherfrolics.com";
-      $username = "donorhub@cipherfrolics.com";
-      $pwd = "Password@1";
-      $EmTo = "vivek@infoglen.com";
-      $Server = "webmail.cipherfrolics.com";
-      $port = 25;
-      $Subj = "Following are the components modified";
-      $securepwd = ConvertTo-SecureString $pwd -AsPlainText -Force;
-      $cred = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $username, $securepwd;
-      
-      try {
-          Send-MailMessage -To $EmTo -From $EmFrom -BodyAsHtml $bodyEmail -Subject $Subj -SmtpServer $Server -port $port -Credential $cred;
-          $env:AZURE_DEVOPS_EXT_PAT = 'f3s5p4b4soqlcef7yqjx3bwfpy5e6c4nw5f3wgwf3s7hw6ghvepa'
-          az pipelines variable-group variable update --group-id 2 --name isCommitFromHotFix --value 0 --organization https://dev.azure.com/PrashantsaxenaSF/ --project TestProject-Vivek
+        $EmFrom = "donorhub@cipherfrolics.com";
+        $username = "donorhub@cipherfrolics.com";
+        $pwd = "Password@1";
+        $EmTo = "vivek@infoglen.com";
+        $Server = "webmail.cipherfrolics.com";
+        $port = 25;
+        $Subj = "Following are the components modified";
+        $securepwd = ConvertTo-SecureString $pwd -AsPlainText -Force;
+        $cred = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $username, $securepwd;
+        
+        try {
+            Send-MailMessage -To $EmTo -From $EmFrom -BodyAsHtml $bodyEmail -Subject $Subj -SmtpServer $Server -port $port -Credential $cred;
+            $env:AZURE_DEVOPS_EXT_PAT = 'f3s5p4b4soqlcef7yqjx3bwfpy5e6c4nw5f3wgwf3s7hw6ghvepa'
+            az pipelines variable-group variable update --group-id 2 --name isCommitFromHotFix --value 0 --organization https://dev.azure.com/PrashantsaxenaSF/ --project TestProject-Vivek
+        }
+        catch {
+            Write-Output "An error occurred that could not be resolved."
+        }
       }
-      catch {
-          Write-Output "An error occurred that could not be resolved."
-      }
-    }
