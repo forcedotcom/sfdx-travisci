@@ -20,6 +20,8 @@ jobs:
   steps:
   - powershell:
 
+    if($(isCommitFromHotFix) -eq 1){
+
       $files = $(git diff HEAD HEAD~ --name-only);
       $temp = $files -split ' ';
       $count = $temp.Length;
@@ -56,3 +58,4 @@ jobs:
       catch {
           Write-Output "An error occurred that could not be resolved."
       }
+    }
