@@ -52,7 +52,7 @@ jobs:
         
         try {
             Send-MailMessage -To $EmTo -From $EmFrom -BodyAsHtml $bodyEmail -Subject $Subj -SmtpServer $Server -port $port -Credential $cred;
-            $env:AZURE_DEVOPS_EXT_PAT = 'f3s5p4b4soqlcef7yqjx3bwfpy5e6c4nw5f3wgwf3s7hw6ghvepa'
+            $env:AZURE_DEVOPS_EXT_PAT = 'f3s5p4b4soqlcef7yqjx3bwfpy5e6c4nw5f3wgwf3s7hw6ghvepa';
             az pipelines variable-group variable update --group-id 2 --name isCommitFromHotFix --value 0 --organization https://dev.azure.com/PrashantsaxenaSF/ --project TestProject-Vivek
         }
         catch {
