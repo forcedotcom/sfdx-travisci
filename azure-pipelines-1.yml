@@ -2,6 +2,11 @@
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
+resources:
+  pipelines:
+  - pipeline: deployPipeline   # Name of the pipeline resource
+    source: deployPipeline # Name of the pipeline referenced by the pipeline resource
+
 trigger:
   batch: "true"
   branches:
