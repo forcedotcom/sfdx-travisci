@@ -15,21 +15,23 @@ pr:
       - feature/Test1234
 variables:
   - group: TestVariableGroup
+  - name: patToken
+    value: $[variables.PAT_TOKEN]
       
 jobs:
 
 - job: AutoMergeToMaster
-  
   displayName: Auto Merge
   steps: 
   - checkout: self
     persistCredentials: true
     clean: true
+    env:
+      AZURE_DEVOPS_EXT_PAT: $(PAT_TOKEN)
   - powershell: |
-       echo $allowAutoMerge
-       $initiateAutoMerge = $allowAutoMerge;
-       if($initiateAutoMerge -eq 1){
-          write-host("*****Initiating AutoMerge To master******");
+
+       if($(allowAutoMerge) -eq 1){
+
           git --version
           git config --global user.email "Prashantsxn8@gmail.com"
           git config --global user.name "Prashantsaxena88811"
@@ -38,33 +40,12 @@ jobs:
           git checkout master
           git merge feature/Test1234
           git push origin master
-       }else {
+          
+          $env:AZURE_DEVOPS_EXT_PAT = 'f3s5p4b4soqlcef7yqjx3bwfpy5e6c4nw5f3wgwf3s7hw6ghvepa'
+          az pipelines variable-group variable update --group-id 2 --name isCommitFromHotFix --value 1 --organization https://dev.azure.com/PrashantsaxenaSF/ --project TestProject-Vivek
+ 
+         }else {
           write-host("No Auto Merge")
        }
-  - bash: 
-        ORGANIZATION="PrashantsaxenaSF"
-        PROJECT="TestProject-Vivek"
-        TOKEN="w6hmwl5giih6wchrrxckertlsepwlloqhs3me2ejv424z3curtpa"
-        ORGANIZATION_URL="https://dev.azure.com/$ORGANIZATION/"
-        targetGroup="TestVariableGroup"
-        findString="0"
-        replaceString="1"
-       # authenticate to Azure DevOps CLI
-    echo $TOKEN | az devops login --org $ORGANIZATION_URL
-          
-      group_json=$(az pipelines variable-group list --org $ORGANIZATION_URL -p $PROJECT --group-name $targetGroup)
-      targetGroupId=$(jq -r ".[].id"  <<< "$group_json")
-      for key in $(jq -r '.[].variables | keys | .[]' <<< "$group_json"); do
-      node=$(jq -r ".[].variables[\"$key\"]"  <<< "$group_json");
-      value=$(jq -r '.value' <<< "$node");
-      if [[ $value == *$findString* ]]; then
-        newvalue=${value/$findString/$replaceString}
-        echo "Replacing $value with $newvalue for $key variable"
-        az pipelines variable-group variable update --org $ORGANIZATION_URL -p $PROJECT --group-id $targetGroupId --name "$key" --value "$newvalue"
-      fi
-        done 
-      
-        groups=$(az pipelines variable-group list --org $ORGANIZATION_URL -p $PROJECT --group-name $targetGroup | jq -r ".[].name")
-        for group in $groups; do
-        echo $group
-        az pipelines variable-group list --org $ORGANIZATION_URL -p $PROJECT --group-name $group | grep $findString;
+
+ 
