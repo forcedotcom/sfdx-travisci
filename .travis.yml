@@ -22,7 +22,7 @@ before_install:
 script:
 - ls -l
 - git diff --name-only master..$TRAVIS_BRANCH
-- cp  $(git diff --name-only master..$TRAVIS_BRANCH) deploy/
+- cp  $(git diff --name-only master..$TRAVIS_BRANCH) deploy/*
 - cd deploy
 - ls -l
 - sfdx force:org:create -v HubOrg -s -f config/project-scratch-def.json -a ciorg --wait 10
