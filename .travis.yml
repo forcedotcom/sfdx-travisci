@@ -22,6 +22,7 @@ before_install:
 script:
 - ls -l
 - git diff --name-only master..$TRAVIS_BRANCH
+- cp --help
 - cp  $(git diff --name-only master..$TRAVIS_BRANCH) deploy/*
 - cd deploy
 - ls -l
