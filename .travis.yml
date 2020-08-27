@@ -26,3 +26,4 @@ if: branch = master
   - sfdx force:source:push -u ciorg
   - sfdx force:apex:test:run -u ciorg --wait 10
   - sfdx force:org:delete -u ciorg -p
+  # Convert force-app folder to mdapi folder structure, Login to production org, test deploy, deploy
