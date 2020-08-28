@@ -27,7 +27,11 @@ script:
 - sfdx force:source:push -u ciorg
 - sfdx force:apex:test:run -u ciorg --wait 10
 - sfdx force:org:delete -u ciorg -p
-# Login to dev and push code
-- sfdx force:auth:sfdxurl:store -f assets/dev-login.txt -a dev
-- sfdx force:source:convert -r ./force-app/ -d ./mdapi/
-- sfdx force:mdapi:deploy -d ./mdapi -u dev 
+branches:
+  only:
+    - master
+    # Login to dev and push code
+    - sfdx force:auth:sfdxurl:store -f assets/dev-login.txt -a dev
+    - sfdx force:source:convert -r ./force-app/ -d ./mdapi/
+    - sfdx force:mdapi:deploy -d ./mdapi -u dev
+    - sfdx force:mdapi:deploy:report -w 10
