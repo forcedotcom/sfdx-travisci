@@ -30,4 +30,4 @@ script:
 # Login to dev and push code
 - sfdx force:auth:sfdxurl:store -f assets/dev-login.txt -a dev
 - sfdx force:source:convert -r ./force-app/ -d ./mdapi/
-- sfdx force:mdapi:deploy -d ./mdapi -u dev -l RunLocalTests
+- sfdx force:mdapi:deploy -d ./mdapi -u dev 
