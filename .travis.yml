@@ -25,4 +25,4 @@ script:
 - sfdx force:auth:sfdxurl:store -f assets/dev-login.txt -a dev
 - sfdx force:source:convert -r ./force-app/ -d ./mdapi/
 - sfdx force:mdapi:deploy -c -d ./mdapi -u dev
-- sfdx force:mdapi:deploy:report -u dev
+- sfdx force:mdapi:deploy:report -u dev -w 10
