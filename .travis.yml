@@ -22,6 +22,6 @@ before_install:
 - sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key
   --username $USERNAME --setdefaultdevhubusername -a HubOrg
 script:
-- sfdx force:auth:sfdxurl:store -f mysandbox-login.txt -a dev
+- sfdx force:auth:sfdxurl:store -f dev-login.txt -a dev
 - sfdx force:source:convert -r ./force-app/ -d ./mdapi/
 - sfdx force:mdapi:deploy -c -d ./mdapi -u dev
