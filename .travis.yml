@@ -4,9 +4,10 @@ cache: false
 env:
 - URL=https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
 before_install:
-- openssl aes-256-cbc -K $encrypted_7cc2a14231e4_key -iv $encrypted_7cc2a14231e4_iv -in mysandbox-login.txt.enc -out mysandbox-login.txt -d
-# - openssl enc -d -aes-256-cbc -in mysandbox-login.txt.enc -out mysandbox-login.txt -k $DEVBOXPASS
-- openssl aes-256-cbc -K $encrypted_79a2f6093848_key -iv $encrypted_79a2f6093848_iv -in assets/server.key.enc -out assets/server.key -d
+- openssl aes-256-cbc -K $encrypted_a1e1b46722e5_key -iv $encrypted_a1e1b46722e5_iv
+  -in assets/dev-login.txt.enc -out assets/dev-login.txt -d
+- openssl aes-256-cbc -K $encrypted_79a2f6093848_key -iv $encrypted_79a2f6093848_iv
+  -in assets/server.key.enc -out assets/server.key -d
 - export SFDX_AUTOUPDATE_DISABLE=false
 - export SFDX_USE_GENERIC_UNIX_KEYCHAIN=true
 - export SFDX_DOMAIN_RETRY=300
@@ -21,13 +22,6 @@ before_install:
 - sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key
   --username $USERNAME --setdefaultdevhubusername -a HubOrg
 script:
-- sfdx force:auth:sfdxurl:store -f mysandbox-login.txt -a my_sandbox
-# - sfdx force:apex:test:run -u my_sandbox --wait 10
+- sfdx force:auth:sfdxurl:store -f mysandbox-login.txt -a dev
 - sfdx force:source:convert -r ./force-app/ -d ./mdapi/
-- sfdx force:mdapi:deploy -c -d ./mdapi -u my_sandbox
-# - sfdx force:org:create -v HubOrg -s -f config/project-scratch-def.json -a ciorg --wait 10
-# - sfdx force:org:display -u ciorg
-# - sfdx force:source:push -u ciorg
-# - sfdx force:apex:test:run -u ciorg --wait 10
-# - sfdx force:org:delete -u ciorg -p
-# if: branch = master - ls -l
+- sfdx force:mdapi:deploy -c -d ./mdapi -u dev
