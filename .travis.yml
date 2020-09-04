@@ -35,3 +35,5 @@ branches:
     - sfdx force:source:convert -r ./force-app/ -d ./mdapi/
     - sfdx force:mdapi:deploy -d ./mdapi -u dev
     - sfdx force:mdapi:deploy:report -w 10
+    # have not tried this to test deploy first
+    - sfdx force:apex:test:run -c -u dev -r human -w 10
