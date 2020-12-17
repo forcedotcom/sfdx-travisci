@@ -11,7 +11,7 @@ This repository shows one way you can successfully setup Salesforce DX with Trav
 If any any of these assumptions aren't true, the following steps won't work.
 
 ## Getting Started
-whatever
+whatever chakka
 
 1) Make sure you have the Salesforce CLI installed. Check by running `sfdx force --help` and confirm you see the command output. If you don't have it installed you can download and install it from [here](https://developer.salesforce.com/tools/sfdxcli).
 
